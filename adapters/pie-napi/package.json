@@ -1,0 +1,63 @@
+{
+  "name": "pie-tui-native",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Repo-owned native compatibility facade for the pinned pi-tui runtime",
+  "type": "module",
+  "main": "./index.cjs",
+  "module": "./index.js",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./index.js",
+      "require": "./index.cjs"
+    }
+  },
+  "files": [
+    "LICENSE",
+    "README.md",
+    "index.cjs",
+    "index.d.ts",
+    "index.js",
+    "native-loader.cjs",
+    "pie-tui-native.*.node",
+    "runtime.cjs"
+  ],
+  "engines": {
+    "node": ">=24.4.1"
+  },
+  "license": "MIT",
+  "napi": {
+    "binaryName": "pie-tui-native",
+    "targets": [
+      "aarch64-apple-darwin",
+      "x86_64-apple-darwin",
+      "aarch64-unknown-linux-gnu",
+      "x86_64-unknown-linux-gnu"
+    ]
+  },
+  "scripts": {
+    "build": "node scripts/build-native.mjs",
+    "test": "node --test test/*.test.mjs",
+    "test:surface": "node test/check-surface.mjs",
+    "test:artifact": "node test/artifact-repro.mjs",
+    "test:differential": "node test/differential.mjs",
+    "test:m6oracle": "node test/m6-semantic-oracle.mjs",
+    "test:mutations": "node test/check-mutations.mjs",
+    "test:types": "tsc --noEmit",
+    "test:typesurface": "node test/check-type-surface.mjs",
+    "test:pack": "node test/pack-consumer.mjs",
+    "oracle:check": "node test/check-reference.mjs",
+    "oracle:drift": "node test/check-upstream-drift.mjs",
+    "verify": "npm run oracle:check && npm run oracle:drift && npm run test:surface && npm run test:typesurface && npm run build && npm run test:artifact && npm test && npm run test:types && npm run test:differential && npm run test:m6oracle && npm run test:pack && npm run test:mutations"
+  },
+  "dependencies": {
+    "marked": "18.0.5"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "3.8.6",
+    "@types/node": "24.13.3",
+    "typescript": "7.0.2"
+  }
+}

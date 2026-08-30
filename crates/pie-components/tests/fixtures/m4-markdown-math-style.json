@@ -1,0 +1,99 @@
+{
+ "generator": "gen-golden-m4-markdown.mjs",
+ "reference": {
+  "package": "@earendil-works/pi-tui",
+  "version": "0.84.1",
+  "indexDtsSha256": "f86836256fea4329d5618a87ae503c89f73efa74523a11c0a84294b17b12bea3",
+  "markdownDtsSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+  "markdownJsSha256": "bbffe68aa6bb6968e9eca2681e19b0ea7787fff8124ef996fae282a4c2201465",
+  "latexDtsSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+  "latexJsSha256": "d8778b4166001faf09fa555d550c06a8d63b84b86244e04b45fa1b3fc68b1716",
+  "terminalImageDtsSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+  "terminalImageJsSha256": "b2b60272f6f25dbb559722dffa369944f5c8846fa726c31fb841d1532470adc2",
+  "utilsDtsSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+  "utilsJsSha256": "70c037e8c3c6ec909c4bab6b14777e1f33ab1f5c39f5f1f3aa6f8966357d8052",
+  "markedVersion": "18.0.5",
+  "markedEsmSha256": "43e1fc0927b2d397bdc786c0a9efa8414ce18e7781d0b3490faceea35b7d0d15",
+  "eastAsianWidthVersion": "1.6.0",
+  "eastAsianWidthPackageSha256": "d263e50dd1a43aee9acda4d7f066e66b0d0bde1f2852ea6e7153750a5e3a3e52",
+  "eastAsianWidthIndexSha256": "d7b1ba05914c0fc311c20e5618bf8d0893c9c74078a07975e2df981445e64887",
+  "eastAsianWidthLookupSha256": "c80ecc22b120b27ef5ea9facb7000b8fd4ec037a84d9231d215f1c44bc9c21d0",
+  "eastAsianWidthDataSha256": "f6b40f86c9a2a6808ec808fa8ddcb8da261254cc6121d37ffaeb2bf35dad1d5b",
+  "eastAsianWidthUtilitiesSha256": "4b08a7e9e3ffacbcf198a6abceb2338d52ac671899e52ccc2851c898bfccac42",
+  "node": "24.4.1",
+  "icu": "77.1",
+  "unicode": "16.0"
+ },
+ "cases": [
+  {
+   "name": "inline-math-supported-default-style",
+   "source": "$x_{i+1}^2$",
+   "width": 32,
+   "outputs": [
+    [
+     "\u001b[1m\u001b[37mxᵢ₊₁²\u001b[39m\u001b[22m                           "
+    ]
+   ],
+   "events": [
+    "transform:32:$x_{i+1}^2$",
+    "color:<NUL>",
+    "bold:<ESC>[37m<NUL><ESC>[39m",
+    "color:xᵢ₊₁²",
+    "bold:<ESC>[37mxᵢ₊₁²<ESC>[39m"
+   ]
+  },
+  {
+   "name": "inline-math-failed-default-style",
+   "source": "$\\frac{a}$",
+   "width": 32,
+   "outputs": [
+    [
+     "\u001b[1m\u001b[37m$\\frac{a}$\u001b[39m\u001b[22m                      "
+    ]
+   ],
+   "events": [
+    "transform:32:$\\frac{a}$",
+    "color:<NUL>",
+    "bold:<ESC>[37m<NUL><ESC>[39m",
+    "color:$\\frac{a}$",
+    "bold:<ESC>[37m$\\frac{a}$<ESC>[39m"
+   ]
+  },
+  {
+   "name": "display-math-supported-default-style",
+   "source": "$$\\frac{a}{b}$$",
+   "width": 32,
+   "outputs": [
+    [
+     "\u001b[1m\u001b[37ma\u001b[39m\u001b[22m                               ",
+     "\u001b[1m\u001b[37m─\u001b[39m\u001b[22m                               ",
+     "\u001b[1m\u001b[37mb\u001b[39m\u001b[22m                               "
+    ]
+   ],
+   "events": [
+    "transform:32:$$\\frac{a}{b}$$",
+    "color:a",
+    "bold:<ESC>[37ma<ESC>[39m",
+    "color:─",
+    "bold:<ESC>[37m─<ESC>[39m",
+    "color:b",
+    "bold:<ESC>[37mb<ESC>[39m"
+   ]
+  },
+  {
+   "name": "display-math-failed-default-style",
+   "source": "$$\\frac{a}$$",
+   "width": 32,
+   "outputs": [
+    [
+     "\u001b[1m\u001b[37m$$\\frac{a}$$\u001b[39m\u001b[22m                    "
+    ]
+   ],
+   "events": [
+    "transform:32:$$\\frac{a}$$",
+    "color:$$\\frac{a}$$",
+    "bold:<ESC>[37m$$\\frac{a}$$<ESC>[39m"
+   ]
+  }
+ ]
+}

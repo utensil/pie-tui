@@ -1,0 +1,480 @@
+{
+  "oracle": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "files": {
+      "terminal.js": "30bf4f78daf561e7b222f1a52c96a9e4f5805bfd5436c5d4c484375e0df7f79c"
+    },
+    "platform": "darwin"
+  },
+  "constants": {
+    "query": "\u001b[>7u\u001b[?u\u001b[c",
+    "bracketedPasteOn": "\u001b[?2004h",
+    "bracketedPasteOff": "\u001b[?2004l",
+    "kittyOff": "\u001b[<u",
+    "modifyOtherKeysOn": "\u001b[>4;2m",
+    "modifyOtherKeysOff": "\u001b[>4;0m",
+    "progressOn": "\u001b]9;4;3\u0007",
+    "progressOff": "\u001b]9;4;0\u0007"
+  },
+  "normalizers": [
+    {
+      "sequence": "\u001b[?7u",
+      "negotiation": {
+        "type": "kitty-flags",
+        "flags": 7
+      },
+      "nativeFalse": "\u001b[?7u",
+      "nativeNoShift": "\u001b[?7u",
+      "nativeShift": "\u001b[?7u",
+      "appleShift": "\u001b[?7u"
+    },
+    {
+      "sequence": "\u001b[?0u",
+      "negotiation": {
+        "type": "kitty-flags",
+        "flags": 0
+      },
+      "nativeFalse": "\u001b[?0u",
+      "nativeNoShift": "\u001b[?0u",
+      "nativeShift": "\u001b[?0u",
+      "appleShift": "\u001b[?0u"
+    },
+    {
+      "sequence": "\u001b[?1;2c",
+      "negotiation": {
+        "type": "device-attributes"
+      },
+      "nativeFalse": "\u001b[?1;2c",
+      "nativeNoShift": "\u001b[?1;2c",
+      "nativeShift": "\u001b[?1;2c",
+      "appleShift": "\u001b[?1;2c"
+    },
+    {
+      "sequence": "\u001b[?c",
+      "negotiation": {
+        "type": "device-attributes"
+      },
+      "nativeFalse": "\u001b[?c",
+      "nativeNoShift": "\u001b[?c",
+      "nativeShift": "\u001b[?c",
+      "appleShift": "\u001b[?c"
+    },
+    {
+      "sequence": "\u001b[?u",
+      "negotiation": null,
+      "nativeFalse": "\u001b[?u",
+      "nativeNoShift": "\u001b[?u",
+      "nativeShift": "\u001b[?u",
+      "appleShift": "\u001b[?u"
+    },
+    {
+      "sequence": "\u001b[c",
+      "negotiation": null,
+      "nativeFalse": "\u001b[c",
+      "nativeNoShift": "\u001b[c",
+      "nativeShift": "\u001b[c",
+      "appleShift": "\u001b[c"
+    },
+    {
+      "sequence": "hello",
+      "negotiation": null,
+      "nativeFalse": "hello",
+      "nativeNoShift": "hello",
+      "nativeShift": "hello",
+      "appleShift": "hello"
+    },
+    {
+      "sequence": "\r",
+      "negotiation": null,
+      "nativeFalse": "\r",
+      "nativeNoShift": "\r",
+      "nativeShift": "\u001b[13;2u",
+      "appleShift": "\u001b[13;2u"
+    }
+  ],
+  "startupKittyStop": {
+    "afterStart": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c"
+      ],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    },
+    "afterInput": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c"
+      ],
+      "input": [
+        "a"
+      ],
+      "resizeCount": 1,
+      "state": {
+        "kittyProtocolActive": true,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    },
+    "afterStop": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[?2004l",
+        "stdout.write:\\u001b[<u",
+        "stdin.removeListener:data",
+        "stdout.removeListener:resize",
+        "stdin.pause",
+        "stdin.setRawMode:false"
+      ],
+      "input": [
+        "a"
+      ],
+      "resizeCount": 1,
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": false,
+        "listenerCount": 0,
+        "resizeListenerCount": 0
+      }
+    }
+  },
+  "fallbackThenKitty": {
+    "afterDa": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[>4;2m"
+      ],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": true,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    },
+    "afterKitty": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[>4;2m",
+        "stdout.write:\\u001b[>4;0m"
+      ],
+      "input": [
+        "\u001b[200~paste\ntext\u001b[201~"
+      ],
+      "state": {
+        "kittyProtocolActive": true,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    },
+    "afterStop": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[>4;2m",
+        "stdout.write:\\u001b[>4;0m",
+        "stdout.write:\\u001b[?2004l",
+        "stdout.write:\\u001b[<u",
+        "stdin.removeListener:data",
+        "stdout.removeListener:resize",
+        "stdin.pause",
+        "stdin.setRawMode:false"
+      ],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": false,
+        "listenerCount": 0,
+        "resizeListenerCount": 0
+      }
+    }
+  },
+  "splitNegotiation": {
+    "afterFragmentFlush": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c"
+      ],
+      "input": [],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      },
+      "now": 10
+    },
+    "afterCompletion": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c"
+      ],
+      "input": [],
+      "state": {
+        "kittyProtocolActive": true,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      },
+      "now": 10
+    }
+  },
+  "negotiationTimeout": {
+    "before": {
+      "input": [],
+      "now": 159
+    },
+    "after": {
+      "input": [
+        "\u001b["
+      ],
+      "now": 160,
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    }
+  },
+  "coarseTick": {
+    "input": [
+      {
+        "data": "\u001b[",
+        "at": 160
+      }
+    ],
+    "target": 1000,
+    "state": {
+      "kittyProtocolActive": false,
+      "modifyOtherKeysActive": false,
+      "raw": true,
+      "listenerCount": 1,
+      "resizeListenerCount": 1
+    }
+  },
+  "drain": {
+    "afterBegin": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[>4;2m",
+        "stdout.write:\\u001b[<u",
+        "stdout.write:\\u001b[>4;0m",
+        "stdin.on:data"
+      ],
+      "input": [],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 2,
+        "resizeListenerCount": 1
+      },
+      "now": 0
+    },
+    "afterDone": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "process.kill:SIGWINCH",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[>4;2m",
+        "stdout.write:\\u001b[<u",
+        "stdout.write:\\u001b[>4;0m",
+        "stdin.on:data",
+        "stdin.removeListener:data"
+      ],
+      "input": [],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      },
+      "now": 50
+    }
+  },
+  "progress": {
+    "active": [
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;3\\u0007"
+    ],
+    "complete": [
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;0\\u0007",
+      "stdout.write:\\u001b]9;4;0\\u0007",
+      "stdout.write:\\u001b]9;4;3\\u0007",
+      "stdout.write:\\u001b]9;4;0\\u0007",
+      "stdout.write:\\u001b[?2004l",
+      "stdin.pause",
+      "stdin.setRawMode:false"
+    ]
+  },
+  "geometryAndWrites": {
+    "geometry": {
+      "columns": 101,
+      "rows": 37
+    },
+    "operations": [
+      "stdout.write:\\u001b[2B",
+      "stdout.write:\\u001b[3A",
+      "stdout.write:\\u001b[?25l",
+      "stdout.write:\\u001b[?25h",
+      "stdout.write:\\u001b[K",
+      "stdout.write:\\u001b[J",
+      "stdout.write:\\u001b[2J\\u001b[H",
+      "stdout.write:\\u001b]0;hello\\u0007"
+    ]
+  },
+  "restoreRaw": {
+    "operations": [
+      "stdin.setRawMode:true",
+      "stdin.setEncoding:utf8",
+      "stdin.resume",
+      "stdout.write:\\u001b[?2004h",
+      "stdout.on:resize",
+      "process.kill:SIGWINCH",
+      "stdin.on:data",
+      "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+      "stdout.write:\\u001b[?2004l",
+      "stdout.write:\\u001b[<u",
+      "stdin.removeListener:data",
+      "stdout.removeListener:resize",
+      "stdin.pause",
+      "stdin.setRawMode:true"
+    ],
+    "state": {
+      "kittyProtocolActive": false,
+      "modifyOtherKeysActive": false,
+      "raw": true,
+      "listenerCount": 0,
+      "resizeListenerCount": 0
+    }
+  },
+  "windowsStart": {
+    "afterStart": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "windows.enableVirtualTerminalInput",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c"
+      ],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": true,
+        "listenerCount": 1,
+        "resizeListenerCount": 1
+      }
+    },
+    "afterStop": {
+      "operations": [
+        "stdin.setRawMode:true",
+        "stdin.setEncoding:utf8",
+        "stdin.resume",
+        "stdout.write:\\u001b[?2004h",
+        "stdout.on:resize",
+        "windows.enableVirtualTerminalInput",
+        "stdin.on:data",
+        "stdout.write:\\u001b[>7u\\u001b[?u\\u001b[c",
+        "stdout.write:\\u001b[?2004l",
+        "stdout.write:\\u001b[<u",
+        "stdin.removeListener:data",
+        "stdout.removeListener:resize",
+        "stdin.pause",
+        "stdin.setRawMode:false"
+      ],
+      "state": {
+        "kittyProtocolActive": false,
+        "modifyOtherKeysActive": false,
+        "raw": false,
+        "listenerCount": 0,
+        "resizeListenerCount": 0
+      }
+    }
+  }
+}

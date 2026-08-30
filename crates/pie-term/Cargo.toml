@@ -1,0 +1,12 @@
+[package]
+name = "pie-term"
+description = "Terminal abstraction: Terminal trait + raw/captured/pty backends. The IO seam."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+pie-core = { path = "../pie-core" }
+
+[dev-dependencies]
+serde_json = "1"

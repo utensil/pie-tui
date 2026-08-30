@@ -1,0 +1,15 @@
+[package]
+name = "pie-components"
+description = "pi-tui-parity components over pie-core + pie-term."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[dependencies]
+markdown = "=1.0.0"
+pie-core = { path = "../../crates/pie-core" }
+pie-term = { path = "../../crates/pie-term" }
+unicode-segmentation = "1"
+
+[dev-dependencies]
+serde_json = "1"

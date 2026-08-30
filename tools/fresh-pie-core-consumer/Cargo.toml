@@ -1,0 +1,10 @@
+[package]
+name = "fresh-pie-core-consumer"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+pie-core = { path = "../pie-tui/crates/pie-core" }

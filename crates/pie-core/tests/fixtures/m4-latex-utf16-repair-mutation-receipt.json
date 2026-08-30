@@ -1,0 +1,74 @@
+{
+  "schema": "pie-tui-m4-latex-utf16-repair-mutation-receipt-v1",
+  "baseline": "corrected 861-case detached-review implementation",
+  "isolation": "each mutation was applied alone, gated, and restored before the next mutation",
+  "gate": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_detached_review_product_and_repair_edges -- --exact",
+  "mutations": [
+    {
+      "id": "require-braced-accent-arguments",
+      "exitCode": 101,
+      "mismatchCount": 33,
+      "killedRows": [
+        "bar-unbraced-ascii-d0",
+        "bar-unbraced-astral-d0",
+        "bar-unbraced-lone-high-start-d0",
+        "bar-command-d0"
+      ]
+    },
+    {
+      "id": "remove-display-fraction-width-floor-and-global-trim",
+      "exitCode": 101,
+      "mismatchCount": 18,
+      "killedRows": [
+        "fraction-empty-over-empty-d1",
+        "fraction-empty-over-high-d1",
+        "fraction-x-over-empty-d1",
+        "fraction-high-over-high-d1"
+      ]
+    },
+    {
+      "id": "count-lone-surrogates-as-replacement-width",
+      "exitCode": 101,
+      "mismatchCount": 12,
+      "killedRows": [
+        "fraction-ab-over-high-d1",
+        "fraction-cjk-over-low-d1",
+        "fraction-high-over-ab-d1",
+        "fraction-low-over-astral-d1"
+      ]
+    },
+    {
+      "id": "restore-coarse-inline-fraction-grouping",
+      "exitCode": 101,
+      "mismatchCount": 6,
+      "killedRows": [
+        "fraction-dot-numerator-d0",
+        "fraction-decimal-numerator-d0",
+        "fraction-digit-denominator-d0",
+        "fraction-decimal-both-d0"
+      ]
+    },
+    {
+      "id": "restore-coarse-root-grouping",
+      "exitCode": 101,
+      "mismatchCount": 4,
+      "killedRows": [
+        "root-dot-d0",
+        "root-decimal-d0",
+        "root-dot-d1",
+        "root-decimal-d1"
+      ]
+    },
+    {
+      "id": "allow-operator-duplicate-direction-scripts",
+      "exitCode": 101,
+      "mismatchCount": 4,
+      "killedRows": [
+        "operator-duplicate-sub-d0",
+        "operator-duplicate-super-d0",
+        "operator-duplicate-sub-d1",
+        "operator-duplicate-super-d1"
+      ]
+    }
+  ]
+}

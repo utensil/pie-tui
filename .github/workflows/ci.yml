@@ -1,0 +1,112 @@
+name: ci
+on:
+  push: { branches: [dev-rust, main] }
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      # rustup reads the repository's exact rust-toolchain.toml pin. Keeping
+      # installation policy in one file prevents local/CI Clippy drift.
+      - name: install pinned Rust toolchain
+        run: |
+          rustup show active-toolchain
+          rustc --version --verbose
+      - uses: Swatinem/rust-cache@v2
+      - name: fmt
+        run: cargo fmt --check --all
+      - name: clippy (warning-free)
+        run: cargo clippy --workspace --all-targets -- -D warnings
+      - name: boundary gate
+        run: cargo run -p xt -- boundary
+      - name: tests
+        run: cargo test --workspace
+      - name: fresh pie-core consumer dependency gate
+        run: bash tools/check-fresh-pie-core-consumer.sh
+      - name: fresh pie-app screen consumer gate
+        run: bash tools/check-fresh-pie-app-consumer.sh
+      - name: surface-coverage gate
+        run: node tools/check-coverage.mjs
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.4.1
+      - name: install Node-API dependencies and authenticated references
+        run: |
+          npm --prefix adapters/pie-napi ci
+          mkdir -p "$RUNNER_TEMP/pi-tui-tarballs" "$RUNNER_TEMP/pi-tui-reference"
+          npm pack @earendil-works/pi-tui@0.84.1 --pack-destination "$RUNNER_TEMP/pi-tui-tarballs"
+          npm pack @earendil-works/pi-tui@0.84.2 --pack-destination "$RUNNER_TEMP/pi-tui-tarballs"
+          npm pack @earendil-works/pi-tui@0.84.4 --pack-destination "$RUNNER_TEMP/pi-tui-tarballs"
+          npm install --prefix "$RUNNER_TEMP/pi-tui-reference" --ignore-scripts \
+            "$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz"
+          echo "PI_TUI_TARBALL=$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz" >> "$GITHUB_ENV"
+          echo "PI_TUI_DIST=$RUNNER_TEMP/pi-tui-reference/node_modules/@earendil-works/pi-tui/dist" >> "$GITHUB_ENV"
+          echo "PI_TUI_0842_TARBALL=$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz" >> "$GITHUB_ENV"
+          echo "PI_TUI_0844_TARBALL=$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.4.tgz" >> "$GITHUB_ENV"
+      - name: full Node-API compatibility gate
+        run: npm --prefix adapters/pie-napi run verify
+      - name: install real-terminal smoke dependency
+        run: sudo apt-get update && sudo apt-get install -y tmux
+      - name: Node-API Main/Alt real-terminal gate
+        run: tools/tmux-napi-smoke.sh
+      - name: current pi-dsh front-door consumer gate
+        run: bash tools/check-current-dsh-consumer.sh
+
+  platform:
+    name: platform (${{ matrix.target }})
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - target: aarch64-apple-darwin
+            os: macos-15
+            platform: darwin
+            arch: arm64
+            addon: pie-tui-native.darwin-arm64.node
+          - target: x86_64-apple-darwin
+            os: macos-15-intel
+            platform: darwin
+            arch: x64
+            addon: pie-tui-native.darwin-x64.node
+          - target: aarch64-unknown-linux-gnu
+            os: ubuntu-24.04-arm
+            platform: linux
+            arch: arm64
+            addon: pie-tui-native.linux-arm64-gnu.node
+          - target: x86_64-unknown-linux-gnu
+            os: ubuntu-24.04
+            platform: linux
+            arch: x64
+            addon: pie-tui-native.linux-x64-gnu.node
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: install pinned Rust toolchain
+        run: |
+          rustup show active-toolchain
+          rustc --version --verbose
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24.4.1
+          cache: npm
+          cache-dependency-path: adapters/pie-napi/package-lock.json
+      - name: install and build native facade
+        run: |
+          npm --prefix adapters/pie-napi ci
+          npm --prefix adapters/pie-napi run build
+      - name: verify declared platform receipt
+        env:
+          EXPECTED_PLATFORM: ${{ matrix.platform }}
+          EXPECTED_ARCH: ${{ matrix.arch }}
+          EXPECTED_ADDON: ${{ matrix.addon }}
+        run: |
+          node -e 'const fs = require("node:fs"); if (process.platform !== process.env.EXPECTED_PLATFORM || process.arch !== process.env.EXPECTED_ARCH) throw new Error(`runner mismatch: ${process.platform}/${process.arch}`); if (!fs.existsSync(`adapters/pie-napi/${process.env.EXPECTED_ADDON}`)) throw new Error(`missing ${process.env.EXPECTED_ADDON}`)'
+      - name: runtime, type, and packed artifact gates
+        run: |
+          npm --prefix adapters/pie-napi test
+          npm --prefix adapters/pie-napi run test:types
+          npm --prefix adapters/pie-napi run test:pack
+      - name: exact-head live pi-dsh InteractiveMode lifecycle
+        run: bash tools/check-current-dsh-consumer.sh

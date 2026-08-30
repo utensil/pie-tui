@@ -1,0 +1,3821 @@
+{
+  "generator": "tools/build-coverage-ledger.mjs",
+  "reference": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.2",
+    "indexSha256": "2eb2c4d88617a344f5c8f51cc1e42e4770d0867dea67e6466263d4346c980d5c",
+    "statementCount": 30,
+    "symbolCount": 133
+  },
+  "bindings": {
+    "napi": {
+      "package": "pie-tui-native",
+      "private": true,
+      "dropIn": true,
+      "selectedRuntimeExports": [
+        "Box",
+        "CURSOR_MARKER",
+        "CancellableLoader",
+        "CombinedAutocompleteProvider",
+        "Container",
+        "Editor",
+        "HStack",
+        "Image",
+        "Input",
+        "Key",
+        "KeybindingsManager",
+        "Loader",
+        "Markdown",
+        "Marked",
+        "ProcessTerminal",
+        "ScrollView",
+        "SelectList",
+        "SettingsList",
+        "Spacer",
+        "StdinBuffer",
+        "TUI_KEYBINDINGS",
+        "Text",
+        "TruncatedText",
+        "TuiAltScreen",
+        "TuiMainScreen",
+        "VStack",
+        "allocateImageId",
+        "calculateImageRows",
+        "compositeTuiLine",
+        "decodeKittyPrintable",
+        "deleteAllKittyImages",
+        "deleteKittyImage",
+        "detectCapabilities",
+        "encodeITerm2",
+        "encodeKitty",
+        "fuzzyFilter",
+        "fuzzyMatch",
+        "getCapabilities",
+        "getCellDimensions",
+        "getGifDimensions",
+        "getImageDimensions",
+        "getJpegDimensions",
+        "getKeybindings",
+        "getOsc8LinkAtColumn",
+        "getPngDimensions",
+        "getWebpDimensions",
+        "hyperlink",
+        "imageFallback",
+        "isFocusable",
+        "isKeyRelease",
+        "isKeyRepeat",
+        "isKittyProtocolActive",
+        "isViewportTUI",
+        "matchesKey",
+        "parseKey",
+        "parseOsc11BackgroundColor",
+        "parseTerminalColorSchemeReport",
+        "renderImage",
+        "renderLatex",
+        "resetCapabilitiesCache",
+        "setCapabilities",
+        "setCellDimensions",
+        "setKeybindings",
+        "setKittyProtocolActive",
+        "sliceByColumn",
+        "stripTerminalSequences",
+        "truncateToWidth",
+        "visibleWidth",
+        "wrapTextWithAnsi"
+      ],
+      "selectedRuntimeExportCount": 69,
+      "canonicalRuntimeExportCount": 69,
+      "evidence": [
+        "adapters/pie-napi/test/check-reference.mjs",
+        "adapters/pie-napi/test/check-surface.mjs",
+        "adapters/pie-napi/test/check-type-surface.mjs",
+        "adapters/pie-napi/test/check-upstream-drift.mjs",
+        "adapters/pie-napi/test/runtime.test.mjs",
+        "adapters/pie-napi/test/m5-runtime.test.mjs",
+        "adapters/pie-napi/test/m6-runtime.test.mjs",
+        "adapters/pie-napi/test/m6-semantic-oracle.mjs",
+        "adapters/pie-napi/test/differential.mjs",
+        "adapters/pie-napi/test/pack-consumer.mjs",
+        "adapters/pie-napi/test/artifact-repro.mjs",
+        "adapters/pie-napi/test/check-mutations.mjs",
+        "tools/tmux-napi-smoke.sh",
+        "tools/check-current-dsh-consumer.sh"
+      ]
+    }
+  },
+  "policy": {
+    "ordinaryFloor": 88,
+    "compiledFloor": 106,
+    "verifiedFloor": 40,
+    "m3Target": 80,
+    "note": "The ordinary integrity gate enforces the proved ported, compiled, and verified floors. --milestone M3 independently enforces the historical 80-symbol target, now satisfied by reviewed M5 foundation work."
+  },
+  "metrics": {
+    "symbols": {
+      "total": 133,
+      "compiledMappings": 106,
+      "portedOrVerified": 88,
+      "verified": 40,
+      "m3Target": 80
+    },
+    "statements": {
+      "total": 30,
+      "complete": 12,
+      "verified": 5
+    }
+  },
+  "statements": [
+    {
+      "id": "S01-marked",
+      "status": "external",
+      "portedSymbols": 0,
+      "verifiedSymbols": 0,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S02-autocomplete",
+      "status": "partial",
+      "portedSymbols": 4,
+      "verifiedSymbols": 1,
+      "totalSymbols": 5
+    },
+    {
+      "id": "S03-box",
+      "status": "ported",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S04-cancellable-loader",
+      "status": "partial",
+      "portedSymbols": 0,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S05-editor",
+      "status": "partial",
+      "portedSymbols": 2,
+      "verifiedSymbols": 0,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S06-h-stack",
+      "status": "ported",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S07-image",
+      "status": "partial",
+      "portedSymbols": 2,
+      "verifiedSymbols": 0,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S08-input",
+      "status": "partial",
+      "portedSymbols": 0,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S09-loader",
+      "status": "partial",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 2
+    },
+    {
+      "id": "S10-markdown",
+      "status": "partial",
+      "portedSymbols": 3,
+      "verifiedSymbols": 0,
+      "totalSymbols": 4
+    },
+    {
+      "id": "S11-scroll-view",
+      "status": "partial",
+      "portedSymbols": 3,
+      "verifiedSymbols": 1,
+      "totalSymbols": 4
+    },
+    {
+      "id": "S12-select-list",
+      "status": "ported",
+      "portedSymbols": 5,
+      "verifiedSymbols": 1,
+      "totalSymbols": 5
+    },
+    {
+      "id": "S13-settings-list",
+      "status": "partial",
+      "portedSymbols": 2,
+      "verifiedSymbols": 0,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S14-spacer",
+      "status": "ported",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S15-text",
+      "status": "ported",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S16-truncated-text",
+      "status": "verified",
+      "portedSymbols": 1,
+      "verifiedSymbols": 1,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S17-v-stack",
+      "status": "partial",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 5
+    },
+    {
+      "id": "S18-editor-component",
+      "status": "partial",
+      "portedSymbols": 0,
+      "verifiedSymbols": 0,
+      "totalSymbols": 1
+    },
+    {
+      "id": "S19-fuzzy",
+      "status": "verified",
+      "portedSymbols": 3,
+      "verifiedSymbols": 3,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S20-keybindings",
+      "status": "partial",
+      "portedSymbols": 7,
+      "verifiedSymbols": 0,
+      "totalSymbols": 10
+    },
+    {
+      "id": "S21-keys",
+      "status": "partial",
+      "portedSymbols": 9,
+      "verifiedSymbols": 4,
+      "totalSymbols": 10
+    },
+    {
+      "id": "S22-latex",
+      "status": "verified",
+      "portedSymbols": 2,
+      "verifiedSymbols": 2,
+      "totalSymbols": 2
+    },
+    {
+      "id": "S23-stdin-buffer",
+      "status": "ported",
+      "portedSymbols": 3,
+      "verifiedSymbols": 0,
+      "totalSymbols": 3
+    },
+    {
+      "id": "S24-terminal",
+      "status": "partial",
+      "portedSymbols": 1,
+      "verifiedSymbols": 0,
+      "totalSymbols": 2
+    },
+    {
+      "id": "S25-terminal-colors",
+      "status": "verified",
+      "portedSymbols": 4,
+      "verifiedSymbols": 4,
+      "totalSymbols": 4
+    },
+    {
+      "id": "S26-terminal-image",
+      "status": "partial",
+      "portedSymbols": 19,
+      "verifiedSymbols": 16,
+      "totalSymbols": 25
+    },
+    {
+      "id": "S27-tui",
+      "status": "partial",
+      "portedSymbols": 4,
+      "verifiedSymbols": 1,
+      "totalSymbols": 19
+    },
+    {
+      "id": "S28-tui-alt-screen",
+      "status": "partial",
+      "portedSymbols": 0,
+      "verifiedSymbols": 0,
+      "totalSymbols": 2
+    },
+    {
+      "id": "S29-tui-main-screen",
+      "status": "ported",
+      "portedSymbols": 2,
+      "verifiedSymbols": 0,
+      "totalSymbols": 2
+    },
+    {
+      "id": "S30-utils",
+      "status": "verified",
+      "portedSymbols": 6,
+      "verifiedSymbols": 6,
+      "totalSymbols": 6
+    }
+  ],
+  "symbols": [
+    {
+      "id": "S01-marked:Marked",
+      "statementId": "S01-marked",
+      "name": "Marked",
+      "kind": "runtime",
+      "signatureSha256": "b11c7134633995df726263f0f801cba38e3eb14f28449340c482e1073c761b1c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "external",
+      "status": "external",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S01-marked:Token",
+      "statementId": "S01-marked",
+      "name": "Token",
+      "kind": "type",
+      "signatureSha256": "03585640e8b61529324c4405d0f184289bb4641bda3c2cd4696abf40cbc5037f",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "external",
+      "status": "external",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S01-marked:Tokens",
+      "statementId": "S01-marked",
+      "name": "Tokens",
+      "kind": "type",
+      "signatureSha256": "8c886b3808e90dc3ade66a72936e05c2d326f16ab82b82f225ef9b1b8ba2ad29",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "external",
+      "status": "external",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S02-autocomplete:AutocompleteItem",
+      "statementId": "S02-autocomplete",
+      "name": "AutocompleteItem",
+      "kind": "type",
+      "signatureSha256": "872c4017840f4b4d77741a62ba5260a8e25cd8ab8348d369eb6b03012284ea76",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::AutocompleteItem",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/autocomplete.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S02-autocomplete:AutocompleteProvider",
+      "statementId": "S02-autocomplete",
+      "name": "AutocompleteProvider",
+      "kind": "type",
+      "signatureSha256": "a23986b0e57a661ea56d776daa60426fdb71796e6498cc75ee6b17778cd69dd1",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::AutocompleteProvider",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/autocomplete.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S02-autocomplete:AutocompleteSuggestions",
+      "statementId": "S02-autocomplete",
+      "name": "AutocompleteSuggestions",
+      "kind": "type",
+      "signatureSha256": "97755216166c7ed77954eafc670f950ef6c831f03a930113c5922d514f46e9a1",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::AutocompleteSuggestions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/autocomplete.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S02-autocomplete:CombinedAutocompleteProvider",
+      "statementId": "S02-autocomplete",
+      "name": "CombinedAutocompleteProvider",
+      "kind": "runtime",
+      "signatureSha256": "c9ebb75b510b3cf63fd9b6b65c90a5b7fdd49be6f69d3dc4b2643e344d16c09a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::CombinedAutocompleteProvider",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/autocomplete.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "UTF-16 cursors, async providers, live cancellation, fd argv/path escaping, and the pinned Latin/ASCII ordering corpus are covered, but the hand-pinned Rust collation key falls back to scalar order outside that corpus; general ICU/host-locale localeCompare parity remains open."
+      ]
+    },
+    {
+      "id": "S02-autocomplete:SlashCommand",
+      "statementId": "S02-autocomplete",
+      "name": "SlashCommand",
+      "kind": "type",
+      "signatureSha256": "5286f3155d12acb1ed8afdb63244040fd179407341ff71df66579e7ea245c4f9",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SlashCommand",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/autocomplete.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S03-box:Box",
+      "statementId": "S03-box",
+      "name": "Box",
+      "kind": "runtime",
+      "signatureSha256": "155b3b255fcb7b7375e4cd097f146ef454620b055d29726e6b9f221cb7408f13",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Box",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/box_component.rs",
+          "crates/pie-components/tests/components_golden.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Removal, cache, background sampling, and lifecycle behavior are covered, but the Rust public seam owns Box<dyn Component> and removes by BoxChildId rather than retained Component object identity."
+      ]
+    },
+    {
+      "id": "S04-cancellable-loader:CancellableLoader",
+      "statementId": "S04-cancellable-loader",
+      "name": "CancellableLoader",
+      "kind": "runtime",
+      "signatureSha256": "168b210bda9a9645de0e2c73bccc5626bc266c24dce1036d7ad59b7987854fdc",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::CancellableLoader",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/cancellable_loader.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Live signal/callback behavior, Loader/Text forwarding, and bounded cleanup are covered, but inherited Loader still lacks a real runtime-owned timer and exact JS class/NAPI surface."
+      ]
+    },
+    {
+      "id": "S05-editor:Editor",
+      "statementId": "S05-editor",
+      "name": "Editor",
+      "kind": "runtime",
+      "signatureSha256": "6da99cbbb6a6d6810c91e62fec7fbdc115664314e766a7b3426f72f6bf0ce12e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 3,
+        "documented": [
+          "em whose value starts with prefix * 3. No match -> -1 (keep default highlight) * * Matching is case-sensitive and checks item.value only. */ privat"
+        ]
+      },
+      "milestone": "M4",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Editor",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/editor.rs",
+          "crates/pie-components/tests/editor_input_golden.rs",
+          "crates/pie-components/tests/editor_autocomplete.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/editor_input_golden.rs",
+        "crates/pie-components/tests/editor_autocomplete.rs"
+      ],
+      "gaps": [
+        "The rank-2 state, rendering, paste, history, kill/yank, live-keybinding, and autocomplete lifecycle corpus is covered, but the default word fallback retains 1,439 measured Thai-adjacent ICU77/ICU4X divergences. The M5 adapter supplies the JavaScript class/property and event-loop seams; this direct Rust row retains the host-Intl and ABI-shape residuals."
+      ]
+    },
+    {
+      "id": "S05-editor:EditorOptions",
+      "statementId": "S05-editor",
+      "name": "EditorOptions",
+      "kind": "type",
+      "signatureSha256": "6df4255ba0b6e0f4b69c8be0be4928ac7b5bf29b033e44dbf0ef8421084aaae4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::EditorOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/editor.rs",
+          "crates/pie-components/tests/editor_input_golden.rs",
+          "crates/pie-components/tests/editor_autocomplete.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/editor_input_golden.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S05-editor:EditorTheme",
+      "statementId": "S05-editor",
+      "name": "EditorTheme",
+      "kind": "type",
+      "signatureSha256": "e419db127a8c124cb5239755adc3fac16c88ff72442016e5b73b5f439645c86e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::EditorTheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/editor.rs",
+          "crates/pie-components/tests/editor_input_golden.rs",
+          "crates/pie-components/tests/editor_autocomplete.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/editor_input_golden.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S06-h-stack:HStack",
+      "statementId": "S06-h-stack",
+      "name": "HStack",
+      "kind": "runtime",
+      "signatureSha256": "197fd1051580a997ae39bb55c6f20fdad25b13203bd4854f521826282213392b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::HStack",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/vstack_hstack.rs",
+          "crates/pie-components/tests/components_golden.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Removal, visibility, sizing, and alignment behavior are covered, but the exact children/StackOptions constructor and retained Component identity mapping remain open."
+      ]
+    },
+    {
+      "id": "S07-image:Image",
+      "statementId": "S07-image",
+      "name": "Image",
+      "kind": "runtime",
+      "signatureSha256": "ec32bbbc1032a33034befeebd47f910aa13dd225d0f4e482a58873b3a2ed6f0e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Image",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/image.rs",
+          "crates/pie-components/tests/golden_image_component.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_image_component.rs"
+      ],
+      "gaps": [
+        "Pinned render, dimension, cache, ID, and ownership behavior is covered, but the canonical concrete constructor maps to multiple Rust constructors and exact inline rendering requires with_environment; Rust returns a cloned Vec instead of the identical cached JavaScript Array, while the host must consume kitty_image_ownership because Drop performs no terminal deletion. The M5 adapter supplies the JavaScript class and identity seams."
+      ]
+    },
+    {
+      "id": "S07-image:ImageOptions",
+      "statementId": "S07-image",
+      "name": "ImageOptions",
+      "kind": "type",
+      "signatureSha256": "e5f4693c972a4ea6c278126d7d481d44cbb35a167c5647902eaf7c04805e4f06",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ImageOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/image.rs",
+          "crates/pie-components/tests/golden_image_component.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_image_component.rs"
+      ],
+      "gaps": [
+        "Fields and defaults are exercised, but Rust uses bounded numeric types and owned Strings rather than the exact JavaScript object/value boundary."
+      ]
+    },
+    {
+      "id": "S07-image:ImageTheme",
+      "statementId": "S07-image",
+      "name": "ImageTheme",
+      "kind": "type",
+      "signatureSha256": "b0efe2fb1b83e940a85fdadfa6e32afa3dd99186a29eb6279caab06f7adedf21",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ImageTheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/image.rs",
+          "crates/pie-components/tests/golden_image_component.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_image_component.rs"
+      ],
+      "gaps": [
+        "Fallback styling is exercised, but the Rust callback ownership/ABI is not JavaScript function identity."
+      ]
+    },
+    {
+      "id": "S08-input:Input",
+      "statementId": "S08-input",
+      "name": "Input",
+      "kind": "runtime",
+      "signatureSha256": "940027c381ba40024b370e051fbca6a630765bedb5a7010b4e4fc4a840ba4d8a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Input",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/input.rs",
+          "crates/pie-components/tests/input_golden.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/input_golden.rs"
+      ],
+      "gaps": [
+        "The rank-2 input/edit/paste/kill/yank/undo/live-keybinding corpus is covered, but the default word fallback retains the documented Thai-adjacent residual. The M5 adapter supplies the Focusable, callback-property, coercion, and runtime facade; this row measures the narrower direct Rust shape."
+      ]
+    },
+    {
+      "id": "S09-loader:Loader",
+      "statementId": "S09-loader",
+      "name": "Loader",
+      "kind": "runtime",
+      "signatureSha256": "62c00ced4b720603aae7bd56dca3e2aca4b27e3a7c98048f2dfb1e7bd8e2e11a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Loader",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/loader.rs",
+          "crates/pie-components/tests/components_golden.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Text forwarding, indicator semantics, empty/one-frame scheduling state, and lifecycle behavior are covered, but Rust models scheduling without the real runtime-owned interval/TUI requestRender wiring or exact JS class/NAPI surface."
+      ]
+    },
+    {
+      "id": "S09-loader:LoaderIndicatorOptions",
+      "statementId": "S09-loader",
+      "name": "LoaderIndicatorOptions",
+      "kind": "type",
+      "signatureSha256": "1fea44f430a52139de8d050492354f2994f41c0d9f44f83931c7836678b6c015",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::LoaderIndicatorOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/loader.rs",
+          "crates/pie-components/tests/components_golden.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S10-markdown:DefaultTextStyle",
+      "statementId": "S10-markdown",
+      "name": "DefaultTextStyle",
+      "kind": "type",
+      "signatureSha256": "8a22f667bc81f56bfca7076766d5265f53a06545df3a7bfb54776e4d78d24c7f",
+      "defaultMetadata": {
+        "optionalMarkerCount": 6,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::DefaultTextStyle",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown_packet.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m4_markdown.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S10-markdown:Markdown",
+      "statementId": "S10-markdown",
+      "name": "Markdown",
+      "kind": "runtime",
+      "signatureSha256": "be6cb88f6afeb0b5e838507a6988b828806973babf1bf0a55ea14ed73e453203",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": [
+          "idate(): void; render(width: number): string[]; /** * Apply default text style to a string. * This is the base styling applied to all text content."
+        ]
+      },
+      "milestone": "M4",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Markdown",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown_packet.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m4_markdown.rs",
+        "crates/pie-components/tests/golden_m4_markdown_packet.rs"
+      ],
+      "gaps": [
+        "The pinned marked 18 token, rendering, callback-order, cache, source-preservation, indentation, and LaTeX corpus is covered, but canonical JavaScript can return strings with unpaired UTF-16 units and retains JavaScript Array identity; Rust Component returns owned valid-UTF-8 Vec<String>, while the M5 adapter owns the JavaScript class boundary."
+      ]
+    },
+    {
+      "id": "S10-markdown:MarkdownOptions",
+      "statementId": "S10-markdown",
+      "name": "MarkdownOptions",
+      "kind": "type",
+      "signatureSha256": "eb902fae2ceb89c6c9133079d88e4c9f31555c39dd67a080abdb4fc46c55f3a2",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": [
+          "** Render supported LaTeX math expressions as Unicode text (default: true). */ renderLatex?: boolean; }"
+        ]
+      },
+      "milestone": "M4",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::MarkdownOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown_packet.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m4_markdown.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S10-markdown:MarkdownTheme",
+      "statementId": "S10-markdown",
+      "name": "MarkdownTheme",
+      "kind": "type",
+      "signatureSha256": "80287578f6bacc0e9c083ae2f31cf24a54f5b9793e78d2952024a89acb16674d",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 0,
+        "documented": [
+          "ing[]; /** Prefix applied to each rendered code block line (default: \" \") */ codeBlockIndent?: string; }"
+        ]
+      },
+      "milestone": "M4",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::MarkdownTheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown.rs",
+          "crates/pie-components/tests/golden_m4_markdown_packet.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m4_markdown.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S11-scroll-view:ScrollView",
+      "statementId": "S11-scroll-view",
+      "name": "ScrollView",
+      "kind": "runtime",
+      "signatureSha256": "b9d03a6779e2307a5c4e6dd0a9082201226ed1570827e319bfe1ecdae5a52ec3",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ScrollView",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/layout.rs",
+          "crates/pie-components/src/scroll_view.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_layout_scroll.rs"
+      ],
+      "gaps": [
+        "Vertical layout, follow, remainder, nested-hit, scrollbar, fake-clock, stale-timer, and Drop behavior is covered, but the default PassiveTimerHost queues and never fires timeouts; exact direct-Rust timing needs an injected ScrollViewTimerHost. Rust child ownership is not canonical JavaScript Component/children identity; the M5 adapter supplies the runtime timer and class seams."
+      ]
+    },
+    {
+      "id": "S11-scroll-view:ScrollViewOptions",
+      "statementId": "S11-scroll-view",
+      "name": "ScrollViewOptions",
+      "kind": "type",
+      "signatureSha256": "bab623426f64987bfec14a0d5ca8ad7921a739e1ca7a4fa94cd6843fbf0e943b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 7,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ScrollViewOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/layout.rs",
+          "crates/pie-components/src/scroll_view.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_layout_scroll.rs"
+      ],
+      "gaps": [
+        "Fields and defaults are exercised, but Rust carries a Horizontal invalid-witness variant and Rust callback/timer ABIs rather than the exact JavaScript options object."
+      ]
+    },
+    {
+      "id": "S11-scroll-view:ScrollViewScrollbar",
+      "statementId": "S11-scroll-view",
+      "name": "ScrollViewScrollbar",
+      "kind": "type",
+      "signatureSha256": "8fa8fa7bfe5259d7bdc99fa61ed520018b037f826cb6b13001fa84d2f1838786",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ScrollViewScrollbar",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/layout.rs",
+          "crates/pie-components/src/scroll_view.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_layout_scroll.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S11-scroll-view:ScrollViewScrollToOptions",
+      "statementId": "S11-scroll-view",
+      "name": "ScrollViewScrollToOptions",
+      "kind": "type",
+      "signatureSha256": "7ba79d587d3d4499d585de364054b5154afedb5d76505639551c5a91be0e75e2",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ScrollViewScrollToOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/layout.rs",
+          "crates/pie-components/src/scroll_view.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_layout_scroll.rs",
+        "adapters/pie-napi/test/m6-runtime.test.mjs"
+      ],
+      "gaps": [
+        "The M6 adapter and Rust state model preserve disableFollow-at-end behavior; the direct Rust option remains a typed bool rather than the exact optional JavaScript object."
+      ]
+    },
+    {
+      "id": "S12-select-list:SelectItem",
+      "statementId": "S12-select-list",
+      "name": "SelectItem",
+      "kind": "type",
+      "signatureSha256": "a3555b1afcc2f6a266c8d145d6ab14fbfee639b932bd6e6a50da6323abe2fc19",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SelectItem",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/select_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S12-select-list:SelectList",
+      "statementId": "S12-select-list",
+      "name": "SelectList",
+      "kind": "runtime",
+      "signatureSha256": "48cba7ed3794944c3355f07ab981aa66b42e617cb40952096199145af5c5ae0b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SelectList",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/select_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S12-select-list:SelectListLayoutOptions",
+      "statementId": "S12-select-list",
+      "name": "SelectListLayoutOptions",
+      "kind": "type",
+      "signatureSha256": "8ec765c9e4cf1103ca891f80908d20d8b65d5c8382f64fd45dd65ebefdf814fe",
+      "defaultMetadata": {
+        "optionalMarkerCount": 3,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SelectListLayoutOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/select_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S12-select-list:SelectListTheme",
+      "statementId": "S12-select-list",
+      "name": "SelectListTheme",
+      "kind": "type",
+      "signatureSha256": "06c8143d81c57c02f8536c1e90ffc6d7d09fa46e1dde999a97ab6ca6d61ed6e5",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SelectListTheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/select_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S12-select-list:SelectListTruncatePrimaryContext",
+      "statementId": "S12-select-list",
+      "name": "SelectListTruncatePrimaryContext",
+      "kind": "type",
+      "signatureSha256": "25e6c50c8d341ce882913e48aa46310158ca06c41efa8b4f2cf33508f10c8b1a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SelectListTruncatePrimaryContext",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/select_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S13-settings-list:SettingItem",
+      "statementId": "S13-settings-list",
+      "name": "SettingItem",
+      "kind": "type",
+      "signatureSha256": "9d76ed6a3823d6f4936579096b4884c6dbea4d411a732342cc1656b3fcfac707",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SettingItem",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/settings_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S13-settings-list:SettingsList",
+      "statementId": "S13-settings-list",
+      "name": "SettingsList",
+      "kind": "runtime",
+      "signatureSha256": "bcd306e120546aecce176b5dfc335c6db0995dd70381a28a174b0250701ea8b7",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SettingsList",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/settings_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Search editing matches the pinned grapheme, Latin punctuation, viewport, paste, kill/yank, and undo corpus, and submenu completion drains during render/invalidate; dictionary segmentation parity for CJK/Thai remains open, and the embedded search model is not the canonical public Input class."
+      ]
+    },
+    {
+      "id": "S13-settings-list:SettingsListTheme",
+      "statementId": "S13-settings-list",
+      "name": "SettingsListTheme",
+      "kind": "type",
+      "signatureSha256": "2ce4b05a87553d877e7dfbab4a2918e5e9c15bd0c2a58e2b25899a3047f08305",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SettingsListTheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/settings_list.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S14-spacer:Spacer",
+      "statementId": "S14-spacer",
+      "name": "Spacer",
+      "kind": "runtime",
+      "signatureSha256": "f4da5befc73d33073373e2206cfd5fbaa99fbc121103b4e08452cf7d52789d69",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Spacer",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/spacer.rs",
+          "crates/pie-components/tests/components_golden.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": [
+        "Rust Default yields zero lines; the reference omitted constructor argument defaults to one."
+      ]
+    },
+    {
+      "id": "S15-text:Text",
+      "statementId": "S15-text",
+      "name": "Text",
+      "kind": "runtime",
+      "signatureSha256": "256bdefed48634626a832802b714cf6c35670d2c29eb0fb536f9eb79bd014eb4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 5,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Text",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/text.rs",
+          "crates/pie-components/tests/components_golden.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S16-truncated-text:TruncatedText",
+      "statementId": "S16-truncated-text",
+      "name": "TruncatedText",
+      "kind": "runtime",
+      "signatureSha256": "1d489a4f09f69b4c81b37b637f203dea48db7817597c219be918c331331b34ef",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TruncatedText",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/truncated_text.rs",
+          "crates/pie-components/tests/components_golden.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/components_golden.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S17-v-stack:StackChild",
+      "statementId": "S17-v-stack",
+      "name": "StackChild",
+      "kind": "type",
+      "signatureSha256": "dc12783413f2587eef232a2ce02c777cb5096c26e616b4eff2ece3ea1c66682a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": [
+        "No exact public Component-or-StackEntry union mapping."
+      ]
+    },
+    {
+      "id": "S17-v-stack:StackEntry",
+      "statementId": "S17-v-stack",
+      "name": "StackEntry",
+      "kind": "type",
+      "signatureSha256": "56e16d87244383ed4fc955efa3f9ee081e93299bf7de4aa85d436d5f8ba0dd55",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": [
+        "Rust StackEntry models only StackEntryOptions and omits the canonical required component: Component field."
+      ]
+    },
+    {
+      "id": "S17-v-stack:StackEntryOptions",
+      "statementId": "S17-v-stack",
+      "name": "StackEntryOptions",
+      "kind": "type",
+      "signatureSha256": "b9b593f8d78a7452b21e74a20ff098a176b93305d8e5bb67d4c4b996b35e396d",
+      "defaultMetadata": {
+        "optionalMarkerCount": 6,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": [
+        "No exact public options type and visible(viewport) callback mapping."
+      ]
+    },
+    {
+      "id": "S17-v-stack:StackOptions",
+      "statementId": "S17-v-stack",
+      "name": "StackOptions",
+      "kind": "type",
+      "signatureSha256": "a5a3c045277c29a578cebc56b9cb1281f30c4d4d072c59010f916d075bc6aab0",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": [
+        "No exact public gap/alignment options type."
+      ]
+    },
+    {
+      "id": "S17-v-stack:VStack",
+      "statementId": "S17-v-stack",
+      "name": "VStack",
+      "kind": "runtime",
+      "signatureSha256": "2a7f5f9e1aba70f1c2052cb7104a5b090ff8a90a08d0611bd92de7d73090929c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::VStack",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/vstack_hstack.rs",
+          "crates/pie-components/src/stack.rs",
+          "crates/pie-components/tests/golden_m3_components.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs"
+      ],
+      "gaps": [
+        "Removal, visibility, sizing, and alignment behavior are covered, but the exact children/StackOptions constructor and retained Component identity mapping remain open."
+      ]
+    },
+    {
+      "id": "S18-editor-component:EditorComponent",
+      "statementId": "S18-editor-component",
+      "name": "EditorComponent",
+      "kind": "type",
+      "signatureSha256": "d891f5dae01f07159070dc83eea7852db427736727491dd99e9439072a721837",
+      "defaultMetadata": {
+        "optionalMarkerCount": 9,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::EditorComponent",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/editor_component.rs",
+          "crates/pie-components/tests/editor_model_surface.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/editor_model_surface.rs"
+      ],
+      "gaps": [
+        "The object-safe Rust trait covers the rank-2 editor methods, but it substitutes set_on_submit, set_on_change, and set_border_color methods for canonical optional callback and borderColor properties and inherits the partial Rust Component shape. The M5 declaration facade supplies the exact public interface separately."
+      ]
+    },
+    {
+      "id": "S19-fuzzy:FuzzyMatch",
+      "statementId": "S19-fuzzy",
+      "name": "FuzzyMatch",
+      "kind": "type",
+      "signatureSha256": "7b0108e2757d9c2b74483d0efa194d9f4dbe5c6e20ec9de61bd82c44bb171220",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::FuzzyMatch",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/fuzzy.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S19-fuzzy:fuzzyFilter",
+      "statementId": "S19-fuzzy",
+      "name": "fuzzyFilter",
+      "kind": "runtime",
+      "signatureSha256": "2c370c44434c0cecb387fb2da676e63c2731ab2580a603d6f2b8f9020b2150fc",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::fuzzyFilter",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/fuzzy.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S19-fuzzy:fuzzyMatch",
+      "statementId": "S19-fuzzy",
+      "name": "fuzzyMatch",
+      "kind": "runtime",
+      "signatureSha256": "593b077a5c1ca9e3c832bf1040edb08e51f2a71ff02427a86b9ed9ca4936b694",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::fuzzyMatch",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/fuzzy.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:getKeybindings",
+      "statementId": "S20-keybindings",
+      "name": "getKeybindings",
+      "kind": "runtime",
+      "signatureSha256": "0f98403d2c6a96329ba879315081e07f1a0f87d4aefab71b870526095b82b23f",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getKeybindings",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": [
+        "The public adapter proves a retained SharedKeybindings handle with live identity and rebinding, but returns that Rust-specific handle rather than the canonical KeybindingsManager and does not expose getKeys, getDefinition, getConflicts, or getResolvedBindings."
+      ]
+    },
+    {
+      "id": "S20-keybindings:Keybinding",
+      "statementId": "S20-keybindings",
+      "name": "Keybinding",
+      "kind": "type",
+      "signatureSha256": "02643b74be00528d127277a8f0e10d35ed69acdc60d77a3556aa147238903a6c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Keybinding",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:KeybindingConflict",
+      "statementId": "S20-keybindings",
+      "name": "KeybindingConflict",
+      "kind": "type",
+      "signatureSha256": "b4f4c6810a288418e1adcbcc9ccc4af791f7b5fd12aa1aac163dd22cd8daffae",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeybindingConflict",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:KeybindingDefinition",
+      "statementId": "S20-keybindings",
+      "name": "KeybindingDefinition",
+      "kind": "type",
+      "signatureSha256": "ad18ecc35e3382ef0b11b20facd6c7390af4ccf3065e3e90bc6f5f193bf0c9d0",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeybindingDefinition",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:KeybindingDefinitions",
+      "statementId": "S20-keybindings",
+      "name": "KeybindingDefinitions",
+      "kind": "type",
+      "signatureSha256": "ca07ae5dc83d622bf5582e465d6a48ebabc7bde38d65d063195372c459e459c7",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeybindingDefinitions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:Keybindings",
+      "statementId": "S20-keybindings",
+      "name": "Keybindings",
+      "kind": "type",
+      "signatureSha256": "d0386fd9c7e030bbc5d9dccd588c0f2678d37e54702d0e6482c25c5d4a21f777",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Keybindings",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:KeybindingsConfig",
+      "statementId": "S20-keybindings",
+      "name": "KeybindingsConfig",
+      "kind": "type",
+      "signatureSha256": "172b842c86a11a1f11628e0f6b9006b9edc658edadfae95c7300960a913dc100",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeybindingsConfig",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S20-keybindings:KeybindingsManager",
+      "statementId": "S20-keybindings",
+      "name": "KeybindingsManager",
+      "kind": "runtime",
+      "signatureSha256": "1361a16a161406cf6674d4476956e7f47a918917d8f1b480cca632cd5dce07d4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeybindingsManager",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": [
+        "The canonical constructor accepts an optional KeybindingsConfig whose values may be scalar, array, or undefined; Rust requires Vec<(String, Vec<String>)> and get_user_bindings always returns vectors, so scalar input shape cannot round-trip."
+      ]
+    },
+    {
+      "id": "S20-keybindings:setKeybindings",
+      "statementId": "S20-keybindings",
+      "name": "setKeybindings",
+      "kind": "runtime",
+      "signatureSha256": "c92dde39880f816eb9106f767d43f060e9c3bc984f2a71bd30c12026121811e4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::setKeybindings",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m3_core.rs"
+      ],
+      "gaps": [
+        "Shared handles preserve live identity after retrieval, but setKeybindings still takes ownership and cannot prove the JS caller retains and mutates the exact passed object."
+      ]
+    },
+    {
+      "id": "S20-keybindings:TUI_KEYBINDINGS",
+      "statementId": "S20-keybindings",
+      "name": "TUI_KEYBINDINGS",
+      "kind": "runtime",
+      "signatureSha256": "399d02c3301e6fb80447232da8ae2d2fb3ce0bff040617f2a2b4b2e08d2815a0",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M3",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TUI_KEYBINDINGS",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keybindings.rs",
+          "crates/pie-core/tests/golden_m3_core.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:decodeKittyPrintable",
+      "statementId": "S21-keys",
+      "name": "decodeKittyPrintable",
+      "kind": "runtime",
+      "signatureSha256": "2b4e94e85c03df2c6356bec9513ecbcaa15770df89286dbdb17a09e186fc94c3",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::decodeKittyPrintable",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:isKeyRelease",
+      "statementId": "S21-keys",
+      "name": "isKeyRelease",
+      "kind": "runtime",
+      "signatureSha256": "4223c08b950806703f00f833e670ee0df23f9d83d7fd11358db1ca24b8a48007",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::isKeyRelease",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_keys.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:isKeyRepeat",
+      "statementId": "S21-keys",
+      "name": "isKeyRepeat",
+      "kind": "runtime",
+      "signatureSha256": "3fcb26839fccc618a004376044e17a1d234e0a8b1e99484d8d26eb289bfb3529",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::isKeyRepeat",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_keys.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:isKittyProtocolActive",
+      "statementId": "S21-keys",
+      "name": "isKittyProtocolActive",
+      "kind": "runtime",
+      "signatureSha256": "c1b017a97f4abcbd72eb9c8cf2d0b9e4c939afb36c90bb75eb7d54f15974a68d",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::isKittyProtocolActive",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:Key",
+      "statementId": "S21-keys",
+      "name": "Key",
+      "kind": "runtime",
+      "signatureSha256": "f4a5f8e0192c51e1912760fa776dcd39ffcf6a26b610668511ea89d47007f008",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The M5 package exposes the canonical key-helper object; this row remains partial only because the direct public Rust compatibility namespace uses a different shape."
+      ]
+    },
+    {
+      "id": "S21-keys:KeyEventType",
+      "statementId": "S21-keys",
+      "name": "KeyEventType",
+      "kind": "type",
+      "signatureSha256": "78df49487223310a845abcb8c03c11c9832535d26a42e6a43244f57ededc7af9",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeyEventType",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:KeyId",
+      "statementId": "S21-keys",
+      "name": "KeyId",
+      "kind": "type",
+      "signatureSha256": "bb8985c53d0fe2484e30205687790d803be7922f38e2b0abe1922705b6ae2e78",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::KeyId",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:matchesKey",
+      "statementId": "S21-keys",
+      "name": "matchesKey",
+      "kind": "runtime",
+      "signatureSha256": "4b168ec2f0fff9b340885597d4676c628c97fc4162067473c32facc1b2107a16",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::matchesKey",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_keys.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:parseKey",
+      "statementId": "S21-keys",
+      "name": "parseKey",
+      "kind": "runtime",
+      "signatureSha256": "864418405cfea81a719e95a35d1761e1fad5a9d56b42e32eb885ac9d6b46ef5b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::parseKey",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_keys.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S21-keys:setKittyProtocolActive",
+      "statementId": "S21-keys",
+      "name": "setKittyProtocolActive",
+      "kind": "runtime",
+      "signatureSha256": "5923ac3035360afc8e17419799ac18c850a9c3f7644ca82a44790eb569ed070b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::setKittyProtocolActive",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/keys.rs",
+          "crates/pie-core/tests/golden_keys.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S22-latex:RenderLatexOptions",
+      "statementId": "S22-latex",
+      "name": "RenderLatexOptions",
+      "kind": "type",
+      "signatureSha256": "d740aef838f13edcfe43c7602ad44456f9e5b9264b705fc7320320cc3639b75b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": [
+          "fractions and operator limits vertically for display math (default: false). */ display?: boolean; }"
+        ]
+      },
+      "milestone": "M4",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::RenderLatexOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/latex.rs",
+          "crates/pie-core/tests/golden_m4_latex_utf16.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m4_latex_utf16.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S22-latex:renderLatex",
+      "statementId": "S22-latex",
+      "name": "renderLatex",
+      "kind": "runtime",
+      "signatureSha256": "02ad28b4966a091ca74a6eb945da691b12bf5c7ae2ad232f0893f33460e98ed0",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M4",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::renderLatex",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/latex.rs",
+          "crates/pie-core/tests/golden_m4_latex_utf16.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_m4_latex_utf16.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S23-stdin-buffer:StdinBuffer",
+      "statementId": "S23-stdin-buffer",
+      "name": "StdinBuffer",
+      "kind": "runtime",
+      "signatureSha256": "8609d94c5162a65c8fc0d8ae59f670a4a30af21eafa46aca4e34045c5c2a3284",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::StdinBuffer",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/stdin_buffer.rs",
+          "crates/pie-core/tests/golden_stdin.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_stdin.rs",
+        "tools/tmux-smoke.sh"
+      ],
+      "gaps": [
+        "Pure process/flush semantics and a real lone-ESC reader timeout are covered. Direct Rust keeps timer ownership in pie-app, while the M5 JavaScript facade supplies the canonical runtime timer/class seam."
+      ]
+    },
+    {
+      "id": "S23-stdin-buffer:StdinBufferEventMap",
+      "statementId": "S23-stdin-buffer",
+      "name": "StdinBufferEventMap",
+      "kind": "type",
+      "signatureSha256": "7bedcf424e653c761ccbe4253e2d17bd4703939a693001145b36f6ee912d8084",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::StdinBufferEventMap",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/stdin_buffer.rs",
+          "crates/pie-core/tests/golden_stdin.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S23-stdin-buffer:StdinBufferOptions",
+      "statementId": "S23-stdin-buffer",
+      "name": "StdinBufferOptions",
+      "kind": "type",
+      "signatureSha256": "11ebecc2ac5af3a76b2a231d78833b1cf1864f3f9840682ad2ddc83a9890ba7f",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 1,
+        "documented": [
+          "to wait for an incomplete sequence such as CSI or mouse * (default: 50ms). */ timeout?: number; /** * Maximum time to wait after a lone ESC before",
+          "treating it as Escape * (default: 10ms). Increase for high-latency Alt+key input (SSH). */ escapeTimeout?: numbe"
+        ]
+      },
+      "milestone": "M1",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::StdinBufferOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/stdin_buffer.rs",
+          "crates/pie-core/tests/golden_stdin.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S24-terminal:ProcessTerminal",
+      "statementId": "S24-terminal",
+      "name": "ProcessTerminal",
+      "kind": "runtime",
+      "signatureSha256": "777f341fccd8aff5f7b5ee0d2fe121e6b6afb853ffedafcc6fd736333a6cb249",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M2",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ProcessTerminal",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-term/src/lib.rs",
+          "crates/pie-term/src/process_terminal.rs",
+          "crates/pie-term/tests/golden_process_terminal.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_process_terminal.rs"
+      ],
+      "gaps": [
+        "Rust exposes ProcessTerminal<B: ProcessTerminalBackend>, requires new(backend), host-delivered stdin/resize, and explicit tick/poll calls. The M5 JavaScript facade supplies the concrete zero-argument process stdin/stdout implementation with real listeners/timers and Promise-returning drainInput; this row records the narrower direct Rust shape."
+      ]
+    },
+    {
+      "id": "S24-terminal:Terminal",
+      "statementId": "S24-terminal",
+      "name": "Terminal",
+      "kind": "type",
+      "signatureSha256": "50d9cce74a4ad4392e3ba77a9658c494ba3b97797d3d3d50eb8b20fd14eadde0",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": [
+          "ow SSH connections. * @param maxMs - Maximum time to drain (default: 1000ms) * @param idleMs - Exit early if no input arrives within this time (def"
+        ]
+      },
+      "milestone": "M2",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Terminal",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-term/src/lib.rs",
+          "crates/pie-term/src/process_terminal.rs",
+          "crates/pie-term/tests/golden_process_terminal.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_process_terminal.rs"
+      ],
+      "gaps": [
+        "The Rust Terminal trait remains synchronous and omits canonical drainInput(maxMs?, idleMs?): Promise<void>. ProcessTerminal implements draining through begin_drain_input/poll_drain_input over explicit host clock ticks, with no concrete process backend or JavaScript/NAPI interface."
+      ]
+    },
+    {
+      "id": "S25-terminal-colors:parseOsc11BackgroundColor",
+      "statementId": "S25-terminal-colors",
+      "name": "parseOsc11BackgroundColor",
+      "kind": "runtime",
+      "signatureSha256": "e2a0389b166fc0d26418cd4eceb2c7a0fe43e29679a343a8fa07e38bb09b1765",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::parseOsc11BackgroundColor",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_colors.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S25-terminal-colors:parseTerminalColorSchemeReport",
+      "statementId": "S25-terminal-colors",
+      "name": "parseTerminalColorSchemeReport",
+      "kind": "runtime",
+      "signatureSha256": "a4b3a6ab3666465cabb1d5e3a095aa337ae8f9592c73bebd13c394b3a07e0163",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::parseTerminalColorSchemeReport",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_colors.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S25-terminal-colors:RgbColor",
+      "statementId": "S25-terminal-colors",
+      "name": "RgbColor",
+      "kind": "type",
+      "signatureSha256": "76806809a1cbd49faabbfa2bcae9d75cca16771b9d7b82297747776cf4086b79",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::RgbColor",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_colors.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S25-terminal-colors:TerminalColorScheme",
+      "statementId": "S25-terminal-colors",
+      "name": "TerminalColorScheme",
+      "kind": "type",
+      "signatureSha256": "a067b19cd18921da34fd60fd02bb0de78e209b3181d1e474f173583dcc39190e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TerminalColorScheme",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_colors.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:allocateImageId",
+      "statementId": "S26-terminal-image",
+      "name": "allocateImageId",
+      "kind": "runtime",
+      "signatureSha256": "928a648898ad3411c861723c8cad3e3ee5d28ee9b09e912583de826784548dc8",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The M5 package exposes bounded process-global allocation semantics; the direct public Rust compatibility namespace does not expose this function."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:CellDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "CellDimensions",
+      "kind": "type",
+      "signatureSha256": "18bd21c2df69cc188dcf414d0e95e8ce352b0c756106eb2dbb62bfd96df262fc",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::CellDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:calculateImageRows",
+      "statementId": "S26-terminal-image",
+      "name": "calculateImageRows",
+      "kind": "runtime",
+      "signatureSha256": "7af5337bee9158fa4b2820ead54572685fc08436b9451c15830096fba5bed033",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::calculateImageRows",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs",
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "Five oracle rows match, including the canonical omitted third-argument literal { widthPx: 9, heightPx: 18 } default; the remaining gap is that Rust's typed numeric boundary does not yet cover every JavaScript number coercion."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:deleteAllKittyImages",
+      "statementId": "S26-terminal-image",
+      "name": "deleteAllKittyImages",
+      "kind": "runtime",
+      "signatureSha256": "29936a60b4ba3b9d1eed0c4fd305526d66d3d129a6e1169dc9e2dbfdf366e683",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::deleteAllKittyImages",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:deleteKittyImage",
+      "statementId": "S26-terminal-image",
+      "name": "deleteKittyImage",
+      "kind": "runtime",
+      "signatureSha256": "c5dfe5e0f296a848acd6cff1bb261fd8da77fc64c0ace69615da51eef2889ed4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::deleteKittyImage",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:detectCapabilities",
+      "statementId": "S26-terminal-image",
+      "name": "detectCapabilities",
+      "kind": "runtime",
+      "signatureSha256": "13ecff6ea32aa66c5a6fe1f7db9dfb108854c69b8757f6a747d6564819a65dd6",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::detectCapabilities",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_terminal_capabilities.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:encodeITerm2",
+      "statementId": "S26-terminal-image",
+      "name": "encodeITerm2",
+      "kind": "runtime",
+      "signatureSha256": "e4eefff9b6295455594f580448c95259c70b7e14dea4534e3842b9937bae1253",
+      "defaultMetadata": {
+        "optionalMarkerCount": 6,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::encodeITerm2",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:encodeKitty",
+      "statementId": "S26-terminal-image",
+      "name": "encodeKitty",
+      "kind": "runtime",
+      "signatureSha256": "37cb9297faad841f119fecc210900a85b9fcbc92e40de5dd27b686221817260a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 5,
+        "initializerCount": 0,
+        "documented": [
+          "umber; imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. Default: true. */ moveCursor?: boolean; }): st"
+        ]
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::encodeKitty",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:getCapabilities",
+      "statementId": "S26-terminal-image",
+      "name": "getCapabilities",
+      "kind": "runtime",
+      "signatureSha256": "1f29a1dae7775f9d051bbb458b1a2b0d147275b80948ad028afed6299bb1308c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getCapabilities",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_terminal_capabilities.rs",
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The process-global Rust cache and M5 package preserve the reviewed JavaScript cache/object behavior; the direct Rust namespace retains its typed shape."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:getCellDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getCellDimensions",
+      "kind": "runtime",
+      "signatureSha256": "95ebe2c8d91b1aa951e46b9953316263387f31fd3a9e4e1108aa10373b7b6883",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The M5 package exposes caller-visible cell-dimension state and object identity; the direct public Rust compatibility namespace retains a different shape."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:getGifDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getGifDimensions",
+      "kind": "runtime",
+      "signatureSha256": "6e05e60298b0f5286dd4ba5ae24248ae2a3374c22a612340ff617be067fc5a2c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getGifDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:getImageDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getImageDimensions",
+      "kind": "runtime",
+      "signatureSha256": "c11605ec4b8b0955a92a7081bab53a2df434e995ee678e1da45a02b45b8bd947",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getImageDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:getJpegDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getJpegDimensions",
+      "kind": "runtime",
+      "signatureSha256": "0ab0bdb0977ffeb52fde62b5941d8db462dfe57f1e105b53088789d03a583400",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getJpegDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:getPngDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getPngDimensions",
+      "kind": "runtime",
+      "signatureSha256": "d7b8baa91d039709783dfa70c39179e62cc96a403e97ce269b47dd2244593ace",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getPngDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:getWebpDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "getWebpDimensions",
+      "kind": "runtime",
+      "signatureSha256": "5e9acc90876f33a6357a406e4d2400c5cfa02bf3d186358d47d80b1a4c6b38de",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getWebpDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:hyperlink",
+      "statementId": "S26-terminal-image",
+      "name": "hyperlink",
+      "kind": "runtime",
+      "signatureSha256": "9730bac132a52ab615493cbfc14ba9bf158b9f5e4402851fb9305e8711bc438b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::hyperlink",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:ImageDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "ImageDimensions",
+      "kind": "type",
+      "signatureSha256": "8f3e16a78626649aa9c31d6eb0faddfc3db9c7212deea1eee804fcbf0f8e3498",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ImageDimensions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:ImageProtocol",
+      "statementId": "S26-terminal-image",
+      "name": "ImageProtocol",
+      "kind": "type",
+      "signatureSha256": "1b56bc8dfbcf5f0a00033ebba0388fb1f982a9a31c7e1b9ded1c49e22c33195e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ImageProtocol",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:ImageRenderOptions",
+      "statementId": "S26-terminal-image",
+      "name": "ImageRenderOptions",
+      "kind": "type",
+      "signatureSha256": "c014cd9bc930cff95f0c8df0c5c1051149810a8e1ec6158792837983d4852e2e",
+      "defaultMetadata": {
+        "optionalMarkerCount": 5,
+        "initializerCount": 0,
+        "documented": [
+          "ID. */ imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. */ moveCursor?: boolean; }"
+        ]
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::ImageRenderOptions",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S26-terminal-image:imageFallback",
+      "statementId": "S26-terminal-image",
+      "name": "imageFallback",
+      "kind": "runtime",
+      "signatureSha256": "b0076d86318145ede8c633e088becf6a3dcec69925a27309f8d941e64f2e3239",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::imageFallback",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs",
+        "crates/pie-components/tests/golden_image_component.rs"
+      ],
+      "gaps": [
+        "Formatting matches the pinned rows with home and hyperlink capability facts injected; canonical imageFallback reads os.homedir() and cached capabilities internally, while Rust requires both facts explicitly."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:renderImage",
+      "statementId": "S26-terminal-image",
+      "name": "renderImage",
+      "kind": "runtime",
+      "signatureSha256": "80d714fbcc2fc314be78161943803b7e61a9c72b2f0e380908b7e2e83e9feec1",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::renderImage",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_terminal_primitives.rs"
+      ],
+      "gaps": [
+        "Null, Kitty, and iTerm2 encoding/layout rows match, but canonical renderImage reads cached capabilities and mutable global cell dimensions; Rust requires both facts explicitly and adapts null to Option."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:resetCapabilitiesCache",
+      "statementId": "S26-terminal-image",
+      "name": "resetCapabilitiesCache",
+      "kind": "runtime",
+      "signatureSha256": "633cb9c6c3b56a8817b621b0430dc9a535141656df9e4c17f53f8148a0035da7",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::resetCapabilitiesCache",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_terminal_capabilities.rs",
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The process-global Rust reset and M5 package module-instance behavior are reviewed; the direct Rust namespace retains its typed shape."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:setCapabilities",
+      "statementId": "S26-terminal-image",
+      "name": "setCapabilities",
+      "kind": "runtime",
+      "signatureSha256": "ddee0d867e3ee06a1533b57aef0491c44176da96249c750eb9f81526c13c0238",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::setCapabilities",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_terminal_capabilities.rs",
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The Rust cache retains supplied Arc identity and the M5 package preserves caller JavaScript object identity; this row records the direct Rust ABI difference."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:setCellDimensions",
+      "statementId": "S26-terminal-image",
+      "name": "setCellDimensions",
+      "kind": "runtime",
+      "signatureSha256": "43159eba39ce068c6dff7fa6ea9fd8b7e8990cd6edbc706d7d6ed1c4d7b37f03",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "adapters/pie-napi/test/runtime.test.mjs"
+      ],
+      "gaps": [
+        "The M5 package preserves caller cell-dimension object identity; the direct public Rust compatibility namespace retains a typed shape."
+      ]
+    },
+    {
+      "id": "S26-terminal-image:TerminalCapabilities",
+      "statementId": "S26-terminal-image",
+      "name": "TerminalCapabilities",
+      "kind": "type",
+      "signatureSha256": "a3cf608e5632425b82e27d2141a6496cc0ed598677a7062500d188b0fd2678c5",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TerminalCapabilities",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/terminal_image.rs",
+          "crates/pie-term/src/capabilities.rs",
+          "crates/pie-core/tests/golden_terminal_primitives.rs",
+          "crates/pie-term/tests/golden_terminal_capabilities.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_terminal_capabilities.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:Component",
+      "statementId": "S27-tui",
+      "name": "Component",
+      "kind": "type",
+      "signatureSha256": "c2cb433da445ce99b0ac71721650427a1ac4a4ff3597f9fc8f59828ac71a2fee",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": [
+          ", component receives key release events (Kitty protocol). * Default is false - release events are filtered out. */ wantsKeyRelease?: boolean; /** *"
+        ]
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Component",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/lib.rs",
+          "crates/pie-components/src/container.rs",
+          "crates/pie-components/src/size_value.rs",
+          "crates/pie-components/src/tui.rs",
+          "crates/pie-components/tests/golden_m3_components.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs",
+          "crates/pie-components/tests/tui_contracts.rs",
+          "crates/pie-app/src/lib.rs",
+          "crates/pie-app/src/tui_controller.rs",
+          "crates/pie-app/tests/tui_controller.rs",
+          "crates/pie-core/src/screen.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Rust Component now provides default-false wants_key_release() behavior and structural focus hooks, but the canonical optional mutable wantsKeyRelease property, the separate Focusable.focused property shape, and JavaScript/NAPI property identity remain absent."
+      ]
+    },
+    {
+      "id": "S27-tui:Container",
+      "statementId": "S27-tui",
+      "name": "Container",
+      "kind": "runtime",
+      "signatureSha256": "34cb101b0745889db1021166d37563538bff743896845b73820f5e6a1cb02358",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::Container",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/lib.rs",
+          "crates/pie-components/src/container.rs",
+          "crates/pie-components/src/size_value.rs",
+          "crates/pie-components/src/tui.rs",
+          "crates/pie-components/tests/golden_m3_components.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs",
+          "crates/pie-components/tests/tui_contracts.rs",
+          "crates/pie-app/src/lib.rs",
+          "crates/pie-app/src/tui_controller.rs",
+          "crates/pie-app/tests/tui_controller.rs",
+          "crates/pie-core/src/screen.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_m3_components.rs",
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "ComponentHandle and ComponentRef cover retained and nested identity, duplicate-first removal, cross-owner/stale no-op, and re-add behavior, but the canonical mutable public children array and exact addChild/removeChild Component-object signature are not exposed."
+      ]
+    },
+    {
+      "id": "S27-tui:CURSOR_MARKER",
+      "statementId": "S27-tui",
+      "name": "CURSOR_MARKER",
+      "kind": "runtime",
+      "signatureSha256": "a8249cf0a27fe4c6032c2c8d79977c0d7db65e3df3dc273752e5ed5abb37873a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::CURSOR_MARKER",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/lib.rs",
+          "crates/pie-components/src/container.rs",
+          "crates/pie-components/src/size_value.rs",
+          "crates/pie-components/src/tui.rs",
+          "crates/pie-components/tests/golden_m3_components.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs",
+          "crates/pie-components/tests/tui_contracts.rs",
+          "crates/pie-app/src/lib.rs",
+          "crates/pie-app/src/tui_controller.rs",
+          "crates/pie-app/tests/tui_controller.rs",
+          "crates/pie-core/src/screen.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_render.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:compositeTuiLine",
+      "statementId": "S27-tui",
+      "name": "compositeTuiLine",
+      "kind": "runtime",
+      "signatureSha256": "039524111a8bb4c34d6bfea2af58d61597626dbfdbdc3636697a584adf9a8345",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::compositeTuiLine",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/lib.rs",
+          "crates/pie-components/src/container.rs",
+          "crates/pie-components/src/size_value.rs",
+          "crates/pie-components/src/tui.rs",
+          "crates/pie-components/tests/golden_m3_components.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs",
+          "crates/pie-components/tests/tui_contracts.rs",
+          "crates/pie-app/src/lib.rs",
+          "crates/pie-app/src/tui_controller.rs",
+          "crates/pie-app/tests/tui_controller.rs",
+          "crates/pie-core/src/screen.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:Focusable",
+      "statementId": "S27-tui",
+      "name": "Focusable",
+      "kind": "type",
+      "signatureSha256": "16a3219903209d2142e238d818ba4a58e8e232a54f8748fef618fc6a48d99b74",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "deferred",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:isFocusable",
+      "statementId": "S27-tui",
+      "name": "isFocusable",
+      "kind": "runtime",
+      "signatureSha256": "b750aca8d9286ca53bf61141aca746e6adc69a41f4d50e0e9f1f49d5e5a5d93a",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "deferred",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:isViewportTUI",
+      "statementId": "S27-tui",
+      "name": "isViewportTUI",
+      "kind": "runtime",
+      "signatureSha256": "eec0675c3b97cb36a59a64e212c952047fa43842590fe80d99964649df51dc41",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "deferred",
+      "rustEvidence": null,
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S27-tui:OverlayAnchor",
+      "statementId": "S27-tui",
+      "name": "OverlayAnchor",
+      "kind": "type",
+      "signatureSha256": "7c49fdbfa92c3bd3063156793b2af31755e8db57088564c6e05d2e819cec3bff",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Rust exposes all nine semantic anchors as public OverlayAnchor variants; the oracle exercises center, top-left, and bottom-right layout, but the canonical JavaScript string union and NAPI boundary remain absent."
+      ]
+    },
+    {
+      "id": "S27-tui:OverlayHandle",
+      "statementId": "S27-tui",
+      "name": "OverlayHandle",
+      "kind": "type",
+      "signatureSha256": "b0626c0bf33186420317794357d8da4aa0ef6b627ebad8db32cf4367b9de879d",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "The public rank-3 OverlayHandle covers hide, temporary visibility, focus, unfocus, and focus-state behavior, but Rust's OverlayUnfocus argument and retained handle identity are not the canonical optional JavaScript options/object boundary, and no NAPI export exists."
+      ]
+    },
+    {
+      "id": "S27-tui:OverlayMargin",
+      "statementId": "S27-tui",
+      "name": "OverlayMargin",
+      "kind": "type",
+      "signatureSha256": "07d1323ca1e6f08c8fd8bafe35968d331b46e932ee5d8516abd6ce82c8a6cb1c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Rust models four required i64 fields defaulting to zero plus OverlayMargins::All for the numeric union; canonical fields are optional JavaScript numbers with different coercion and object semantics, and no NAPI mapping exists."
+      ]
+    },
+    {
+      "id": "S27-tui:OverlayOptions",
+      "statementId": "S27-tui",
+      "name": "OverlayOptions",
+      "kind": "type",
+      "signatureSha256": "b395e653e9ae60f37c2e048efcaa70de4c13783527f14e03101bcfae268734b1",
+      "defaultMetadata": {
+        "optionalMarkerCount": 11,
+        "initializerCount": 2,
+        "documented": [
+          "*/ maxHeight?: SizeValue; /** Anchor point for positioning (default: 'center') */ anchor?: OverlayAnchor; /** Horizontal offset from anchor positio"
+        ]
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Layout, default, visibility, and non-capturing behavior is reviewed, but Rust uses Option, usize, i64, SizeValue, and Rc callback fields rather than the exact optional JavaScript object, number coercions, callback identity, and NAPI shape."
+      ]
+    },
+    {
+      "id": "S27-tui:OverlayUnfocusOptions",
+      "statementId": "S27-tui",
+      "name": "OverlayUnfocusOptions",
+      "kind": "type",
+      "signatureSha256": "e337916e223ca6cf8659d9671c7dfca34c6dd7ee672d177232414b39de0aea36",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Rust OverlayUnfocus::Restore and OverlayUnfocus::Target(Option<ComponentRef>) model omitted options versus an explicit target, but they are not the canonical OverlayUnfocusOptions { target: Component | null } JavaScript/NAPI object."
+      ]
+    },
+    {
+      "id": "S27-tui:SizeValue",
+      "statementId": "S27-tui",
+      "name": "SizeValue",
+      "kind": "type",
+      "signatureSha256": "9cf9adf578ea301a622d7e0433d756f7007818c4a6a080ace9c5ff8f78aaacb1",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::SizeValue",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-components/src/lib.rs",
+          "crates/pie-components/src/container.rs",
+          "crates/pie-components/src/size_value.rs",
+          "crates/pie-components/src/tui.rs",
+          "crates/pie-components/tests/golden_m3_components.rs",
+          "crates/pie-components/tests/golden_layout_scroll.rs",
+          "crates/pie-components/tests/tui_contracts.rs",
+          "crates/pie-app/src/lib.rs",
+          "crates/pie-app/src/tui_controller.rs",
+          "crates/pie-app/tests/tui_controller.rs",
+          "crates/pie-core/src/screen.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-components/tests/golden_layout_scroll.rs"
+      ],
+      "gaps": [
+        "Absolute/percentage representation and floor behavior are present, but Rust FromStr accepts only unsigned decimal percentages rather than the entire template-literal lexical space, and the JavaScript union/NAPI shape remains open."
+      ]
+    },
+    {
+      "id": "S27-tui:TUI",
+      "statementId": "S27-tui",
+      "name": "TUI",
+      "kind": "type",
+      "signatureSha256": "1280ca87862adb0c07ccf02c6488c35c82dcfbedae7f5018c94531e3b0a3b9fa",
+      "defaultMetadata": {
+        "optionalMarkerCount": 5,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs",
+        "crates/pie-app/tests/main_alt_controller.rs"
+      ],
+      "gaps": [
+        "The object-safe rank-2 Tui trait and rank-3 TuiBaseController cover shared lifecycle, focus, overlays, listener dispatch, queries, and scheduling, and reviewed injected Rust Main/Alt controllers build on that foundation. Tui is not a Component supertrait, and direct Rust lacks canonical mutable children, terminal, onDebug, and Promise-query property shapes; the M5 adapter supplies the production host/event loop and JavaScript facade."
+      ]
+    },
+    {
+      "id": "S27-tui:TuiInputListener",
+      "statementId": "S27-tui",
+      "name": "TuiInputListener",
+      "kind": "type",
+      "signatureSha256": "76fd3859aa70e7315de863eaa8314edf85efe4e089e17e5f4b40f0e908e6e83c",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Rust retains callback identity and live Set-style ordering and reentrancy, but uses a valid-UTF-8 borrowed Rust callback rather than exact JavaScript function/string identity or NAPI."
+      ]
+    },
+    {
+      "id": "S27-tui:TuiInputListenerResult",
+      "statementId": "S27-tui",
+      "name": "TuiInputListenerResult",
+      "kind": "type",
+      "signatureSha256": "5cc9680eb061a07eeff4dbadc205abe90a5d660fda0e13fdadb8db6dd388df2b",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs"
+      ],
+      "gaps": [
+        "Outer Option plus TuiInputListenerResult models undefined/pass, consume, and transform, but consume is a required bool and data is Option<String>, not the canonical optional JavaScript object/string/coercion identity, and no NAPI mapping exists."
+      ]
+    },
+    {
+      "id": "S27-tui:TuiMode",
+      "statementId": "S27-tui",
+      "name": "TuiMode",
+      "kind": "type",
+      "signatureSha256": "ca201631d79a382e2caf7dea4a6e6a88b3f995b11ff378abf7ec164ad3ff3b02",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 1,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs",
+        "crates/pie-app/tests/main_alt_controller.rs"
+      ],
+      "gaps": [
+        "Rust exposes Regular and Fullscreen variants and both injected Main/Alt controller modes are oracle-exercised; the exact JavaScript string union and NAPI boundary remain absent."
+      ]
+    },
+    {
+      "id": "S27-tui:TuiStopOptions",
+      "statementId": "S27-tui",
+      "name": "TuiStopOptions",
+      "kind": "type",
+      "signatureSha256": "2cc465461b4e6b144879ccff168485ca2de0831a27b31535ead47acd931fdb53",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/tui_controller.rs",
+        "crates/pie-app/tests/main_alt_controller.rs"
+      ],
+      "gaps": [
+        "Rust uses a required preserve_screen bool with a false default rather than the canonical optional preserveScreen JavaScript property object, and no NAPI mapping exists."
+      ]
+    },
+    {
+      "id": "S27-tui:ViewportTUI",
+      "statementId": "S27-tui",
+      "name": "ViewportTUI",
+      "kind": "type",
+      "signatureSha256": "0a31d0b6939e6207cd8cd14757b2c8d10c5fb1f274e498d5b8c497a005777769",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-components/tests/tui_contracts.rs",
+        "crates/pie-app/tests/tui_controller.rs",
+        "crates/pie-app/tests/main_alt_controller.rs"
+      ],
+      "gaps": [
+        "The ViewportTui trait, TuiBaseController layout-root behavior, and injected Rust Alt controller are reviewed. Direct Rust lacks the canonical VIEWPORT_TUI symbol brand and JavaScript interface; the M5 adapter supplies isViewportTUI, the public type facade, and production host event loop."
+      ]
+    },
+    {
+      "id": "S28-tui-alt-screen:TuiAltScreen",
+      "statementId": "S28-tui-alt-screen",
+      "name": "TuiAltScreen",
+      "kind": "runtime",
+      "signatureSha256": "65c69a62bc8421d04b9bfb2246dce2b52edfe190c109e385b8825abee3ce7c98",
+      "defaultMetadata": {
+        "optionalMarkerCount": 4,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/fixtures/main-alt-controller.json",
+        "crates/pie-app/tests/main_alt_controller.rs",
+        "tools/tmux-main-alt-smoke.sh"
+      ],
+      "gaps": [
+        "The injected Rust TuiAltScreen covers the pinned 0.84.1 lifecycle, alternate-buffer, layout-root, focus/overlay, scroll/mouse/selection, image ownership, and teardown corpus. It still uses injected runtime and terminal seams rather than the canonical JavaScript class; the M5 adapter supplies ProcessTerminal/task pumping, JavaScript identity, package exposure, and current-consumer execution."
+      ]
+    },
+    {
+      "id": "S28-tui-alt-screen:TuiAltScreenOptions",
+      "statementId": "S28-tui-alt-screen",
+      "name": "TuiAltScreenOptions",
+      "kind": "type",
+      "signatureSha256": "53f7f25673d92d792caa05b4a1e2a91a6fc6588993df8d95aa5f9546e2d6d0a4",
+      "defaultMetadata": {
+        "optionalMarkerCount": 7,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M5",
+      "status": "partial",
+      "rustEvidence": null,
+      "behaviorEvidence": [
+        "crates/pie-app/tests/fixtures/main-alt-controller.json",
+        "crates/pie-app/tests/main_alt_controller.rs"
+      ],
+      "gaps": [
+        "Wheel, mouse, URL-open, and right-click callback behavior is exercised through typed Rust options, but Rust callback ownership and numeric/value coercion are not the canonical optional JavaScript object or NAPI boundary."
+      ]
+    },
+    {
+      "id": "S29-tui-main-screen:TuiMainScreen",
+      "statementId": "S29-tui-main-screen",
+      "name": "TuiMainScreen",
+      "kind": "runtime",
+      "signatureSha256": "0388a5e4a78864f842288d9c70ffef43f91432f17fd7ddc48dc62df668ee94ed",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M2",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TuiMainScreen",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-term/src/renderer.rs",
+          "crates/pie-term/tests/golden_render.rs",
+          "crates/pie-app/src/tui_main_screen.rs",
+          "crates/pie-app/tests/fixtures/main-alt-controller.json",
+          "crates/pie-app/tests/main_alt_controller.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-term/tests/golden_render.rs",
+        "crates/pie-app/tests/fixtures/main-alt-controller.json",
+        "crates/pie-app/tests/main_alt_controller.rs",
+        "tools/tmux-smoke.sh",
+        "tools/tmux-main-alt-smoke.sh"
+      ],
+      "gaps": [
+        "The injected Rust TuiMainScreen covers the pinned 0.84.1 lifecycle, differential render, resize, cursor, Kitty ownership, render-state, and teardown corpus plus real tmux execution. It still uses injected runtime and terminal seams rather than the canonical JavaScript class; the M5 adapter supplies ProcessTerminal/task pumping, JavaScript identity, package exposure, and current-consumer execution."
+      ]
+    },
+    {
+      "id": "S29-tui-main-screen:TuiMainScreenRenderState",
+      "statementId": "S29-tui-main-screen",
+      "name": "TuiMainScreenRenderState",
+      "kind": "type",
+      "signatureSha256": "f19bdfbdc4bdb401df85154ee22a10ebe21cd8798caa03a1754921888838aea8",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M2",
+      "status": "ported",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::TuiMainScreenRenderState",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-term/src/renderer.rs",
+          "crates/pie-term/tests/golden_render.rs",
+          "crates/pie-app/src/tui_main_screen.rs",
+          "crates/pie-app/tests/fixtures/main-alt-controller.json",
+          "crates/pie-app/tests/main_alt_controller.rs"
+        ]
+      },
+      "behaviorEvidence": [],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:getOsc8LinkAtColumn",
+      "statementId": "S30-utils",
+      "name": "getOsc8LinkAtColumn",
+      "kind": "runtime",
+      "signatureSha256": "f2a7acd86b641516b435c0d633d075b738ed52369b92beb46bc8a10e3a1032db",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::getOsc8LinkAtColumn",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_wrap.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:sliceByColumn",
+      "statementId": "S30-utils",
+      "name": "sliceByColumn",
+      "kind": "runtime",
+      "signatureSha256": "f81e15732dc355a21592f6377fa88189b46003b8837fd275705671c0ea9484e2",
+      "defaultMetadata": {
+        "optionalMarkerCount": 1,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::sliceByColumn",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_wrap.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:stripTerminalSequences",
+      "statementId": "S30-utils",
+      "name": "stripTerminalSequences",
+      "kind": "runtime",
+      "signatureSha256": "89b4812bb095249f5021630133c2a1a896e6499583a4ec871b8b44d426f5e908",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::stripTerminalSequences",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_text.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:truncateToWidth",
+      "statementId": "S30-utils",
+      "name": "truncateToWidth",
+      "kind": "runtime",
+      "signatureSha256": "ac6c365fc166deafebb35bc7b2aba128865652bd20d137e341dc18c7f6338c8d",
+      "defaultMetadata": {
+        "optionalMarkerCount": 2,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::truncateToWidth",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_wrap.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:visibleWidth",
+      "statementId": "S30-utils",
+      "name": "visibleWidth",
+      "kind": "runtime",
+      "signatureSha256": "ff5227d927901971eb77bb5d5ce67d87420d9090a4e05ff230fd6d685348d457",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::visibleWidth",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_text.rs"
+      ],
+      "gaps": []
+    },
+    {
+      "id": "S30-utils:wrapTextWithAnsi",
+      "statementId": "S30-utils",
+      "name": "wrapTextWithAnsi",
+      "kind": "runtime",
+      "signatureSha256": "d85d72acc2d9c426c47bd488c837206c26c2318024f7ba871dd1cd2dd7a1b8be",
+      "defaultMetadata": {
+        "optionalMarkerCount": 0,
+        "initializerCount": 0,
+        "documented": []
+      },
+      "milestone": "M1",
+      "status": "verified",
+      "rustEvidence": {
+        "export": "pie_napi::pi_tui::wrapTextWithAnsi",
+        "contractTest": "adapters/pie-napi/tests/api_contract.rs",
+        "productPaths": [
+          "crates/pie-core/src/text.rs",
+          "crates/pie-core/src/wrap.rs",
+          "crates/pie-core/tests/golden_text.rs",
+          "crates/pie-core/tests/golden_wrap.rs"
+        ]
+      },
+      "behaviorEvidence": [
+        "crates/pie-core/tests/golden_wrap.rs"
+      ],
+      "gaps": []
+    }
+  ]
+}

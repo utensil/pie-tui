@@ -1,0 +1,462 @@
+{
+ "generator": "gen-golden-render.mjs",
+ "reference": "0.84.1",
+ "scenarios": [
+  {
+   "name": "first-render-then-append",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail",
+      "delta 日本語 wide"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail",
+      "delta 日本語 wide",
+      "epsilon"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2Kdelta 日本語 wide\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2Kepsilon\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "modify-middle",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "\u001b[1;32mchanged bold-green\u001b[0m",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[1A\r\u001b[2K\u001b[1;32mchanged bold-green\u001b[0m\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "shrink-content",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail",
+      "delta 日本語 wide"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\r\ndelta 日本語 wide\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[3A\r\u001b[1B\r\u001b[2K\u001b[1B\r\u001b[2K\u001b[1B\r\u001b[2K\u001b[3A\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "grow-after-shrink",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail",
+      "ζ-last line with ANSI \u001b[4munderline\u001b[24m"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[2A\r\u001b[1B\r\u001b[2K\u001b[1B\r\u001b[2K\u001b[2A\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2Kbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[2K\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\r\n\u001b[2Kζ-last line with ANSI \u001b[4munderline\u001b[24m\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "width-change-full",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    },
+    {
+     "width": 30,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    },
+    {
+     "width": 30,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content",
+      "\u001b[31mred line\u001b[0m tail"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\r\n\u001b[31mred line\u001b[0m tail\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "height-change-full",
+   "width": 30,
+   "height": 6,
+   "frames": [
+    {
+     "width": 30,
+     "height": 6,
+     "lines": [
+      "alpha line",
+      "beta line with more content"
+     ]
+    },
+    {
+     "width": 30,
+     "height": 4,
+     "lines": [
+      "alpha line",
+      "beta line with more content"
+     ]
+    },
+    {
+     "width": 30,
+     "height": 4,
+     "lines": [
+      "alpha line",
+      "beta line with more content"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "no-change-cursor-only",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "beta line with more content"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nbeta line with more content\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "cursor-marker",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "prompt> \u001b_pi:c\u0007"
+     ]
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line",
+      "prompt> \u001b_pi:c\u0007"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jalpha line\u001b[0m\u001b]8;;\u0007\r\nprompt> \u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[9G",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[9G",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "content-exceeds-height",
+   "width": 20,
+   "height": 3,
+   "frames": [
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α",
+      "\u001b[35mnarrow-magenta\u001b[0m",
+      "窄い narrow line"
+     ]
+    },
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α",
+      "\u001b[35mnarrow-magenta\u001b[0m",
+      "窄い narrow line",
+      "one more line"
+     ]
+    },
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α",
+      "\u001b[35mnarrow-magenta\u001b[0m",
+      "窄い narrow line",
+      "one more line",
+      "and another"
+     ]
+    },
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α",
+      "\u001b[35mnarrow-magenta\u001b[0m",
+      "窄い narrow line",
+      "one more line",
+      "and another",
+      "\u001b[35mnarrow-magenta\u001b[0m"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jnarrow-α\u001b[0m\u001b]8;;\u0007\r\n\u001b[35mnarrow-magenta\u001b[0m\u001b[0m\u001b]8;;\u0007\r\n窄い narrow line\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2Kone more line\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2Kand another\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\r\n\u001b[2K\u001b[35mnarrow-magenta\u001b[0m\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "shrink-below-height",
+   "width": 20,
+   "height": 3,
+   "frames": [
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α",
+      "\u001b[35mnarrow-magenta\u001b[0m",
+      "窄い narrow line",
+      "one more line",
+      "and another",
+      "\u001b[35mnarrow-magenta\u001b[0m"
+     ]
+    },
+    {
+     "width": 20,
+     "height": 3,
+     "lines": [
+      "narrow-α"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jnarrow-α\u001b[0m\u001b]8;;\u0007\r\n\u001b[35mnarrow-magenta\u001b[0m\u001b[0m\u001b]8;;\u0007\r\n窄い narrow line\u001b[0m\u001b]8;;\u0007\r\none more line\u001b[0m\u001b]8;;\u0007\r\nand another\u001b[0m\u001b]8;;\u0007\r\n\u001b[35mnarrow-magenta\u001b[0m\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jnarrow-α\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  },
+  {
+   "name": "empty-to-content",
+   "width": 40,
+   "height": 8,
+   "frames": [
+    {
+     "width": 40,
+     "height": 8,
+     "lines": []
+    },
+    {
+     "width": 40,
+     "height": 8,
+     "lines": [
+      "alpha line"
+     ]
+    }
+   ],
+   "frameWrites": [
+    [
+     "\u001b[?2026h\u001b[2J\u001b[H\u001b[3J\u001b[?2026l",
+     "\u001b[?25l"
+    ],
+    [
+     "\u001b[?2026halpha line\u001b[0m\u001b]8;;\u0007\u001b[?2026l",
+     "\u001b[?25l"
+    ]
+   ]
+  }
+ ]
+}

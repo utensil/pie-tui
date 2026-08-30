@@ -1,0 +1,2238 @@
+{
+  "generator": "tools/golden/gen-golden-main-alt-controller.mjs",
+  "reference": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "node": "24.4.1",
+    "icu": "77.1",
+    "unicode": "16.0",
+    "platform": "darwin",
+    "arch": "arm64",
+    "sourceDigests": {
+      "packageJson": "f7f8f42f7cfa8c53c4f00bdc12c14cb035aa62d9fb73555661ce08b68da61290",
+      "tuiMainScreenJs": "c039d81fb26597669b13fd249dd4bf685c9a7608e3eb0c9bb3460df89271cd49",
+      "tuiMainScreenDts": "f2441514370d3f5726347aa5c58a2215f3da70f708a33e4784545ef96224b73f",
+      "tuiAltScreenJs": "2886260eca46a0a66cdc9f407777bd17f05200326d495ebf903578c49f298e3a",
+      "tuiAltScreenDts": "849b7307e671465a5a1dffc77b9381e782db08a6a16a6e3dd8d79b5faac329a6",
+      "tuiJs": "b425ed8e8535cf76deaeeea7de91edfda3d07606ee5ef9b2f02028583600a05a",
+      "tuiDts": "0b34c1688da2789a4d73d66a748287c8731f906bee480c5ef79633b66c9ab2f9",
+      "terminalDts": "ddaeac54d2c3db8e04a71626dcc7c4721655e4ee8452f94da7290c09a60f4d34",
+      "altScreenFlashJs": "6ca2016101ca570a94fdaa18bfe8edbc6734243cb5363d21110e809fcd47db12",
+      "altScreenFlashDts": "b8e5800da49d8d88ed59d6fee341e64362d2b43e0b806b21d8c00562ad146a86",
+      "scrollViewJs": "796fdaa30bfb850df9d3e9647cd7b08c1bf3f3775335ce90a158c177c282f53f",
+      "scrollViewDts": "7ee8cf2eced7d5a3cc68f0f054c9813f93b43019bdd72745b56f0c603b13f097",
+      "stackJs": "02b4dafebc728f1c0e8d01b5cc330f82eb760c58bc71c5cc9bff6d98bf34dbf3",
+      "stackDts": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+      "keybindingsJs": "d27090a36394fc4f59350e7f3234c601082d950e179ba6742d9557aae2a72168",
+      "keybindingsDts": "93450b5ff2259c52767d4bc3dffb17d7c9341f866507cf00aba67cddf42b51b0",
+      "keysJs": "14b18205fd5e56ed3b183392c82bd72e41ba3dab1d345e47b2b17af6988493cc",
+      "keysDts": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+      "layoutJs": "fdc6c58b4245e735a0daabdc93201017e77cbbb01d7d440eda6427270556b2af",
+      "layoutDts": "cfa0950012579f3912d7f6887a2b24f8618fa5e7eb0df15447ec992cf806a40a",
+      "layoutNodeJs": "73c3942b68d52ed29072f1f78184c99d405f9259bb4e24a1b6b0e3688381f7f5",
+      "layoutNodeDts": "8a19dd70f320755c3793cbec86902ad037afedd4151f1d174c0175cc281cf77d",
+      "terminalColorsJs": "e26c8c31d161d175817b3335baab4476737719c389a2a39312aa2ece67ccb119",
+      "terminalColorsDts": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+      "terminalImageJs": "b2b60272f6f25dbb559722dffa369944f5c8846fa726c31fb841d1532470adc2",
+      "terminalImageDts": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+      "utilsJs": "70c037e8c3c6ec909c4bab6b14777e1f33ab1f5c39f5f1f3aa6f8966357d8052",
+      "utilsDts": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+      "widthPackageJson": "d263e50dd1a43aee9acda4d7f066e66b0d0bde1f2852ea6e7153750a5e3a3e52",
+      "widthIndexJs": "d7b1ba05914c0fc311c20e5618bf8d0893c9c74078a07975e2df981445e64887",
+      "widthIndexDts": "228354b26813689534d5ecf1e2d1948795fe31bb7fa274b28fbc4056c1ea6ac3",
+      "widthLookupJs": "c80ecc22b120b27ef5ea9facb7000b8fd4ec037a84d9231d215f1c44bc9c21d0",
+      "widthLookupDataJs": "f6b40f86c9a2a6808ec808fa8ddcb8da261254cc6121d37ffaeb2bf35dad1d5b",
+      "widthUtilitiesJs": "4b08a7e9e3ffacbcf198a6abceb2338d52ac671899e52ccc2851c898bfccac42"
+    },
+    "runtimeClosure": [
+      "components/alt-screen-flash.js",
+      "components/scroll-view.js",
+      "components/stack.js",
+      "keybindings.js",
+      "keys.js",
+      "layout-node.js",
+      "layout.js",
+      "terminal-colors.js",
+      "terminal-image.js",
+      "tui-alt-screen.js",
+      "tui-main-screen.js",
+      "tui.js",
+      "utils.js"
+    ],
+    "widthDependency": {
+      "package": "get-east-asian-width",
+      "version": "1.6.0"
+    }
+  },
+  "cases": [
+    {
+      "name": "main-lifecycle-diff-resize-cursor-stop",
+      "initial": {
+        "terminal": [
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026hone\u001b[0m\u001b]8;;\u0007\r\ntwo\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "write",
+            "\u001b[3G"
+          ],
+          [
+            "show-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "root",
+            "focus",
+            true
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "root",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026hone\u001b[0m\u001b]8;;\u0007\r\ntwo\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[3G"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ]
+      },
+      "differential": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\r\u001b[2KTWO\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "write",
+            "\u001b[2G"
+          ],
+          [
+            "show-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "root",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\r\u001b[2KTWO\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[2G"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ]
+        ],
+        "clock": []
+      },
+      "resize": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jone\u001b[0m\u001b]8;;\u0007\r\nTWO\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "write",
+            "\u001b[2G"
+          ],
+          [
+            "show-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "resize",
+            10,
+            4
+          ],
+          [
+            "root",
+            "render",
+            10
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[H\u001b[3Jone\u001b[0m\u001b]8;;\u0007\r\nTWO\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[2G"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            3,
+            100
+          ],
+          [
+            "run-tick",
+            3,
+            100
+          ],
+          [
+            "schedule-timer",
+            4,
+            16,
+            116
+          ],
+          [
+            "run-timer",
+            4,
+            116
+          ]
+        ]
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            " "
+          ],
+          [
+            "write",
+            "\u001b[1B"
+          ],
+          [
+            "write",
+            "\r\n"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            " "
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[1B"
+          ],
+          [
+            "terminal",
+            "write",
+            "\r\n"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ]
+        ],
+        "clock": []
+      },
+      "mode": "regular",
+      "fullRedraws": 2
+    },
+    {
+      "name": "main-long-document-viewport-and-preserved-stop",
+      "initial": {
+        "terminal": [
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h0\u001b[0m\u001b]8;;\u0007\r\n1\u001b[0m\u001b]8;;\u0007\r\n2\u001b[0m\u001b]8;;\u0007\r\n3\u001b[0m\u001b]8;;\u0007\r\n4\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "long",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h0\u001b[0m\u001b]8;;\u0007\r\n1\u001b[0m\u001b]8;;\u0007\r\n2\u001b[0m\u001b]8;;\u0007\r\n3\u001b[0m\u001b]8;;\u0007\r\n4\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ],
+        "state": {
+          "previousLines": [
+            "0\u001b[0m\u001b]8;;\u0007",
+            "1\u001b[0m\u001b]8;;\u0007",
+            "2\u001b[0m\u001b]8;;\u0007",
+            "3\u001b[0m\u001b]8;;\u0007",
+            "4\u001b[0m\u001b]8;;\u0007"
+          ],
+          "previousWidth": 5,
+          "previousHeight": 3,
+          "cursorRow": 4,
+          "hardwareCursorRow": 4,
+          "maxLinesRendered": 5,
+          "previousViewportTop": 2
+        }
+      },
+      "visibleChange": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\r\u001b[2KX\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "long",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\r\u001b[2KX\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": [],
+        "state": {
+          "previousLines": [
+            "0\u001b[0m\u001b]8;;\u0007",
+            "1\u001b[0m\u001b]8;;\u0007",
+            "2\u001b[0m\u001b]8;;\u0007",
+            "3\u001b[0m\u001b]8;;\u0007",
+            "X\u001b[0m\u001b]8;;\u0007"
+          ],
+          "previousWidth": 5,
+          "previousHeight": 3,
+          "cursorRow": 4,
+          "hardwareCursorRow": 4,
+          "maxLinesRendered": 5,
+          "previousViewportTop": 2
+        }
+      },
+      "append": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\r\n\u001b[2K5\u001b[0m\u001b]8;;\u0007\r\n\u001b[2K6\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "long",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\r\n\u001b[2K5\u001b[0m\u001b]8;;\u0007\r\n\u001b[2K6\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": [],
+        "state": {
+          "previousLines": [
+            "0\u001b[0m\u001b]8;;\u0007",
+            "1\u001b[0m\u001b]8;;\u0007",
+            "2\u001b[0m\u001b]8;;\u0007",
+            "3\u001b[0m\u001b]8;;\u0007",
+            "X\u001b[0m\u001b]8;;\u0007",
+            "5\u001b[0m\u001b]8;;\u0007",
+            "6\u001b[0m\u001b]8;;\u0007"
+          ],
+          "previousWidth": 5,
+          "previousHeight": 3,
+          "cursorRow": 6,
+          "hardwareCursorRow": 6,
+          "maxLinesRendered": 7,
+          "previousViewportTop": 4
+        }
+      },
+      "aboveViewport": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[H\u001b[3JZ\u001b[0m\u001b]8;;\u0007\r\n1\u001b[0m\u001b]8;;\u0007\r\n2\u001b[0m\u001b]8;;\u0007\r\n3\u001b[0m\u001b]8;;\u0007\r\nX\u001b[0m\u001b]8;;\u0007\r\n5\u001b[0m\u001b]8;;\u0007\r\n6\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "long",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[H\u001b[3JZ\u001b[0m\u001b]8;;\u0007\r\n1\u001b[0m\u001b]8;;\u0007\r\n2\u001b[0m\u001b]8;;\u0007\r\n3\u001b[0m\u001b]8;;\u0007\r\nX\u001b[0m\u001b]8;;\u0007\r\n5\u001b[0m\u001b]8;;\u0007\r\n6\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": [],
+        "state": {
+          "previousLines": [
+            "Z\u001b[0m\u001b]8;;\u0007",
+            "1\u001b[0m\u001b]8;;\u0007",
+            "2\u001b[0m\u001b]8;;\u0007",
+            "3\u001b[0m\u001b]8;;\u0007",
+            "X\u001b[0m\u001b]8;;\u0007",
+            "5\u001b[0m\u001b]8;;\u0007",
+            "6\u001b[0m\u001b]8;;\u0007"
+          ],
+          "previousWidth": 5,
+          "previousHeight": 3,
+          "cursorRow": 6,
+          "hardwareCursorRow": 6,
+          "maxLinesRendered": 7,
+          "previousViewportTop": 4
+        }
+      },
+      "stop": {
+        "terminal": [
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-raw-unregistered-kitty-lines-are-not-owned",
+      "renderWrites": [
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=2;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=3;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=4;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=5;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=6;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=7;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=8;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=9;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=10;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=11;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=12;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=13;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=14;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=15;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=16;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=17;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l",
+        "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=18;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+      ],
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "main-kitty-ownership-and-render-state-restore",
+      "image": {
+        "columns": 2,
+        "rows": 2,
+        "imageId": 7
+      },
+      "initial": {
+        "terminal": [
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[16t"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\r\n\u001b[1A\u001b_Ga=T,f=100,q=2,c=2,r=2,i=7;QUJDRA==\u001b\\\u001b[1B\r\ntail\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[16t"
+          ],
+          [
+            "image",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\r\n\u001b[1A\u001b_Ga=T,f=100,q=2,c=2,r=2,i=7;QUJDRA==\u001b\\\u001b[1B\r\ntail\u001b[0m\u001b]8;;\u0007\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ]
+      },
+      "removal": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=I,i=7,q=2\u001b\\\u001b[2A\r\u001b[2Kgone\u001b[0m\u001b]8;;\u0007\r\n\u001b[2Ktail\u001b[0m\u001b]8;;\u0007\r\n\u001b[2K\u001b[1A\u001b[?2026l"
+          ],
+          [
+            "hide-cursor"
+          ]
+        ],
+        "trace": [
+          [
+            "image",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=I,i=7,q=2\u001b\\\u001b[2A\r\u001b[2Kgone\u001b[0m\u001b]8;;\u0007\r\n\u001b[2Ktail\u001b[0m\u001b]8;;\u0007\r\n\u001b[2K\u001b[1A\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ]
+        ],
+        "clock": []
+      },
+      "captured": {
+        "previousLines": [
+          "\u001b_Ga=T,f=100,q=2,c=2,r=2,i=7;QUJDRA==\u001b\\",
+          "\u001b[0m\u001b]8;;\u0007",
+          "tail\u001b[0m\u001b]8;;\u0007"
+        ],
+        "previousWidth": 8,
+        "previousHeight": 4,
+        "cursorRow": 2,
+        "hardwareCursorRow": 2,
+        "maxLinesRendered": 3,
+        "previousViewportTop": 0
+      },
+      "restored": {
+        "previousLines": [
+          "",
+          "\u001b[0m\u001b]8;;\u0007",
+          "tail\u001b[0m\u001b]8;;\u0007"
+        ],
+        "previousWidth": 8,
+        "previousHeight": 4,
+        "cursorRow": 2,
+        "hardwareCursorRow": 2,
+        "maxLinesRendered": 3,
+        "previousViewportTop": 0
+      },
+      "stop": {
+        "terminal": [
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-kitty-offscreen-cache-eviction-and-revisit",
+      "atBound": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=17;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty-cache",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=17;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "eviction": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b_Ga=d,d=I,i=1,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=18;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty-cache",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b_Ga=d,d=I,i=1,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=18;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "revisit": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b_Ga=d,d=I,i=2,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=1;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty-cache",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b_Ga=d,d=I,i=2,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=1;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-lifecycle-diff-resize-preserved-stop",
+      "initial": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[?1000h\u001b[?1002h\u001b[?1003h\u001b[?1004h\u001b[?1006h\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007c     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007d     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007e     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "doc",
+            "focus",
+            true
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[?1000h\u001b[?1002h\u001b[?1003h\u001b[?1004h\u001b[?1006h\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "doc",
+            "render",
+            6
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007c     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007d     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007e     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ],
+        "viewportTop": 2,
+        "following": true
+      },
+      "differential": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007E     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "doc",
+            "render",
+            6
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007E     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "resize": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007b      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007c      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007d      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[4;1H\u001b[2K\u001b[0m\u001b]8;;\u0007E      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[4;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "resize",
+            7,
+            4
+          ],
+          [
+            "doc",
+            "render",
+            7
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007b      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007c      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007d      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[4;1H\u001b[2K\u001b[0m\u001b]8;;\u0007E      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[4;2H\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            3,
+            100
+          ],
+          [
+            "run-tick",
+            3,
+            100
+          ],
+          [
+            "schedule-timer",
+            4,
+            16,
+            116
+          ],
+          [
+            "run-timer",
+            4,
+            116
+          ]
+        ],
+        "viewportTop": 1,
+        "following": true
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "mode": "fullscreen",
+      "fullRedraws": 2
+    },
+    {
+      "name": "alt-layout-root-focus-overlay-and-main-screen-restore",
+      "withLayoutAndOverlay": {
+        "terminal": [
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007OV \u001b[0m\u001b]8;;\u0007out-0\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007layout-1\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "child",
+            "focus",
+            true
+          ],
+          [
+            "overlay-visible",
+            8,
+            3
+          ],
+          [
+            "child",
+            "focus",
+            false
+          ],
+          [
+            "overlay",
+            "focus",
+            true
+          ],
+          [
+            "overlay-visible",
+            8,
+            3
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "layout",
+            "render",
+            8
+          ],
+          [
+            "overlay-visible",
+            8,
+            3
+          ],
+          [
+            "overlay",
+            "render",
+            3
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007OV \u001b[0m\u001b]8;;\u0007out-0\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007layout-1\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ],
+        "childFocused": false,
+        "overlayFocused": true,
+        "handleFocused": true
+      },
+      "identityNoop": {
+        "terminal": [],
+        "trace": [],
+        "clock": []
+      },
+      "invalidate": {
+        "terminal": [],
+        "trace": [
+          [
+            "layout",
+            "invalidate"
+          ],
+          [
+            "overlay",
+            "invalidate"
+          ]
+        ],
+        "clock": []
+      },
+      "restoredChildren": {
+        "terminal": [
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007child   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "overlay",
+            "focus",
+            false
+          ],
+          [
+            "child",
+            "focus",
+            true
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "child",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007child   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            3,
+            100
+          ]
+        ],
+        "childFocused": true,
+        "overlayFocused": false
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?7l\r\u001b[2Kchild\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b[?7h\r\n\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "child",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?7l\r\u001b[2Kchild\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b[?7h\r\n\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-scroll-mouse-release-filter-and-live-keybindings",
+      "states": [
+        {
+          "name": "wheel-up",
+          "viewportTop": 2,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007three     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007four      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[<64;1;1M"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007three     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007four      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                3,
+                100
+              ]
+            ]
+          }
+        },
+        {
+          "name": "page-up-release",
+          "viewportTop": 2,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[5;1:3~"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": []
+          }
+        },
+        {
+          "name": "page-up-press",
+          "viewportTop": 1,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007three     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[5~"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007three     \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                4,
+                100
+              ]
+            ]
+          }
+        },
+        {
+          "name": "old-binding-after-replacement",
+          "viewportTop": 1,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[5~"
+              ],
+              [
+                "scroll",
+                "input",
+                "\u001b[5~"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                5,
+                100
+              ]
+            ]
+          }
+        },
+        {
+          "name": "new-binding-after-replacement",
+          "viewportTop": 0,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007zero      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001bOP"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007zero      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                6,
+                100
+              ]
+            ]
+          }
+        },
+        {
+          "name": "bottom",
+          "viewportTop": 4,
+          "following": true,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007four      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007five      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007six       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[F"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007four      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007five      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007six       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                7,
+                100
+              ]
+            ]
+          }
+        },
+        {
+          "name": "top",
+          "viewportTop": 0,
+          "following": false,
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007zero      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[H"
+              ],
+              [
+                "scroll",
+                "render",
+                10
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007zero      \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007one       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007two       \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                8,
+                100
+              ]
+            ]
+          }
+        }
+      ],
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-selection-clipboard-granularity-and-focus-out",
+      "clicks": [
+        {
+          "name": "single",
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1M"
+              ],
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1m"
+              ],
+              [
+                "select",
+                "render",
+                12
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                3,
+                1000
+              ]
+            ]
+          }
+        },
+        {
+          "name": "double-word",
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b]52;c;YWxwaGE=\u0007"
+              ],
+              [
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[7m\u001b[0m\u001b[7m\u001b]8;;\u0007alp\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1M"
+              ],
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1m"
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b]52;c;YWxwaGE=\u0007"
+              ],
+              [
+                "select",
+                "render",
+                12
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[7m\u001b[0m\u001b[7m\u001b]8;;\u0007alp\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                4,
+                1010
+              ],
+              [
+                "schedule-timer",
+                5,
+                1000,
+                2010
+              ]
+            ]
+          }
+        },
+        {
+          "name": "triple-line",
+          "phase": {
+            "terminal": [
+              [
+                "write",
+                "\u001b]52;c;YWxwaGEgYmV0YQ==\u0007"
+              ],
+              [
+                "write",
+                "\u001b[?2026h\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007sec\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "trace": [
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1M"
+              ],
+              [
+                "terminal",
+                "input",
+                "\u001b[<0;2;1m"
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b]52;c;YWxwaGEgYmV0YQ==\u0007"
+              ],
+              [
+                "select",
+                "render",
+                12
+              ],
+              [
+                "terminal",
+                "write",
+                "\u001b[?2026h\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007sec\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+              ]
+            ],
+            "clock": [
+              [
+                "schedule-tick",
+                6,
+                1020
+              ],
+              [
+                "schedule-timer",
+                7,
+                1000,
+                2020
+              ]
+            ]
+          }
+        }
+      ],
+      "focusOutCancellation": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007alp\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "input",
+            "\u001b[<0;1;2M"
+          ],
+          [
+            "terminal",
+            "input",
+            "\u001b[<32;4;2M"
+          ],
+          [
+            "terminal",
+            "input",
+            "\u001b[O"
+          ],
+          [
+            "terminal",
+            "input",
+            "\u001b[<0;4;2m"
+          ],
+          [
+            "select",
+            "render",
+            12
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007alp\u001b[0m\u001b]8;;\u0007\u001b[7m Copied! \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            8,
+            1030
+          ]
+        ]
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "cancel-timer",
+            5,
+            1030
+          ],
+          [
+            "cancel-timer",
+            7,
+            1030
+          ]
+        ]
+      }
+    },
+    {
+      "name": "alt-kitty-transmission-placement-and-teardown-ownership",
+      "first": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[16t"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[2J\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=9;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007tail    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[16t"
+          ],
+          [
+            "kitty",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[2J\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=9;QUFBQQ==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007tail    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ]
+      },
+      "textOnlyChange": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "retransmit": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=9;QkJCQg==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b_Ga=T,f=100,q=2,c=1,r=1,i=9;QkJCQg==\u001b\\\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "removal": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007plain   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "kitty",
+            "render",
+            8
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=a,q=2\u001b\\\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007plain   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007TAIL    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b_Ga=d,d=A,q=2\u001b\\\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      }
+    },
+    {
+      "name": "alt-iterm-capability-suspension-and-unpreserved-stop",
+      "image": {
+        "columns": 1,
+        "rows": 1
+      },
+      "during": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b]1337;File=inline=1;size=4;width=1;height=auto:QUJDRA==\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007abcde\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007x    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "iterm",
+            "invalidate"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "iterm",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b]1337;File=inline=1;size=4;width=1;height=auto:QUJDRA==\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007abcde\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;1H\u001b[2K\u001b[0m\u001b]8;;\u0007x    \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[3;2H\u001b[?25l\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ],
+        "capabilities": {
+          "images": null,
+          "trueColor": true,
+          "hyperlinks": true
+        }
+      },
+      "stop": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?2026h\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?7l\r\u001b[2K\u001b]1337;File=inline=1;size=4;width=1;height=auto:QUJDRA==\u0007\r\n\r\u001b[2Kabcde\r\n\r\u001b[2Kx\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b[?7h\r\n\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "iterm",
+            "render",
+            5
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?7l\r\u001b[2K\u001b]1337;File=inline=1;size=4;width=1;height=auto:QUJDRA==\u0007\r\n\r\u001b[2Kabcde\r\n\r\u001b[2Kx\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b[?7h\r\n\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": []
+      },
+      "restoredCapabilities": {
+        "images": "iterm2",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "name": "alt-multiplexer-button-motion-lifecycle",
+      "lifecycle": {
+        "terminal": [
+          [
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[?1000h\u001b[?1002h\u001b[?1004h\u001b[?1006h\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "start"
+          ],
+          [
+            "hide-cursor"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007x   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "show-cursor"
+          ],
+          [
+            "stop"
+          ],
+          [
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "trace": [
+          [
+            "terminal",
+            "write",
+            "\u001b[?1049h\u001b[?7l\u001b[?1000h\u001b[?1002h\u001b[?1004h\u001b[?1006h\u001b[2J\u001b[H\u001b[?25l"
+          ],
+          [
+            "terminal",
+            "start"
+          ],
+          [
+            "terminal",
+            "hide-cursor"
+          ],
+          [
+            "mux",
+            "render",
+            4
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[2J\u001b[1;1H\u001b[2K\u001b[0m\u001b]8;;\u0007x   \u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007\u001b[2;1H\u001b[2K\u001b[0m\u001b]8;;\u0007\u001b[?25l\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1006l\u001b[?1004l\u001b[?1003l\u001b[?1002l\u001b[?1000l\u001b[?7h\u001b[?2026l"
+          ],
+          [
+            "terminal",
+            "show-cursor"
+          ],
+          [
+            "terminal",
+            "stop"
+          ],
+          [
+            "terminal",
+            "write",
+            "\u001b[?2026h\u001b[?1049l\u001b[?25h\u001b[?2026l"
+          ]
+        ],
+        "clock": [
+          [
+            "schedule-tick",
+            1,
+            100
+          ],
+          [
+            "run-tick",
+            1,
+            100
+          ],
+          [
+            "schedule-timer",
+            2,
+            0,
+            100
+          ],
+          [
+            "run-timer",
+            2,
+            100
+          ]
+        ]
+      }
+    }
+  ]
+}

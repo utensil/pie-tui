@@ -1,0 +1,764 @@
+{
+  "schema": "pie-tui-m4-markdown-adversarial-evidence-v1",
+  "reference": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "markdownJsSha256": "bbffe68aa6bb6968e9eca2681e19b0ea7787fff8124ef996fae282a4c2201465",
+    "markedVersion": "18.0.5",
+    "markedEsmSha256": "43e1fc0927b2d397bdc786c0a9efa8414ce18e7781d0b3490faceea35b7d0d15"
+  },
+  "identityTheme": {
+    "callbacks": [
+      "heading",
+      "link",
+      "linkUrl",
+      "code",
+      "codeBlock",
+      "codeBlockBorder",
+      "quote",
+      "quoteBorder",
+      "hr",
+      "listBullet",
+      "bold",
+      "italic",
+      "strikethrough",
+      "underline"
+    ],
+    "semantics": "each callback returns its input unchanged; highlightCode and codeBlockIndent are absent"
+  },
+  "priorThreeOfThirtyTwo": [
+    {
+      "name": "nested-list-continuation",
+      "source": "- first line\n  continuation line\n  - child\n    child continuation\n- final",
+      "width": 35,
+      "output": [
+        "- first line                       ",
+        "  continuation line                ",
+        "    - child                        ",
+        "      child continuation           ",
+        "- final                            "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 35
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "- first line                       ",
+          "  continuation line                ",
+          "    - child                        ",
+          "      child continuation           ",
+          "- final                            "
+        ]
+      ]
+    },
+    {
+      "name": "blockquote-nested",
+      "source": "> outer\n> > inner\n>\n> tail",
+      "width": 30,
+      "output": [
+        "│ outer                       ",
+        "│                             ",
+        "│ │ inner                     ",
+        "│                             ",
+        "│ tail                        "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 30
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "│ outer                       ",
+          "│                             ",
+          "│ │ inner                     ",
+          "│                             ",
+          "│ tail                        "
+        ]
+      ]
+    },
+    {
+      "name": "leading-trailing-blank",
+      "source": "\n\nalpha\n\n",
+      "width": 20,
+      "output": [
+        "                    ",
+        "alpha               ",
+        "                    "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 20
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "                    ",
+          "alpha               ",
+          "                    "
+        ]
+      ]
+    }
+  ],
+  "additionalTenOfFifteen": [
+    {
+      "name": "reference-link",
+      "source": "[label][id]\n\n[id]: https://example.test \"T\"",
+      "width": 60,
+      "output": [
+        "label (https://example.test)                                ",
+        "                                                            "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 60
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "label (https://example.test)                                ",
+          "                                                            "
+        ]
+      ]
+    },
+    {
+      "name": "collapsed-reference",
+      "source": "[label][]\n\n[label]: https://example.test",
+      "width": 60,
+      "output": [
+        "label (https://example.test)                                ",
+        "                                                            "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 60
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "label (https://example.test)                                ",
+          "                                                            "
+        ]
+      ]
+    },
+    {
+      "name": "shortcut-reference",
+      "source": "[label]\n\n[label]: https://example.test",
+      "width": 60,
+      "output": [
+        "label (https://example.test)                                ",
+        "                                                            "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 60
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "label (https://example.test)                                ",
+          "                                                            "
+        ]
+      ]
+    },
+    {
+      "name": "heading-closing",
+      "source": "## Heading ##",
+      "width": 30,
+      "output": [
+        "Heading                       "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 30
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "Heading                       "
+        ]
+      ]
+    },
+    {
+      "name": "ordered-paren",
+      "source": "3) third\n7) seventh",
+      "width": 30,
+      "output": [
+        "3. third                      ",
+        "4. seventh                    "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 30
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "3. third                      ",
+          "4. seventh                    "
+        ]
+      ]
+    },
+    {
+      "name": "triple-emphasis",
+      "source": "***both*** and ~~**bold strike**~~",
+      "width": 50,
+      "output": [
+        "both and bold strike                              "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 50
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "both and bold strike                              "
+        ]
+      ]
+    },
+    {
+      "name": "blockquote-lazy",
+      "source": "> quoted\nlazy continuation",
+      "width": 40,
+      "output": [
+        "│ quoted                                ",
+        "│ lazy continuation                     "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 40
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "│ quoted                                ",
+          "│ lazy continuation                     "
+        ]
+      ]
+    },
+    {
+      "name": "loose-list",
+      "source": "- one\n\n  continuation\n\n- two",
+      "width": 40,
+      "output": [
+        "- one                                   ",
+        "                                        ",
+        "  continuation                          ",
+        "                                        ",
+        "- two                                   "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 40
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "- one                                   ",
+          "                                        ",
+          "  continuation                          ",
+          "                                        ",
+          "- two                                   "
+        ]
+      ]
+    },
+    {
+      "name": "empty-fence",
+      "source": "```js\n```",
+      "width": 30,
+      "output": [
+        "```js                         ",
+        "                              ",
+        "```                           "
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 30
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "```js                         ",
+          "                              ",
+          "```                           "
+        ]
+      ]
+    },
+    {
+      "name": "thematic-ambiguous",
+      "source": "- - -\n* * *\n_ _ _",
+      "width": 24,
+      "output": [
+        "────────────────────────",
+        "                        ",
+        "────────────────────────",
+        "                        ",
+        "────────────────────────"
+      ],
+      "paddingX": 0,
+      "paddingY": 0,
+      "theme": "identity",
+      "defaultTextStyle": null,
+      "options": "omitted/default",
+      "operations": [
+        {
+          "op": "render",
+          "width": 24
+        }
+      ],
+      "expectedOutputs": [
+        [
+          "────────────────────────",
+          "                        ",
+          "────────────────────────",
+          "                        ",
+          "────────────────────────"
+        ]
+      ]
+    }
+  ],
+  "defaultOptionsMutationGuard": {
+    "source": "3. third\n7. seventh",
+    "paddingX": 0,
+    "paddingY": 0,
+    "theme": "identity",
+    "defaultTextStyle": null,
+    "options": "omitted/default",
+    "operations": [
+      {
+        "op": "render",
+        "width": 24
+      }
+    ],
+    "expectedOutputs": [
+      [
+        "3. third                ",
+        "4. seventh              "
+      ]
+    ]
+  },
+  "constructionTransformCallbackLifecycle": {
+    "source": "plain **bold *italic* ~~strike~~ `code` [link](https://e.test)** tail",
+    "paddingX": 1,
+    "paddingY": 1,
+    "callbackSemantics": "each callback logs name + colon + input with NUL encoded as <NUL>, then returns input unchanged",
+    "themeCallbacks": [
+      "heading",
+      "link",
+      "linkUrl",
+      "code",
+      "codeBlock",
+      "border",
+      "quote",
+      "quoteBorder",
+      "hr",
+      "bullet",
+      "bold",
+      "italic",
+      "strike",
+      "underline"
+    ],
+    "defaultTextStyle": {
+      "color": "logged identity color",
+      "bgColor": "logged identity bg",
+      "bold": true,
+      "italic": true,
+      "strikethrough": true,
+      "underline": true
+    },
+    "options": {
+      "transform": "log transform:<contentWidth>:<source>, then return source unchanged; all other options default"
+    },
+    "operations": [
+      {
+        "op": "construct"
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:constructed"
+      },
+      {
+        "op": "render",
+        "width": 72
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:first"
+      },
+      {
+        "op": "render",
+        "width": 72
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:same"
+      },
+      {
+        "op": "render",
+        "width": 60
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:resize"
+      },
+      {
+        "op": "invalidate"
+      },
+      {
+        "op": "render",
+        "width": 60
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:invalidate"
+      },
+      {
+        "op": "setText",
+        "value": "same source"
+      },
+      {
+        "op": "render",
+        "width": 60
+      },
+      {
+        "op": "pushEvent",
+        "event": "MARK:setText"
+      }
+    ],
+    "expectedOutputs": [
+      [
+        "                                                                        ",
+        " plain bold italic strike code link (https://e.test) tail               ",
+        "                                                                        "
+      ],
+      [
+        "                                                                        ",
+        " plain bold italic strike code link (https://e.test) tail               ",
+        "                                                                        "
+      ],
+      [
+        "                                                            ",
+        " plain bold italic strike code link (https://e.test) tail   ",
+        "                                                            "
+      ],
+      [
+        "                                                            ",
+        " plain bold italic strike code link (https://e.test) tail   ",
+        "                                                            "
+      ],
+      [
+        "                                                            ",
+        " plain bold italic strike code link (https://e.test) tail   ",
+        "                                                            "
+      ]
+    ],
+    "expectedEvents": [
+      "MARK:constructed",
+      "transform:70:plain **bold *italic* ~~strike~~ `code` [link](https://e.test)** tail",
+      "color:<NUL>",
+      "bold:<NUL>",
+      "italic:<NUL>",
+      "strike:<NUL>",
+      "underline:<NUL>",
+      "color:plain ",
+      "bold:plain ",
+      "italic:plain ",
+      "strike:plain ",
+      "underline:plain ",
+      "color:bold ",
+      "bold:bold ",
+      "italic:bold ",
+      "strike:bold ",
+      "underline:bold ",
+      "color:italic",
+      "bold:italic",
+      "italic:italic",
+      "strike:italic",
+      "underline:italic",
+      "italic:italic",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:strike",
+      "bold:strike",
+      "italic:strike",
+      "strike:strike",
+      "underline:strike",
+      "strike:strike",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "code:code",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:link",
+      "bold:link",
+      "italic:link",
+      "strike:link",
+      "underline:link",
+      "underline:link",
+      "link:link",
+      "linkUrl: (https://e.test)",
+      "bold:bold italic strike code link (https://e.test)",
+      "color: tail",
+      "bold: tail",
+      "italic: tail",
+      "strike: tail",
+      "underline: tail",
+      "bg: plain bold italic strike code link (https://e.test) tail               ",
+      "bg:                                                                        ",
+      "MARK:first",
+      "MARK:same",
+      "transform:58:plain **bold *italic* ~~strike~~ `code` [link](https://e.test)** tail",
+      "color:plain ",
+      "bold:plain ",
+      "italic:plain ",
+      "strike:plain ",
+      "underline:plain ",
+      "color:bold ",
+      "bold:bold ",
+      "italic:bold ",
+      "strike:bold ",
+      "underline:bold ",
+      "color:italic",
+      "bold:italic",
+      "italic:italic",
+      "strike:italic",
+      "underline:italic",
+      "italic:italic",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:strike",
+      "bold:strike",
+      "italic:strike",
+      "strike:strike",
+      "underline:strike",
+      "strike:strike",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "code:code",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:link",
+      "bold:link",
+      "italic:link",
+      "strike:link",
+      "underline:link",
+      "underline:link",
+      "link:link",
+      "linkUrl: (https://e.test)",
+      "bold:bold italic strike code link (https://e.test)",
+      "color: tail",
+      "bold: tail",
+      "italic: tail",
+      "strike: tail",
+      "underline: tail",
+      "bg: plain bold italic strike code link (https://e.test) tail   ",
+      "bg:                                                            ",
+      "MARK:resize",
+      "transform:58:plain **bold *italic* ~~strike~~ `code` [link](https://e.test)** tail",
+      "color:plain ",
+      "bold:plain ",
+      "italic:plain ",
+      "strike:plain ",
+      "underline:plain ",
+      "color:bold ",
+      "bold:bold ",
+      "italic:bold ",
+      "strike:bold ",
+      "underline:bold ",
+      "color:italic",
+      "bold:italic",
+      "italic:italic",
+      "strike:italic",
+      "underline:italic",
+      "italic:italic",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:strike",
+      "bold:strike",
+      "italic:strike",
+      "strike:strike",
+      "underline:strike",
+      "strike:strike",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "code:code",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:link",
+      "bold:link",
+      "italic:link",
+      "strike:link",
+      "underline:link",
+      "underline:link",
+      "link:link",
+      "linkUrl: (https://e.test)",
+      "bold:bold italic strike code link (https://e.test)",
+      "color: tail",
+      "bold: tail",
+      "italic: tail",
+      "strike: tail",
+      "underline: tail",
+      "bg: plain bold italic strike code link (https://e.test) tail   ",
+      "bg:                                                            ",
+      "MARK:invalidate",
+      "transform:58:plain **bold *italic* ~~strike~~ `code` [link](https://e.test)** tail",
+      "color:plain ",
+      "bold:plain ",
+      "italic:plain ",
+      "strike:plain ",
+      "underline:plain ",
+      "color:bold ",
+      "bold:bold ",
+      "italic:bold ",
+      "strike:bold ",
+      "underline:bold ",
+      "color:italic",
+      "bold:italic",
+      "italic:italic",
+      "strike:italic",
+      "underline:italic",
+      "italic:italic",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:strike",
+      "bold:strike",
+      "italic:strike",
+      "strike:strike",
+      "underline:strike",
+      "strike:strike",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "code:code",
+      "color: ",
+      "bold: ",
+      "italic: ",
+      "strike: ",
+      "underline: ",
+      "color:link",
+      "bold:link",
+      "italic:link",
+      "strike:link",
+      "underline:link",
+      "underline:link",
+      "link:link",
+      "linkUrl: (https://e.test)",
+      "bold:bold italic strike code link (https://e.test)",
+      "color: tail",
+      "bold: tail",
+      "italic: tail",
+      "strike: tail",
+      "underline: tail",
+      "bg: plain bold italic strike code link (https://e.test) tail   ",
+      "bg:                                                            ",
+      "MARK:setText"
+    ]
+  }
+}

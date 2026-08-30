@@ -1,0 +1,55 @@
+{
+  "schema": "pie-tui-m4-markdown-final-review-mutation-receipt-v1",
+  "date": "2026-08-30",
+  "recoveryRef": "refs/recovery/m4-markdown-mdast-pre-final-review-20260830",
+  "oraclePhase": "committed intentional-red before product repair",
+  "mutations": [
+    {
+      "id": "drop-task-marker-source-recovery",
+      "family": "task-markers",
+      "change": "force the parsed task marker to None before list rendering",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_final_review final_review_source_preservation_vectors_are_exact_and_panic_free -- --exact",
+      "exitCode": 101,
+      "killedRows": [
+        "task-markers"
+      ]
+    },
+    {
+      "id": "drop-inline-math-raw-fallback",
+      "family": "inline-math-fallback",
+      "change": "return the parsed math body instead of the raw positioned span when conversion fails",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_final_review final_review_source_preservation_vectors_are_exact_and_panic_free -- --exact",
+      "exitCode": 101,
+      "killedRows": [
+        "inline-math-malformed-fraction",
+        "inline-math-unclosed-group",
+        "inline-math-unsupported"
+      ]
+    },
+    {
+      "id": "decode-positioned-character-references",
+      "family": "raw-entities-html",
+      "change": "ignore entity-bearing source slices and use mdast-decoded text",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_final_review final_review_source_preservation_vectors_are_exact_and_panic_free -- --exact",
+      "exitCode": 101,
+      "killedRows": [
+        "entities-raw",
+        "inline-html-entities-raw"
+      ]
+    },
+    {
+      "id": "mix-byte-offset-with-character-index",
+      "family": "unicode-source-boundaries",
+      "change": "apply the UTF-8 byte offset of backslash-sum directly to a Vec<char>",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_final_review final_review_source_preservation_vectors_are_exact_and_panic_free -- --exact",
+      "exitCode": 101,
+      "killedRows": [
+        "unicode-before-sum",
+        "unicode-before-sum-no-panic",
+        "unicode-wide-sum-boundaries"
+      ],
+      "observation": "the no-panic row raised range start index 45 out of range for a 17-character slice"
+    }
+  ],
+  "restoration": "Every mutation was reverted by an inverse patch; the full 10-row review oracle and bounded Unicode properties passed afterward."
+}

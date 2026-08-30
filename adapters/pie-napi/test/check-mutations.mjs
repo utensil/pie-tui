@@ -1,0 +1,626 @@
+import assert from 'node:assert/strict'
+import { spawnSync } from 'node:child_process'
+import {
+  cp,
+  copyFile,
+  mkdir,
+  mkdtemp,
+  readFile,
+  readdir,
+  rm,
+  symlink,
+  writeFile,
+} from 'node:fs/promises'
+import { tmpdir } from 'node:os'
+import { dirname, join } from 'node:path'
+import { fileURLToPath } from 'node:url'
+
+const packageRoot = dirname(dirname(fileURLToPath(import.meta.url)))
+const mutationRoot = await mkdtemp(join(tmpdir(), 'pie-tui-napi-mutations-'))
+const directFiles = [
+  'LICENSE',
+  'README.md',
+  'index.cjs',
+  'index.d.ts',
+  'index.js',
+  'native-loader.cjs',
+  'package.json',
+  'runtime.cjs',
+]
+const testFiles = [
+  'artifact-helpers.mjs',
+  'boundary-child.mjs',
+  'check-reference.mjs',
+  'oracle-contract.json',
+  'm6-runtime.test.mjs',
+  'm6-semantic-oracle.mjs',
+  'pack-consumer.mjs',
+  'runtime.test.mjs',
+]
+
+for (const entry of await readdir(packageRoot)) {
+  if (entry.endsWith('.node')) {
+    directFiles.push(entry)
+  }
+}
+
+async function prepareCase(name) {
+  const directory = join(mutationRoot, name)
+  await mkdir(join(directory, 'test'), { recursive: true })
+  for (const file of directFiles) {
+    await copyFile(join(packageRoot, file), join(directory, file))
+  }
+  for (const file of testFiles) {
+    await copyFile(join(packageRoot, 'test', file), join(directory, 'test', file))
+  }
+  await symlink(join(packageRoot, 'node_modules'), join(directory, 'node_modules'))
+  return directory
+}
+
+async function replaceOnce(directory, file, from, to) {
+  const path = join(directory, file)
+  const content = await readFile(path, 'utf8')
+  const occurrences = content.split(from).length - 1
+  assert.equal(occurrences, 1, `${file}: mutation marker count`)
+  await writeFile(path, content.replace(from, to))
+}
+
+const runtimeMutations = [
+  {
+    name: 'cursor-marker-byte-drift',
+    from: 'const CURSOR_MARKER = native.nativeCursorMarker()',
+    to: "const CURSOR_MARKER = `${native.nativeCursorMarker()}x`",
+    expected:
+      'canonical constants retain exact content, descriptors, and shared identity',
+  },
+  {
+    name: 'keybinding-table-omission',
+    from: 'for (const definition of native.nativeGetTuiKeybindingDefinitions()) {',
+    to:
+      'for (const definition of native.nativeGetTuiKeybindingDefinitions().slice(1)) {',
+    expected:
+      'canonical constants retain exact content, descriptors, and shared identity',
+  },
+  {
+    name: 'spacer-native-state-bypass',
+    from: '    state.setLines(Number(this.lines))',
+    to: '    state.setLines(0)',
+    expected:
+      'Spacer keeps canonical prototypes while native state stays per instance',
+  },
+  {
+    name: 'fuzzy-match-case-drift',
+    from: '    text.toLowerCase(),',
+    to: '    text.toUpperCase(),',
+    expected:
+      'fuzzy matching preserves UTF-16 scoring and callback reentrancy',
+  },
+  {
+    name: 'fuzzy-filter-callback-snapshot',
+    from: '  for (const item of items) {',
+    to: '  for (const item of [...items]) {',
+    expected:
+      'fuzzy matching preserves UTF-16 scoring and callback reentrancy',
+  },
+  {
+    name: 'render-image-capability-inversion',
+    from: '  if (!capabilities.images) return null',
+    to: '  if (capabilities.images) return null',
+    expected:
+      'renderImage reads live capability and cell facts with JavaScript Number semantics',
+  },
+  {
+    name: 'image-fallback-link-omission',
+    from: '    if (getCapabilities().hyperlinks && isAbsolute(filename)) {',
+    to: '    if (false && getCapabilities().hyperlinks && isAbsolute(filename)) {',
+    expected:
+      'imageFallback snapshots live capability facts and Node path behavior',
+  },
+  {
+    name: 'composite-raw-utf16-loss',
+    from:
+      '  const { encoded, decode, tokenPrefix } = encodeRawUtf16Strings(\n    baseLine,\n    overlayLine,\n  )',
+    to:
+      "  const encoded = [baseLine.toWellFormed(), overlayLine.toWellFormed()]\n  const decode = (value) => value\n  const tokenPrefix = ''",
+    expected:
+      'compositeTuiLine preserves ANSI, wide cells, raw UTF-16, and image identity',
+  },
+  {
+    name: 'composite-fractional-boundary-floor',
+    from:
+      '  const overlay = native.nativeSliceComposite(\n    encodedOverlay,\n    Number(overlayWidth),\n    tokenPrefix,\n  )',
+    to:
+      '  const overlay = native.nativeSliceComposite(\n    encodedOverlay,\n    Math.floor(Number(overlayWidth)),\n    tokenPrefix,\n  )',
+    expected:
+      'compositeTuiLine preserves ANSI, wide cells, raw UTF-16, and image identity',
+  },
+  {
+    name: 'composite-cross-segment-utf16-width',
+    from: '    visibleWidthRawUtf16(decodedResult) <= totalWidth',
+    to: '    native.nativeVisibleWidth(result) <= totalWidth',
+    expected:
+      'compositeTuiLine preserves ANSI, wide cells, raw UTF-16, and image identity',
+  },
+  {
+    name: 'composite-partial-token-leak',
+    from:
+      '    Number(afterLength),\n    tokenPrefix,\n  )',
+    to:
+      "    Number(afterLength),\n    '\\u0000',\n  )",
+    expected:
+      'compositeTuiLine preserves ANSI, wide cells, raw UTF-16, and image identity',
+  },
+  {
+    name: 'raw-utf16-loss',
+    from: 'native.nativeRenderLatex(source, {',
+    to: 'native.nativeRenderLatex(source.toWellFormed(), {',
+    expected: 'renderLatex crosses Node-API as exact raw UTF-16',
+  },
+  {
+    name: 'nullable-collapse',
+    from: 'const fromNullable = (value) => (value === null ? undefined : value)',
+    to: 'const fromNullable = (value) => value',
+    expected: 'undefined and null remain distinct at the public boundary',
+  },
+  {
+    name: 'cell-identity-clone',
+    from: '  cellDimensions = dimensions\n',
+    to: '  cellDimensions = { ...dimensions }\n',
+    expected: 'cell and capability slots preserve caller identity across loaders',
+  },
+  {
+    name: 'capability-post-callback-env-reread',
+    from:
+      '  return native.nativeDetectCapabilities(\n    environment,\n    Boolean(tmuxForwards),\n  )',
+    to:
+      '  return native.nativeDetectCapabilities(\n    snapshotTerminalEnvironment(),\n    Boolean(tmuxForwards),\n  )',
+    expected:
+      'detectCapabilities snapshots all environment facts before the tmux callback',
+  },
+  {
+    name: 'reject-image-id-zero',
+    from:
+      "  if (!Number.isSafeInteger(value) || value < 0 || value > 0xffffffff) {\n    throw new RangeError('imageId must be an unsigned 32-bit integer')",
+    to:
+      "  if (!Number.isSafeInteger(value) || value < 1 || value > 0xffffffff) {\n    throw new RangeError('imageId must be an unsigned 32-bit integer')",
+    expected: 'image IDs and codec defaults match the reference receipts',
+  },
+  {
+    name: 'kitty-utf8-byte-slicing',
+    from: 'native.nativeEncodeKittyUtf16(base64Data, nativeOptions)',
+    to: 'native.nativeEncodeKitty(base64Data, nativeOptions)',
+    expected: 'Kitty chunks byte-exactly at 4096 JavaScript UTF-16 units',
+  },
+  {
+    name: 'calculate-rows-u32-coercion',
+    from:
+      '  return calculateImageCellSize(\n    imageDimensions,\n    targetWidthCells,\n    undefined,\n    dimensions,\n  ).rows',
+    to:
+      '  return native.nativeCalculateImageRows(\n    imageDimensions,\n    targetWidthCells,\n    dimensions,\n  )',
+    expected: 'image row calculation retains canonical JavaScript Number coercion',
+  },
+  {
+    name: 'iterm2-rust-size-approximation',
+    from:
+      "  return native.nativeEncodeITerm2Utf16(\n    base64Data,\n    Buffer.byteLength(base64Data, 'base64'),\n    nativeOptions,\n  )",
+    to: '  return native.nativeEncodeITerm2(base64Data, nativeOptions)',
+    expected: 'iTerm2 byte lengths are computed with Node Buffer base64 semantics',
+  },
+  {
+    name: 'default-arity-drift',
+    from: '  dimensions = { widthPx: 9, heightPx: 18 },\n',
+    to: '  dimensions,\n',
+    expected: 'ESM and CJS expose the exact reviewed names, slots, and descriptors',
+  },
+  {
+    name: 'namespace-export-order',
+    from: 'const selectedExports = {\n  Box,\n  CURSOR_MARKER,\n',
+    to: 'const selectedExports = {\n  CURSOR_MARKER,\n  Box,\n',
+    expected: 'ESM and CJS expose the exact reviewed names, slots, and descriptors',
+  },
+  {
+    name: 'namespace-mutation-traps',
+    from:
+      'const runtime = new Proxy(runtimeTarget, {\n  set: () => false,\n  defineProperty: () => false,\n  deleteProperty: () => false,\n})',
+    to: 'const runtime = runtimeTarget',
+    expected: 'ESM and CJS expose the exact reviewed names, slots, and descriptors',
+  },
+  {
+    name: 'duplicate-export-value',
+    from: '  decodeKittyPrintable,\n',
+    to: '  decodeKittyPrintable: parseKey,\n',
+    expected: 'ESM and CJS expose the exact reviewed names, slots, and descriptors',
+  },
+  {
+    name: 'unintended-export',
+    from: 'const selectedExports = {\n',
+    to: 'const selectedExports = {\n  unintendedM5Export: () => undefined,\n',
+    expected: 'ESM and CJS expose the exact reviewed names, slots, and descriptors',
+  },
+  {
+    name: 'lossy-utility-input',
+    from: 'function assertWellFormed(value, parameter) {\n',
+    to:
+      'function assertWellFormed(value, parameter) {\n  return value\n',
+    expected: 'pure utilities are exact for well-formed strings and reject lossy input',
+  },
+]
+
+const m6RuntimeMutations = [
+  {
+    name: 'm6-main-native-planner-omission',
+    from: '    mainScreenPlannerRegistry.set(this, new native.NativeMainScreenPlanner())',
+    to: '    mainScreenPlannerRegistry.set(this, new native.NativeAltScreenPlanner())',
+    expected: 'M6 MainScreen is native-planned, differential, synchronized, and stopped-safe',
+  },
+  {
+    name: 'm6-color-scheme-query-byte-drift',
+    from: "      this.terminal.write('\\x1b[?996n')",
+    to: "      this.terminal.write('\\x1b[?995n')",
+    expected: 'M6 OSC 11 queries and color-scheme notifications consume terminal reports',
+  },
+  {
+    name: 'm6-cell-size-query-byte-drift',
+    from: "    if (getCapabilities().images) this.terminal.write('\\x1b[16t')",
+    to: "    if (getCapabilities().images) this.terminal.write('\\x1b[15t')",
+    expected: 'M6 terminal queries preserve DSR, cell-size, and hex-color behavior',
+  },
+  {
+    name: 'm6-scroll-disable-follow-loss',
+    from: '    const nextFollowSuppressedAtEnd = options.disableFollow === true && next === maximum',
+    to: '    const nextFollowSuppressedAtEnd = false',
+    expected: 'M6 ScrollView disableFollow suppresses reattachment at the current end',
+  },
+  {
+    name: 'm6-alt-mouse-default-inversion',
+    from: '    this.mouseEnabled = options.mouse ?? true',
+    to: '    this.mouseEnabled = options.mouse ?? false',
+    expected: 'M6 AltScreen defaults mouse on and emits native-planned synchronized diffs',
+  },
+  {
+    name: 'm6-alt-layout-height-collapse',
+    from: '    this.currentLayout = renderLayoutFrame(root, width, height, () => this.requestRender())\n    let document = this.currentLayout.lines',
+    to: '    this.currentLayout = renderLayoutFrame(root, width, 1, () => this.requestRender())\n    let document = this.currentLayout.lines',
+    expected: 'M6 AltScreen allocates fullscreen VStack growth to the primary ScrollView',
+  },
+]
+
+const m6SemanticMutations = [
+  {
+    name: 'm6-alt-search-open-omission',
+    from: '      if (!release) this.openSearch()',
+    to: '      if (false && !release) this.openSearch()',
+    expected: 'AltScreen keyboard/search receipt',
+  },
+  {
+    name: 'm6-alt-selection-copy-range-loss',
+    from: "      lines.push(stripTerminalSequences(sliceByColumn(line, columns.start, Math.max(0, columns.end - columns.start), true)).trimEnd())",
+    to: "      lines.push(stripTerminalSequences(sliceByColumn(line, columns.start, Math.max(0, columns.end - columns.start - 1), true)).trimEnd())",
+    expected: 'AltScreen selection/copy receipt',
+  },
+  {
+    name: 'm6-alt-kitty-metadata-ownership-loss',
+    from: '      registerKittyImageMetadata({',
+    to: '      false && registerKittyImageMetadata({',
+    expected: 'AltScreen Kitty cache/placement receipt',
+  },
+]
+
+async function expectKilled(name, directory, args, expected) {
+  return expectKilledWithEnv(name, directory, args, expected)
+}
+
+async function expectKilledWithEnv(
+  name,
+  directory,
+  args,
+  expected,
+  extraEnv = {},
+) {
+  const result = spawnSync(process.execPath, args, {
+    cwd: directory,
+    encoding: 'utf8',
+    env: {
+      ...process.env,
+      NAPI_RS_NATIVE_LIBRARY_PATH: '',
+      ...extraEnv,
+    },
+  })
+  const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`
+  assert.notEqual(result.status, 0, `mutation survived: ${name}`)
+  assert.ok(output.includes(expected), `mutation did not reach its gate: ${name}`)
+  console.log(`mutation killed: ${name}`)
+}
+
+async function prepareReferenceCopy(directory) {
+  const sourceDist = process.env.PI_TUI_DIST
+  assert.ok(sourceDist, 'PI_TUI_DIST is required for provenance mutations')
+  assert.ok(
+    process.env.PI_TUI_TARBALL,
+    'PI_TUI_TARBALL is required for provenance mutations',
+  )
+  const sourcePackage = dirname(sourceDist)
+  const referenceRoot = join(directory, 'reference')
+  const copiedPackage = join(referenceRoot, 'package')
+  const copiedDist = join(copiedPackage, 'dist')
+  await mkdir(copiedPackage, { recursive: true })
+  await cp(sourceDist, copiedDist, { recursive: true })
+  await copyFile(
+    join(sourcePackage, 'package.json'),
+    join(copiedPackage, 'package.json'),
+  )
+  await symlink(
+    dirname(dirname(sourcePackage)),
+    join(referenceRoot, 'node_modules'),
+  )
+  return copiedDist
+}
+
+try {
+  for (const mutation of runtimeMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(
+      directory,
+      'runtime.cjs',
+      mutation.from,
+      mutation.to,
+    )
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', 'test/runtime.test.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of m6RuntimeMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', 'test/m6-runtime.test.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of m6SemanticMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/m6-semantic-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  const paddingDirectory = await prepareCase('padded-allocation-guard')
+  await replaceOnce(
+    paddingDirectory,
+    'runtime.cjs',
+    'const MAX_PAD_WIDTH = MAX_STRING_LENGTH',
+    'const MAX_PAD_WIDTH = 64',
+  )
+  await replaceOnce(
+    paddingDirectory,
+    'runtime.cjs',
+    "  if (pad && checkedMaxWidth > MAX_PAD_WIDTH) {\n    throw new RangeError('padded output exceeds the JavaScript string limit')\n  }\n",
+    '',
+  )
+  const paddingResult = spawnSync(
+    process.execPath,
+    ['test/boundary-child.mjs'],
+    {
+      cwd: paddingDirectory,
+      encoding: 'utf8',
+      env: {
+        ...process.env,
+        NAPI_RS_NATIVE_LIBRARY_PATH: '',
+        PIE_NAPI_PAD_WIDTH: '65',
+      },
+    },
+  )
+  const paddingOutput = `${paddingResult.stdout ?? ''}\n${paddingResult.stderr ?? ''}`
+  assert.notEqual(paddingResult.status, 0, 'mutation survived: padded-allocation-guard')
+  assert.match(paddingOutput, /Missing expected exception/)
+  console.log('mutation killed: padded-allocation-guard')
+
+  const artifactDigestDirectory = await prepareCase(
+    'reference-artifact-digest',
+  )
+  await replaceOnce(
+    artifactDigestDirectory,
+    'test/oracle-contract.json',
+    '3abec26d852a9574fd341b8b4984277fc76dabb57a0360df4c19cc1fc0df993e',
+    '0abec26d852a9574fd341b8b4984277fc76dabb57a0360df4c19cc1fc0df993e',
+  )
+  await expectKilled(
+    'reference-artifact-digest',
+    artifactDigestDirectory,
+    ['test/check-reference.mjs'],
+    'reference tarball sha256',
+  )
+
+  const dependencyTreeDirectory = await prepareCase(
+    'reference-dependency-tree-digest',
+  )
+  await replaceOnce(
+    dependencyTreeDirectory,
+    'test/oracle-contract.json',
+    '0cefc607630cc42e61985c544c55bde6955c23ec49d0b3d0f39fe51ec4296767',
+    '1cefc607630cc42e61985c544c55bde6955c23ec49d0b3d0f39fe51ec4296767',
+  )
+  await expectKilled(
+    'reference-dependency-tree-digest',
+    dependencyTreeDirectory,
+    ['test/check-reference.mjs'],
+    'get-east-asian-width tree digest',
+  )
+
+  const selectedClosureDirectory = await prepareCase(
+    'reference-selected-closure-digest',
+  )
+  await replaceOnce(
+    selectedClosureDirectory,
+    'test/oracle-contract.json',
+    '4e8de99d7a73e192b1215d5e37c1cbd687be1c8917edfd0ceb7636f44352cbc8',
+    '5e8de99d7a73e192b1215d5e37c1cbd687be1c8917edfd0ceb7636f44352cbc8',
+  )
+  await expectKilled(
+    'reference-selected-closure-digest',
+    selectedClosureDirectory,
+    ['test/check-reference.mjs'],
+    'selected surface closure fuzzy.js',
+  )
+
+  const sourceOrderDirectory = await prepareCase(
+    'reference-source-export-order',
+  )
+  await replaceOnce(
+    sourceOrderDirectory,
+    'test/oracle-contract.json',
+    '    "Marked",\n    "CombinedAutocompleteProvider",',
+    '    "CombinedAutocompleteProvider",\n    "Marked",',
+  )
+  await expectKilled(
+    'reference-source-export-order',
+    sourceOrderDirectory,
+    ['test/check-reference.mjs'],
+    'canonical index.js runtime export source order',
+  )
+
+  const canonicalTypeDirectory = await prepareCase(
+    'reference-canonical-runtime-type',
+  )
+  await replaceOnce(
+    canonicalTypeDirectory,
+    'test/oracle-contract.json',
+    '  "canonicalRuntimeTypes": {\n    "Box": "function",',
+    '  "canonicalRuntimeTypes": {\n    "Box": "object",',
+  )
+  await expectKilled(
+    'reference-canonical-runtime-type',
+    canonicalTypeDirectory,
+    ['test/check-reference.mjs'],
+    'Box',
+  )
+
+  for (const [name, relativeFile] of [
+    ['reference-index-mutation', 'index.js'],
+    ['reference-transitive-mutation', 'terminal-image.js'],
+  ]) {
+    const directory = await prepareCase(name)
+    const copiedDist = await prepareReferenceCopy(directory)
+    const path = join(copiedDist, relativeFile)
+    await writeFile(path, `${await readFile(path, 'utf8')}\n// mutation\n`)
+    await expectKilledWithEnv(
+      name,
+      directory,
+      ['test/check-reference.mjs'],
+      'colocated dist tree digest',
+      { PI_TUI_DIST: copiedDist },
+    )
+  }
+
+  const dependencyDirectory = await prepareCase(
+    'reference-dependency-version',
+  )
+  const dependencyDist = await prepareReferenceCopy(dependencyDirectory)
+  await replaceOnce(
+    dirname(dependencyDist),
+    'package.json',
+    '"marked": "18.0.5"',
+    '"marked": "18.0.4"',
+  )
+  await expectKilledWithEnv(
+    'reference-dependency-version',
+    dependencyDirectory,
+    ['test/check-reference.mjs'],
+    'colocated install dependencies',
+    { PI_TUI_DIST: dependencyDist },
+  )
+
+  const readmeCountDirectory = await prepareCase('readme-selected-count')
+  await replaceOnce(
+    readmeCountDirectory,
+    'README.md',
+    'complete 69-export runtime namespace and exact 133-name declaration\nnamespace of the authenticated pi-tui 0.84.2 baseline',
+    'incomplete 68-export runtime namespace and exact 133-name declaration\nnamespace of the authenticated pi-tui 0.84.2 baseline',
+  )
+  await expectKilled(
+    'readme-selected-count',
+    readmeCountDirectory,
+    ['test/pack-consumer.mjs'],
+    'README pins the complete 69-export baseline',
+  )
+
+  const readmeBoundaryDirectory = await prepareCase(
+    'readme-drop-in-boundary',
+  )
+  await replaceOnce(
+    readmeBoundaryDirectory,
+    'README.md',
+    'it is not the upstream package and does not claim compatibility outside the\ndocumented parity ledger',
+    'it is the upstream package and claims compatibility outside the\ndocumented parity ledger',
+  )
+  await expectKilled(
+    'readme-drop-in-boundary',
+    readmeBoundaryDirectory,
+    ['test/pack-consumer.mjs'],
+    'README preserves the recorded compatibility boundary',
+  )
+
+  const differentialWiringDirectory = await prepareCase(
+    'verify-m6-oracle-wiring',
+  )
+  await replaceOnce(
+    differentialWiringDirectory,
+    'package.json',
+    ' && npm run test:m6oracle',
+    '',
+  )
+  await expectKilled(
+    'verify-m6-oracle-wiring',
+    differentialWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated 0.84.2 M6 semantic gate',
+  )
+
+  const licenseOmissionDirectory = await prepareCase('license-omission')
+  await rm(join(licenseOmissionDirectory, 'LICENSE'))
+  await expectKilled(
+    'license-omission',
+    licenseOmissionDirectory,
+    ['test/pack-consumer.mjs'],
+    'ENOENT',
+  )
+
+  const licenseAlterationDirectory = await prepareCase('license-alteration')
+  await writeFile(
+    join(licenseAlterationDirectory, 'LICENSE'),
+    'MIT License\n\naltered mutation\n',
+  )
+  await expectKilled(
+    'license-alteration',
+    licenseAlterationDirectory,
+    ['test/pack-consumer.mjs'],
+    'package LICENSE matches the repo receipt',
+  )
+
+  const packDirectory = await prepareCase('native-artifact-omission')
+  await replaceOnce(
+    packDirectory,
+    'package.json',
+    '    "pie-tui-native.*.node",\n',
+    '',
+  )
+  await expectKilled(
+    'native-artifact-omission',
+    packDirectory,
+    ['test/pack-consumer.mjs'],
+    'AssertionError',
+  )
+} finally {
+  await rm(mutationRoot, { recursive: true, force: true })
+}

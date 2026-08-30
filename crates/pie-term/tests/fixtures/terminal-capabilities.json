@@ -1,0 +1,370 @@
+{
+  "oracle": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "files": {
+      "terminal-image.js": "b2b60272f6f25dbb559722dffa369944f5c8846fa726c31fb841d1532470adc2"
+    },
+    "platform": "darwin"
+  },
+  "cases": [
+    {
+      "label": "unknown",
+      "env": {},
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": false,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "unknown-truecolor",
+      "env": {
+        "COLORTERM": "TRUECOLOR"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "unknown-24bit",
+      "env": {
+        "COLORTERM": "24Bit"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "tmux-env-blocks-kitty",
+      "env": {
+        "TMUX": "socket",
+        "KITTY_WINDOW_ID": "1",
+        "COLORTERM": "truecolor"
+      },
+      "probeResult": true,
+      "probeCalls": 1,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "tmux-wins-over-screen",
+      "env": {
+        "TMUX": "socket",
+        "TERM": "screen-256color"
+      },
+      "probeResult": true,
+      "probeCalls": 1,
+      "result": {
+        "images": null,
+        "trueColor": false,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "tmux-term-probe-false",
+      "env": {
+        "TERM": "TmUx-256Color",
+        "TERM_PROGRAM": "iTerm.app"
+      },
+      "probeResult": false,
+      "probeCalls": 1,
+      "result": {
+        "images": null,
+        "trueColor": false,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "screen-blocks-kitty",
+      "env": {
+        "TERM": "screen-256color",
+        "KITTY_WINDOW_ID": "1",
+        "COLORTERM": "truecolor"
+      },
+      "probeResult": true,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "kitty-env",
+      "env": {
+        "KITTY_WINDOW_ID": "1"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "kitty-program",
+      "env": {
+        "TERM_PROGRAM": "KiTtY"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "ghostty-program",
+      "env": {
+        "TERM_PROGRAM": "Ghostty"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "ghostty-term",
+      "env": {
+        "TERM": "xterm-ghostty"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "ghostty-env",
+      "env": {
+        "GHOSTTY_RESOURCES_DIR": "/opt/ghostty"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "wezterm-env",
+      "env": {
+        "WEZTERM_PANE": "3"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "wezterm-program",
+      "env": {
+        "TERM_PROGRAM": "WezTerm"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "warp-program",
+      "env": {
+        "TERM_PROGRAM": "WarpTerminal"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "warp-session",
+      "env": {
+        "WARP_SESSION_ID": "s"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "warp-uuid",
+      "env": {
+        "WARP_TERMINAL_SESSION_UUID": "u"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "iterm-session",
+      "env": {
+        "ITERM_SESSION_ID": "s"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "iterm2",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "iterm-program",
+      "env": {
+        "TERM_PROGRAM": "iTerm.app"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "iterm2",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "windows-terminal",
+      "env": {
+        "WT_SESSION": "s"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "vscode",
+      "env": {
+        "TERM_PROGRAM": "vscode"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "alacritty",
+      "env": {
+        "TERM_PROGRAM": "Alacritty"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "jetbrains",
+      "env": {
+        "TERMINAL_EMULATOR": "JetBrains-JediTerm",
+        "COLORTERM": "truecolor"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": null,
+        "trueColor": true,
+        "hyperlinks": false
+      }
+    },
+    {
+      "label": "kitty-wins-over-iterm",
+      "env": {
+        "KITTY_WINDOW_ID": "1",
+        "ITERM_SESSION_ID": "s"
+      },
+      "probeResult": false,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    },
+    {
+      "label": "empty-tmux-is-false",
+      "env": {
+        "TMUX": "",
+        "TERM_PROGRAM": "kitty"
+      },
+      "probeResult": true,
+      "probeCalls": 0,
+      "result": {
+        "images": "kitty",
+        "trueColor": true,
+        "hyperlinks": true
+      }
+    }
+  ],
+  "cache": {
+    "first": {
+      "images": "kitty",
+      "trueColor": true,
+      "hyperlinks": true
+    },
+    "firstSecondSame": true,
+    "stale": {
+      "images": "kitty",
+      "trueColor": true,
+      "hyperlinks": true
+    },
+    "firstStaleSame": true,
+    "refreshed": {
+      "images": "iterm2",
+      "trueColor": true,
+      "hyperlinks": true
+    },
+    "refreshedSameAsFirst": false,
+    "overridden": {
+      "images": null,
+      "trueColor": false,
+      "hyperlinks": true
+    },
+    "overrideSameIdentity": true
+  }
+}

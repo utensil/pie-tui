@@ -1,0 +1,54 @@
+{
+  "schema": "pie-tui-m4-markdown-mutation-receipt-v1",
+  "date": "2026-08-30",
+  "baseline": "a875c3e",
+  "mutations": [
+    {
+      "id": "parser-model-commonmark-only",
+      "family": "parser-model",
+      "change": "replace ParseOptions::gfm() with ParseOptions::default()",
+      "command": "cargo test -p pie-components --test golden_m4_markdown --test golden_m4_markdown_packet",
+      "exitCode": 101,
+      "killedBy": [
+        "markdown_plain_blocks_lists_options_and_tables_match_reference",
+        "markdown_styling_quotes_code_and_latex_match_reference",
+        "markdown_adversarial_matrix_matches_pinned_reference"
+      ],
+      "observation": "GFM tables and strikethrough diverged from the pinned marked18 outputs"
+    },
+    {
+      "id": "default-preserve-ordered-markers",
+      "family": "default-options",
+      "change": "set preserve_ordered_list_markers default to true",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_packet packet_identity_and_default_marker_cases_match_reference -- --exact",
+      "exitCode": 101,
+      "killedBy": [
+        "packet_identity_and_default_marker_cases_match_reference"
+      ],
+      "observation": "ordered-paren and omitted-options guard retained 7 instead of normalizing to 4"
+    },
+    {
+      "id": "remove-marked-ordered-interrupt-normalization",
+      "family": "list-compatibility",
+      "change": "parse the unnormalized source directly",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_indent marked_ordered_interrupt_indentation_matrix_is_exact -- --exact",
+      "exitCode": 101,
+      "killedBy": [
+        "marked_ordered_interrupt_indentation_matrix_is_exact"
+      ],
+      "observation": "all 12 indent 5 through 8 cross-product rows lost the nested ordered-list structure"
+    },
+    {
+      "id": "disable-render-cache-hit",
+      "family": "callback-lifecycle",
+      "change": "force same-text same-width renders to miss the cache",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_packet packet_lazy_transform_callback_and_cache_lifecycle_is_exact -- --exact",
+      "exitCode": 101,
+      "killedBy": [
+        "packet_lazy_transform_callback_and_cache_lifecycle_is_exact"
+      ],
+      "observation": "callback/event count increased from the exact 231 events to 286"
+    }
+  ],
+  "restoration": "Every mutation was reverted with an inverse patch before the receipt was written."
+}

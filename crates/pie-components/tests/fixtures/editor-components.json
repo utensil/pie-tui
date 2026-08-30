@@ -1,0 +1,1255 @@
+{
+  "generator": "tools/golden/gen-golden-editor-components.mjs",
+  "reference": "0.84.1",
+  "referencePackage": {
+    "name": "@earendil-works/pi-tui",
+    "version": "0.84.1"
+  },
+  "sourceDigests": {
+    "packageJson": "f7f8f42f7cfa8c53c4f00bdc12c14cb035aa62d9fb73555661ce08b68da61290",
+    "editorJs": "a384c140d84e5352605250fab0e1284add133dbdda1e986419c4a0778ffa0853",
+    "editorDts": "fc3b400c5c965e4906971df836c1fae0a62c89524cda44d85b3cca86782332be",
+    "inputJs": "4762edfaa75de102aabc00f8660c591f2d7de1ba6e7e212900dd81c48f231e63",
+    "inputDts": "f2a2bab62c83d6e4b2b69a243c96df26f81ac98963031a67c92a083c57309871",
+    "editorComponentDts": "5de081a8879f096e0bb0f7efb1f4751bab259b1a77663be041938758d22e50c6",
+    "selectListJs": "ea14ebd2f64ed045563360b598eeccc816f7f9f252df6b7bc492309cfe49c545",
+    "keybindingsJs": "d27090a36394fc4f59350e7f3234c601082d950e179ba6742d9557aae2a72168",
+    "keysJs": "14b18205fd5e56ed3b183392c82bd72e41ba3dab1d345e47b2b17af6988493cc",
+    "killRingJs": "52212d532f2c5b85ed8977b0f4431f43998c6dc7746d26efc81eb7975b119122",
+    "tuiJs": "b425ed8e8535cf76deaeeea7de91edfda3d07606ee5ef9b2f02028583600a05a",
+    "undoStackJs": "7fbb318db3521aa1fa6804ffe50245c18d9e9f210a85a48e175fae6a629259cb",
+    "utilsJs": "70c037e8c3c6ec909c4bab6b14777e1f33ab1f5c39f5f1f3aa6f8966357d8052",
+    "wordNavigationJs": "72618be2d05d6c20d9987d0d74de487335056fa0a00a145687f6106a6ae6b9d0",
+    "keybindingsDts": "93450b5ff2259c52767d4bc3dffb17d7c9341f866507cf00aba67cddf42b51b0",
+    "keysDts": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+    "utilsDts": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+    "eastAsianWidthPackageJson": "d263e50dd1a43aee9acda4d7f066e66b0d0bde1f2852ea6e7153750a5e3a3e52",
+    "eastAsianWidthIndexJs": "d7b1ba05914c0fc311c20e5618bf8d0893c9c74078a07975e2df981445e64887",
+    "eastAsianWidthLookupJs": "c80ecc22b120b27ef5ea9facb7000b8fd4ec037a84d9231d215f1c44bc9c21d0",
+    "eastAsianWidthLookupDataJs": "f6b40f86c9a2a6808ec808fa8ddcb8da261254cc6121d37ffaeb2bf35dad1d5b",
+    "eastAsianWidthUtilitiesJs": "4b08a7e9e3ffacbcf198a6abceb2338d52ac671899e52ccc2851c898bfccac42"
+  },
+  "dependencies": {
+    "getEastAsianWidth": {
+      "name": "get-east-asian-width",
+      "version": "1.6.0",
+      "entry": "index.js"
+    }
+  },
+  "runtime": {
+    "node": "24.4.1",
+    "icu": "77.1",
+    "unicode": "16.0"
+  },
+  "editorCases": [
+    {
+      "name": "defaults-empty",
+      "state": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "render": [
+        "────────",
+        "\u001b[7m \u001b[0m       ",
+        "────────"
+      ]
+    },
+    {
+      "name": "focused-empty",
+      "state": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": true,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "render": [
+        "────────",
+        "\u001b_pi:c\u0007\u001b[7m \u001b[0m       ",
+        "────────"
+      ]
+    },
+    {
+      "name": "options-normalize-unicode",
+      "state": {
+        "text": "A\nB    👩🏽‍💻é",
+        "expandedText": "A\nB    👩🏽‍💻é",
+        "lines": [
+          "A",
+          "B    👩🏽‍💻é"
+        ],
+        "cursor": {
+          "line": 1,
+          "col": 14
+        },
+        "paddingX": 2,
+        "autocompleteMaxVisible": 20,
+        "focused": true,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "render": [
+        "──────────────",
+        "  A           ",
+        "  B    👩🏽‍💻é\u001b_pi:c\u0007\u001b[7m \u001b[0m   ",
+        "──────────────"
+      ]
+    },
+    {
+      "name": "insert-normalize-unicode",
+      "state": {
+        "text": "A\nB    👩🏽‍💻é\nX    Y",
+        "expandedText": "A\nB    👩🏽‍💻é\nX    Y",
+        "lines": [
+          "A",
+          "B    👩🏽‍💻é",
+          "X    Y"
+        ],
+        "cursor": {
+          "line": 2,
+          "col": 6
+        },
+        "paddingX": 2,
+        "autocompleteMaxVisible": 20,
+        "focused": true,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "render": [
+        "──────────────",
+        "  A           ",
+        "  B    👩🏽‍💻é    ",
+        "  X    Y\u001b_pi:c\u0007\u001b[7m \u001b[0m     ",
+        "──────────────"
+      ]
+    },
+    {
+      "name": "submit-effect-order",
+      "effects": [
+        [
+          "change",
+          ""
+        ],
+        [
+          "submit",
+          "old"
+        ]
+      ],
+      "state": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "grapheme-atomic-input",
+      "before": {
+        "text": "👩🏽‍💻é",
+        "expandedText": "👩🏽‍💻é",
+        "lines": [
+          "👩🏽‍💻é"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 9
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "afterLeft": {
+        "text": "👩🏽‍💻é",
+        "expandedText": "👩🏽‍💻é",
+        "lines": [
+          "👩🏽‍💻é"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 7
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "afterBackspace": {
+        "text": "é",
+        "expandedText": "é",
+        "lines": [
+          "é"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "multi-codepoint-jump-target",
+      "state": {
+        "text": "aeXé",
+        "expandedText": "aeXé",
+        "lines": [
+          "aeXé"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 3
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "live-newline-submit-backslash-enter",
+      "effects": [
+        [
+          "change",
+          ""
+        ],
+        [
+          "change",
+          ""
+        ],
+        [
+          "submit",
+          ""
+        ]
+      ],
+      "state": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "paste-10-lines",
+      "afterPaste": {
+        "text": "line-1\nline-2\nline-3\nline-4\nline-5\nline-6\nline-7\nline-8\nline-9\nline-10",
+        "expandedText": "line-1\nline-2\nline-3\nline-4\nline-5\nline-6\nline-7\nline-8\nline-9\nline-10",
+        "lines": [
+          "line-1",
+          "line-2",
+          "line-3",
+          "line-4",
+          "line-5",
+          "line-6",
+          "line-7",
+          "line-8",
+          "line-9",
+          "line-10"
+        ],
+        "cursor": {
+          "line": 9,
+          "col": 7
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "afterUndo": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "paste-11-lines",
+      "afterPaste": {
+        "text": "[paste #1 +11 lines]",
+        "expandedText": "line-1\nline-2\nline-3\nline-4\nline-5\nline-6\nline-7\nline-8\nline-9\nline-10\nline-11",
+        "lines": [
+          "[paste #1 +11 lines]"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 20
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "afterUndo": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "owned-paste-marker-render",
+      "wrapped": [
+        "──────",
+        "[past ",
+        "e #1  ",
+        "+11   ",
+        "lines ",
+        "]\u001b_pi:c\u0007\u001b[7m \u001b[0m    ",
+        "──────"
+      ],
+      "ownedAtStart": [
+        "────────────────────────",
+        "\u001b_pi:c\u0007\u001b[7m[paste #1 +11 lines]\u001b[0m    ",
+        "────────────────────────"
+      ],
+      "literalAtStart": [
+        "────────────────────────",
+        "\u001b_pi:c\u0007\u001b[7m[\u001b[0mpaste #1 +11 lines]    ",
+        "────────────────────────"
+      ]
+    },
+    {
+      "name": "long-document-scroll-top-marker",
+      "state": {
+        "text": "row-1\nrow-2\nrow-3\nrow-4\nrow-5\nrow-6\nrow-7\nrow-8\nrow-9",
+        "expandedText": "row-1\nrow-2\nrow-3\nrow-4\nrow-5\nrow-6\nrow-7\nrow-8\nrow-9",
+        "lines": [
+          "row-1",
+          "row-2",
+          "row-3",
+          "row-4",
+          "row-5",
+          "row-6",
+          "row-7",
+          "row-8",
+          "row-9"
+        ],
+        "cursor": {
+          "line": 8,
+          "col": 5
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": true,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "render": [
+        "─── ↑ 4 m...",
+        "row-5       ",
+        "row-6       ",
+        "row-7       ",
+        "row-8       ",
+        "row-9\u001b_pi:c\u0007\u001b[7m \u001b[0m      ",
+        "────────────"
+      ]
+    },
+    {
+      "name": "resize-rewrap",
+      "renderWide": [
+        "─── ↑ 4 more ───────",
+        "row-5               ",
+        "row-6               ",
+        "row-7               ",
+        "row-8               ",
+        "row-9\u001b_pi:c\u0007\u001b[7m \u001b[0m              ",
+        "────────────────────"
+      ],
+      "renderNarrow": [
+        "─── ↑...",
+        "row-5   ",
+        "row-6   ",
+        "row-7   ",
+        "row-8   ",
+        "row-9\u001b_pi:c\u0007\u001b[7m \u001b[0m  ",
+        "────────"
+      ],
+      "state": {
+        "text": "row-1\nrow-2\nrow-3\nrow-4\nrow-5\nrow-6\nrow-7\nrow-8\nrow-9",
+        "expandedText": "row-1\nrow-2\nrow-3\nrow-4\nrow-5\nrow-6\nrow-7\nrow-8\nrow-9",
+        "lines": [
+          "row-1",
+          "row-2",
+          "row-3",
+          "row-4",
+          "row-5",
+          "row-6",
+          "row-7",
+          "row-8",
+          "row-9"
+        ],
+        "cursor": {
+          "line": 8,
+          "col": 5
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": true,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    }
+  ],
+  "inputCases": [
+    {
+      "name": "defaults",
+      "value": "",
+      "focused": false,
+      "render": [
+        "> \u001b[7m \u001b[27m     "
+      ]
+    },
+    {
+      "name": "set-value-cursor-zero",
+      "value": "abcdef",
+      "render": [
+        "> \u001b_pi:c\u0007\u001b[7ma\u001b[27mbcdef"
+      ]
+    },
+    {
+      "name": "submit-no-clear-escape",
+      "events": [
+        [
+          "submit",
+          "abcdef"
+        ],
+        [
+          "escape"
+        ]
+      ],
+      "value": "abcdef"
+    },
+    {
+      "name": "paste-flatten-tabs",
+      "value": "Abcde    f",
+      "render": [
+        "> Abcde    f\u001b[7m \u001b[27m       "
+      ]
+    },
+    {
+      "name": "unicode-cursor-render",
+      "value": "a👩🏽‍💻éz",
+      "render": [
+        "> a👩🏽‍💻\u001b_pi:c\u0007\u001b[7mé\u001b[27mz   "
+      ]
+    },
+    {
+      "name": "horizontal-viewport",
+      "value": "a👩🏽‍💻éz",
+      "render": [
+        "> 👩🏽‍💻\u001b_pi:c\u0007\u001b[7mé\u001b[27mz"
+      ]
+    },
+    {
+      "name": "live-global-keybindings",
+      "afterOld": "held",
+      "afterNew": "held",
+      "events": [
+        "held"
+      ]
+    }
+  ],
+  "autocompleteCases": [
+    {
+      "name": "serialized-supersession-stale-cannot-win",
+      "beforeASettles": [
+        {
+          "id": 1,
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        }
+      ],
+      "afterASettles": [
+        {
+          "id": 1,
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        },
+        {
+          "id": 2,
+          "text": "/a",
+          "line": 0,
+          "col": 2,
+          "force": false,
+          "aborted": false
+        }
+      ],
+      "finalCalls": [
+        {
+          "id": 1,
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        },
+        {
+          "id": 2,
+          "text": "/a",
+          "line": 0,
+          "col": 2,
+          "force": false,
+          "aborted": false
+        }
+      ],
+      "state": {
+        "text": "/a",
+        "expandedText": "/a",
+        "lines": [
+          "/a"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 2
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": true
+      },
+      "render": [
+        "────────────────────────",
+        "/a\u001b[7m \u001b[0m                     ",
+        "────────────────────────",
+        "→ /about                ",
+        "  /alpha                "
+      ]
+    },
+    {
+      "name": "custom-trigger-debounce-reset",
+      "beforeBoundary": 0,
+      "afterReset19": 0,
+      "atReset20": 1,
+      "calls": [
+        {
+          "text": "#a",
+          "line": 0,
+          "col": 2,
+          "force": false
+        }
+      ]
+    },
+    {
+      "name": "escape-before-visible-does-not-abort",
+      "afterEscape": {
+        "aborted": false,
+        "showing": false
+      },
+      "afterResolve": {
+        "aborted": false,
+        "showing": true
+      }
+    },
+    {
+      "name": "forced-tab-single-auto-apply",
+      "events": [
+        [
+          "predicate",
+          "",
+          0,
+          0
+        ],
+        [
+          "request",
+          true,
+          "",
+          0,
+          0
+        ],
+        [
+          "apply",
+          "file.txt"
+        ],
+        [
+          "change",
+          "file.txt"
+        ]
+      ],
+      "state": {
+        "text": "file.txt",
+        "expandedText": "file.txt",
+        "lines": [
+          "file.txt"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 8
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      },
+      "renders": [
+        {
+          "type": "render",
+          "force": false
+        }
+      ]
+    },
+    {
+      "name": "pending-slash-backspace-retrigger",
+      "afterSlash": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": false
+        }
+      ],
+      "afterA": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        }
+      ],
+      "afterBackspace": {
+        "calls": [
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false,
+            "aborted": true
+          }
+        ],
+        "state": {
+          "text": "/",
+          "expandedText": "/",
+          "lines": [
+            "/"
+          ],
+          "cursor": {
+            "line": 0,
+            "col": 1
+          },
+          "paddingX": 0,
+          "autocompleteMaxVisible": 5,
+          "focused": false,
+          "disableSubmit": false,
+          "showingAutocomplete": false
+        }
+      },
+      "afterFirstSettles": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        },
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": false
+        }
+      ],
+      "finalCalls": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        },
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": false
+        }
+      ],
+      "state": {
+        "text": "/",
+        "expandedText": "/",
+        "lines": [
+          "/"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 1
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": true
+      }
+    },
+    {
+      "name": "history-actions-abort-active",
+      "afterPrevious": {
+        "call": {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false,
+          "aborted": true
+        },
+        "state": {
+          "text": "older",
+          "expandedText": "older",
+          "lines": [
+            "older"
+          ],
+          "cursor": {
+            "line": 0,
+            "col": 0
+          },
+          "paddingX": 0,
+          "autocompleteMaxVisible": 5,
+          "focused": false,
+          "disableSubmit": false,
+          "showingAutocomplete": false
+        }
+      },
+      "afterNext": {
+        "call": {
+          "text": "older",
+          "line": 0,
+          "col": 0,
+          "force": true,
+          "aborted": true
+        },
+        "state": {
+          "text": "draft",
+          "expandedText": "draft",
+          "lines": [
+            "draft"
+          ],
+          "cursor": {
+            "line": 0,
+            "col": 5
+          },
+          "paddingX": 0,
+          "autocompleteMaxVisible": 5,
+          "focused": false,
+          "disableSubmit": false,
+          "showingAutocomplete": false
+        }
+      }
+    },
+    {
+      "name": "open-menu-horizontal-requery",
+      "beforeLeft": 1,
+      "calls": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false
+        },
+        {
+          "text": "/",
+          "line": 0,
+          "col": 0,
+          "force": false
+        }
+      ],
+      "state": {
+        "text": "/",
+        "expandedText": "/",
+        "lines": [
+          "/"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": true
+      }
+    },
+    {
+      "name": "non-refresh-editor-actions",
+      "baselineCalls": 4,
+      "calls": [
+        {
+          "text": "/",
+          "line": 0,
+          "col": 1,
+          "force": false
+        },
+        {
+          "text": "/a",
+          "line": 0,
+          "col": 2,
+          "force": false
+        },
+        {
+          "text": "/ab",
+          "line": 0,
+          "col": 3,
+          "force": false
+        },
+        {
+          "text": "/abc",
+          "line": 0,
+          "col": 4,
+          "force": false
+        }
+      ],
+      "actions": [
+        {
+          "name": "line-start",
+          "requestDelta": 0,
+          "state": {
+            "text": "/abc",
+            "expandedText": "/abc",
+            "lines": [
+              "/abc"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 0
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "word-right",
+          "requestDelta": 0,
+          "state": {
+            "text": "/abc",
+            "expandedText": "/abc",
+            "lines": [
+              "/abc"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 1
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "word-left",
+          "requestDelta": 0,
+          "state": {
+            "text": "/abc",
+            "expandedText": "/abc",
+            "lines": [
+              "/abc"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 0
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "line-end",
+          "requestDelta": 0,
+          "state": {
+            "text": "/abc",
+            "expandedText": "/abc",
+            "lines": [
+              "/abc"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 4
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "kill-line-start",
+          "requestDelta": 0,
+          "state": {
+            "text": "",
+            "expandedText": "",
+            "lines": [
+              ""
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 0
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "yank",
+          "requestDelta": 0,
+          "state": {
+            "text": "/abc",
+            "expandedText": "/abc",
+            "lines": [
+              "/abc"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 4
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        },
+        {
+          "name": "undo",
+          "requestDelta": 0,
+          "state": {
+            "text": "",
+            "expandedText": "",
+            "lines": [
+              ""
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 0
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": true
+          }
+        }
+      ]
+    },
+    {
+      "name": "backspace-forward-delete-retrigger",
+      "afterBackspace": {
+        "requestDelta": 1,
+        "calls": [
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false
+          },
+          {
+            "text": "/a",
+            "line": 0,
+            "col": 2,
+            "force": false
+          },
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false
+          }
+        ],
+        "state": {
+          "text": "/",
+          "expandedText": "/",
+          "lines": [
+            "/"
+          ],
+          "cursor": {
+            "line": 0,
+            "col": 1
+          },
+          "paddingX": 0,
+          "autocompleteMaxVisible": 5,
+          "focused": false,
+          "disableSubmit": false,
+          "showingAutocomplete": false
+        }
+      },
+      "afterDelete": {
+        "requestDelta": 1,
+        "calls": [
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false
+          },
+          {
+            "text": "/a",
+            "line": 0,
+            "col": 2,
+            "force": false
+          },
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false
+          },
+          {
+            "text": "/",
+            "line": 0,
+            "col": 1,
+            "force": false
+          },
+          {
+            "text": "/a",
+            "line": 0,
+            "col": 2,
+            "force": false
+          },
+          {
+            "text": "/ab",
+            "line": 0,
+            "col": 3,
+            "force": false
+          },
+          {
+            "text": "/a",
+            "line": 0,
+            "col": 2,
+            "force": false
+          }
+        ],
+        "state": {
+          "text": "/a",
+          "expandedText": "/a",
+          "lines": [
+            "/a"
+          ],
+          "cursor": {
+            "line": 0,
+            "col": 2
+          },
+          "paddingX": 0,
+          "autocompleteMaxVisible": 5,
+          "focused": false,
+          "disableSubmit": false,
+          "showingAutocomplete": false
+        }
+      }
+    },
+    {
+      "name": "continued-trigger-js-whitespace",
+      "cases": [
+        {
+          "name": "nbsp",
+          "afterTrigger": {
+            "calls": [],
+            "pendingTimers": 0
+          },
+          "afterContinuation": {
+            "calls": [
+              {
+                "text": " #a",
+                "line": 0,
+                "col": 3,
+                "force": false
+              }
+            ],
+            "pendingTimers": 0
+          },
+          "state": {
+            "text": " #a",
+            "expandedText": " #a",
+            "lines": [
+              " #a"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 3
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": false
+          }
+        },
+        {
+          "name": "feff",
+          "afterTrigger": {
+            "calls": [],
+            "pendingTimers": 0
+          },
+          "afterContinuation": {
+            "calls": [
+              {
+                "text": "﻿#a",
+                "line": 0,
+                "col": 3,
+                "force": false
+              }
+            ],
+            "pendingTimers": 0
+          },
+          "state": {
+            "text": "﻿#a",
+            "expandedText": "﻿#a",
+            "lines": [
+              "﻿#a"
+            ],
+            "cursor": {
+              "line": 0,
+              "col": 3
+            },
+            "paddingX": 0,
+            "autocompleteMaxVisible": 5,
+            "focused": false,
+            "disableSubmit": false,
+            "showingAutocomplete": false
+          }
+        }
+      ]
+    },
+    {
+      "name": "slash-confirm-silent-apply",
+      "events": [
+        [
+          "change",
+          ""
+        ],
+        [
+          "submit",
+          "/help"
+        ]
+      ],
+      "state": {
+        "text": "",
+        "expandedText": "",
+        "lines": [
+          ""
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 0
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    },
+    {
+      "name": "ordinary-confirm-emits-change",
+      "events": [
+        [
+          "change",
+          "#alice"
+        ]
+      ],
+      "state": {
+        "text": "#alice",
+        "expandedText": "#alice",
+        "lines": [
+          "#alice"
+        ],
+        "cursor": {
+          "line": 0,
+          "col": 6
+        },
+        "paddingX": 0,
+        "autocompleteMaxVisible": 5,
+        "focused": false,
+        "disableSubmit": false,
+        "showingAutocomplete": false
+      }
+    }
+  ]
+}

@@ -1,0 +1,236 @@
+{
+ "generator": "gen-golden-m4-markdown.mjs",
+ "reference": {
+  "package": "@earendil-works/pi-tui",
+  "version": "0.84.1",
+  "indexDtsSha256": "f86836256fea4329d5618a87ae503c89f73efa74523a11c0a84294b17b12bea3",
+  "markdownDtsSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+  "markdownJsSha256": "bbffe68aa6bb6968e9eca2681e19b0ea7787fff8124ef996fae282a4c2201465",
+  "latexDtsSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+  "latexJsSha256": "d8778b4166001faf09fa555d550c06a8d63b84b86244e04b45fa1b3fc68b1716",
+  "terminalImageDtsSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+  "terminalImageJsSha256": "b2b60272f6f25dbb559722dffa369944f5c8846fa726c31fb841d1532470adc2",
+  "utilsDtsSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+  "utilsJsSha256": "70c037e8c3c6ec909c4bab6b14777e1f33ab1f5c39f5f1f3aa6f8966357d8052",
+  "markedVersion": "18.0.5",
+  "markedEsmSha256": "43e1fc0927b2d397bdc786c0a9efa8414ce18e7781d0b3490faceea35b7d0d15",
+  "eastAsianWidthVersion": "1.6.0",
+  "eastAsianWidthPackageSha256": "d263e50dd1a43aee9acda4d7f066e66b0d0bde1f2852ea6e7153750a5e3a3e52",
+  "eastAsianWidthIndexSha256": "d7b1ba05914c0fc311c20e5618bf8d0893c9c74078a07975e2df981445e64887",
+  "eastAsianWidthLookupSha256": "c80ecc22b120b27ef5ea9facb7000b8fd4ec037a84d9231d215f1c44bc9c21d0",
+  "eastAsianWidthDataSha256": "f6b40f86c9a2a6808ec808fa8ddcb8da261254cc6121d37ffaeb2bf35dad1d5b",
+  "eastAsianWidthUtilitiesSha256": "4b08a7e9e3ffacbcf198a6abceb2338d52ac671899e52ccc2851c898bfccac42",
+  "node": "24.4.1",
+  "icu": "77.1",
+  "unicode": "16.0"
+ },
+ "cases": [
+  {
+   "name": "empty-default",
+   "outputs": [
+    []
+   ]
+  },
+  {
+   "name": "paragraph-wrap-resize",
+   "outputs": [
+    [
+     "Alpha beta gamma  ",
+     "delta epsilon.    ",
+     "                  ",
+     "Second paragraph. "
+    ],
+    [
+     "Alpha beta gamma delta      ",
+     "epsilon.                    ",
+     "                            ",
+     "Second paragraph.           "
+    ]
+   ]
+  },
+  {
+   "name": "headings-inline-link",
+   "outputs": [
+    [
+     "\u001b[31m\u001b[1m\u001b[4mHeading one\u001b[24m\u001b[22m\u001b[39m                                                             ",
+     "                                                                        ",
+     "Text with \u001b[1mbold\u001b[22m, \u001b[3mitalic\u001b[23m, \u001b[9mstrike\u001b[29m, \u001b[33mcode\u001b[39m, and \u001b[36m\u001b[4mlink\u001b[24m\u001b[39m\u001b[34m (https://example.test)\u001b[39m.  "
+    ]
+   ]
+  },
+  {
+   "name": "quote-rule",
+   "outputs": [
+    [
+     "\u001b[92m│ \u001b[39m\u001b[32m\u001b[3mquoted text that wraps",
+     "\u001b[92m│ \u001b[39m\u001b[3;32macross rows           ",
+     "\u001b[92m│ \u001b[39m\u001b[3;32msecond line\u001b[23m\u001b[39m           ",
+     "                        ",
+     "\u001b[90m────────────────────────\u001b[39m"
+    ]
+   ]
+  },
+  {
+   "name": "nested-unordered-list",
+   "outputs": [
+    [
+     "- first item          ",
+     "    - nested item     ",
+     "- final item with     ",
+     "  wrapping words      "
+    ]
+   ]
+  },
+  {
+   "name": "ordered-normalized",
+   "outputs": [
+    [
+     "3. third                ",
+     "4. seventh              "
+    ]
+   ]
+  },
+  {
+   "name": "ordered-preserved",
+   "outputs": [
+    [
+     "3. third                ",
+     "7. seventh              "
+    ]
+   ]
+  },
+  {
+   "name": "backslash-escape-default",
+   "outputs": [
+    [
+     "Escaped *star* and bracket.             "
+    ]
+   ]
+  },
+  {
+   "name": "backslash-escape-preserved",
+   "outputs": [
+    [
+     "Escaped \\*star\\* and bracket.           "
+    ]
+   ]
+  },
+  {
+   "name": "fenced-code-default-indent",
+   "outputs": [
+    [
+     "```                 ",
+     "  raw code          ",
+     "```                 "
+    ]
+   ]
+  },
+  {
+   "name": "fenced-code-highlight",
+   "outputs": [
+    [
+     "\u001b[2m```js\u001b[22m                               ",
+     "» \u001b[96mconst x = 1;\u001b[39m                      ",
+     "» \u001b[96mconsole.log(x);\u001b[39m                   ",
+     "\u001b[2m```\u001b[22m                                 "
+    ]
+   ],
+   "events": [
+    "highlight:js:const x = 1;\nconsole.log(x);"
+   ]
+  },
+  {
+   "name": "table-wide-narrow",
+   "outputs": [
+    [
+     "┌───────┬───────────────────────────────────┐ ",
+     "│ Name  │ Description                       │ ",
+     "├───────┼───────────────────────────────────┤ ",
+     "│ alpha │ a description with wrapping words │ ",
+     "├───────┼───────────────────────────────────┤ ",
+     "│ beta  │ short                             │ ",
+     "└───────┴───────────────────────────────────┘ "
+    ],
+    [
+     "┌───────┬───────────────┐",
+     "│ Name  │ Description   │",
+     "├───────┼───────────────┤",
+     "│ alpha │ a description │",
+     "│       │ with wrapping │",
+     "│       │ words         │",
+     "├───────┼───────────────┤",
+     "│ beta  │ short         │",
+     "└───────┴───────────────┘"
+    ]
+   ]
+  },
+  {
+   "name": "latex-default",
+   "outputs": [
+    [
+     "Inline xᵢ₊₁² and display:             ",
+     "                                      ",
+     "a+b                                   ",
+     "───                                   ",
+     "c-d                                   "
+    ]
+   ]
+  },
+  {
+   "name": "latex-disabled",
+   "outputs": [
+    [
+     "Inline $x_{i+1}^2$ and $$\\frac{a}{b}$$.           "
+    ]
+   ]
+  },
+  {
+   "name": "padding-default-style-background",
+   "outputs": [
+    [
+     "\u001b[44m                            \u001b[49m",
+     "\u001b[44m  \u001b[4m\u001b[9m\u001b[3m\u001b[1m\u001b[37mStyled \u001b[39m\u001b[22m\u001b[23m\u001b[29m\u001b[24m\u001b[1m\u001b[4m\u001b[9m\u001b[3m\u001b[1m\u001b[37mbody\u001b[39m\u001b[22m\u001b[23m\u001b[29m\u001b[24m\u001b[22m\u001b[4m\u001b[9m\u001b[3m\u001b[1m\u001b[37m\u001b[4m\u001b[9m\u001b[3m\u001b[1m\u001b[37m.\u001b[39m\u001b[22m\u001b[23m\u001b[29m\u001b[24m              \u001b[49m",
+     "\u001b[44m                            \u001b[49m"
+    ]
+   ]
+  },
+  {
+   "name": "transform-cache-invalidate-order",
+   "outputs": [
+    [
+     " \u001b[2m```txt\u001b[22m             ",
+     " » \u001b[96mseed\u001b[39m             ",
+     " \u001b[2m```\u001b[22m                "
+    ],
+    [
+     " \u001b[2m```txt\u001b[22m             ",
+     " » \u001b[96mseed\u001b[39m             ",
+     " \u001b[2m```\u001b[22m                "
+    ],
+    [
+     " \u001b[2m```txt\u001b[22m         ",
+     " » \u001b[96mseed\u001b[39m         ",
+     " \u001b[2m```\u001b[22m            "
+    ],
+    [
+     " \u001b[2m```txt\u001b[22m         ",
+     " » \u001b[96mseed\u001b[39m         ",
+     " \u001b[2m```\u001b[22m            "
+    ],
+    [
+     " plain          ",
+     " replacement    "
+    ]
+   ],
+   "events": [
+    "transform:18:```txt\nseed\n```",
+    "highlight:txt:seed",
+    "transform:14:```txt\nseed\n```",
+    "highlight:txt:seed",
+    "transform:14:```txt\nseed\n```",
+    "highlight:txt:seed",
+    "transform:14:plain replacement"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,1336 @@
+{
+  "oracle": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "files": {
+      "autocomplete.js": "865133b63cfbf59bdc045f6ba9b8760c2489fb735312b8c791f8f56cf0c19191",
+      "components/input.js": "4762edfaa75de102aabc00f8660c591f2d7de1ba6e7e212900dd81c48f231e63",
+      "components/loader.js": "ac9b17681af40e9dc681fb0a2cbafb5d109ff5a529d6117756a35d7016dd4f4f",
+      "components/box.js": "cb81f51bbb09035a1c33227064e558d3dbab72484943e0d1dc9dc0a479649ab7",
+      "components/stack.js": "02b4dafebc728f1c0e8d01b5cc330f82eb760c58bc71c5cc9bff6d98bf34dbf3",
+      "components/v-stack.js": "7b6e6f6e1fbb037f33a8238ab02ec9e6e5f65fe49029bb430acd59c40148bfa4",
+      "components/h-stack.js": "b4cf1819879bcbbf20f2cfd3a5d5960b92c7f69308310d2ad44f0dbae4ed9c0f",
+      "layout-node.js": "73c3942b68d52ed29072f1f78184c99d405f9259bb4e24a1b6b0e3688381f7f5",
+      "components/cancellable-loader.js": "9fcffa6a7faeafe4686d1b78f375d3b03c465552faaf308ee9a44169580b3467",
+      "components/select-list.js": "ea14ebd2f64ed045563360b598eeccc816f7f9f252df6b7bc492309cfe49c545",
+      "components/settings-list.js": "475f324eb9b077d3f2b90aed72f9972cc1fa6c53421d517514180812f95343f2",
+      "tui.js": "b425ed8e8535cf76deaeeea7de91edfda3d07606ee5ef9b2f02028583600a05a"
+    }
+  },
+  "selectList": [
+    {
+      "name": "navigation-filter-callbacks",
+      "outputs": [
+        [
+          "\u001b[7m→ Configure                       Change the active configurat\u001b[0m\u001b[27m",
+          "  Connect\u001b[2m                         Connect to a remote\u001b[22m",
+          "  Copy\u001b[2m                            Copy the selected value\u001b[22m",
+          "\u001b[36m  (1/7)\u001b[39m"
+        ],
+        [
+          "  Configure\u001b[2m                       Change the active configurat\u001b[0m\u001b[22m",
+          "\u001b[7m→ Connect                         Connect to a remote\u001b[27m",
+          "  Copy\u001b[2m                            Copy the selected value\u001b[22m",
+          "\u001b[36m  (2/7)\u001b[39m"
+        ],
+        [
+          "  Commit\u001b[2m                          Commit current changes\u001b[22m",
+          "\u001b[7m→ Continue                        Continue execution\u001b[27m",
+          "  value-only\u001b[2m                      Falls back to value\u001b[22m",
+          "\u001b[36m  (6/7)\u001b[39m"
+        ],
+        [
+          "  Commit\u001b[2m                          Commit current changes\u001b[22m",
+          "  Continue\u001b[2m                        Continue execution\u001b[22m",
+          "\u001b[7m→ value-only                      Falls back to value\u001b[27m",
+          "\u001b[36m  (7/7)\u001b[39m"
+        ],
+        [
+          "\u001b[7m→ Configure                       Change the active configurat\u001b[0m\u001b[27m",
+          "  Connect\u001b[2m                         Connect to a remote\u001b[22m",
+          "  Copy\u001b[2m                            Copy the selected value\u001b[22m",
+          "\u001b[36m  (1/5)\u001b[39m"
+        ],
+        [
+          "\u001b[31m  No matching commands\u001b[39m"
+        ]
+      ],
+      "events": [
+        "change:connect",
+        "change:value-only",
+        "change:continue",
+        "select:continue",
+        "cancel"
+      ],
+      "selectedBeforeFilter": "continue",
+      "selectedAfterFilter": "config"
+    },
+    {
+      "name": "layout-truncation-bounds",
+      "outputs": [
+        [
+          "\u001b[7m→ ALPHA PRIMARY COLU\u001b[0m  alpha description\u001b[27m",
+          "  BETA\u001b[2m                beta description\u001b[22m"
+        ],
+        [
+          "\u001b[7m→ ALPHA PRIMARY COLU\u001b[0m\u001b[27m",
+          "  BETA"
+        ],
+        [
+          "\u001b[7m→ ALPHA PRIMARY COLU\u001b[0m  alpha description\u001b[27m",
+          "  BETA\u001b[2m                beta description\u001b[22m"
+        ],
+        [
+          "  ALPHA PRIMARY COLU\u001b[0m\u001b[2m  alpha description\u001b[22m",
+          "\u001b[7m→ BETA                beta description\u001b[27m"
+        ]
+      ],
+      "contexts": [
+        {
+          "text": "Alpha primary column",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "alpha-long-value",
+          "isSelected": true
+        },
+        {
+          "text": "Beta",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "beta",
+          "isSelected": false
+        },
+        {
+          "text": "Alpha primary column",
+          "maxWidth": 18,
+          "columnWidth": 18,
+          "value": "alpha-long-value",
+          "isSelected": true
+        },
+        {
+          "text": "Beta",
+          "maxWidth": 18,
+          "columnWidth": 18,
+          "value": "beta",
+          "isSelected": false
+        },
+        {
+          "text": "Alpha primary column",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "alpha-long-value",
+          "isSelected": true
+        },
+        {
+          "text": "Beta",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "beta",
+          "isSelected": false
+        },
+        {
+          "text": "Alpha primary column",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "alpha-long-value",
+          "isSelected": false
+        },
+        {
+          "text": "Beta",
+          "maxWidth": 18,
+          "columnWidth": 20,
+          "value": "beta",
+          "isSelected": true
+        }
+      ]
+    },
+    {
+      "name": "description-truthiness",
+      "outputs": [
+        [
+          "\u001b[7m→ Empty description\u001b[27m",
+          "  Newline description",
+          "  Whitespace description"
+        ],
+        [
+          "  Empty description",
+          "\u001b[7m→ Newline description\u001b[27m",
+          "  Whitespace description"
+        ],
+        [
+          "  Empty description",
+          "  Newline description",
+          "\u001b[7m→ Whitespace description\u001b[27m"
+        ]
+      ]
+    }
+  ],
+  "settingsList": [
+    {
+      "name": "navigation-cycle-update",
+      "outputs": [
+        [
+          "» \u001b[1mTheme        \u001b[22m  \u001b[36mdark\u001b[39m",
+          "  Language       \u001b[2mEnglish\u001b[22m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "\u001b[2m  (1/5)\u001b[22m",
+          "",
+          "\u001b[3m  Color theme used for the interface.\u001b[23m",
+          "",
+          "\u001b[2m  Enter/Space to change · Esc to cancel\u001b[22m"
+        ],
+        [
+          "  Theme          \u001b[2mdark\u001b[22m",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36mEnglish\u001b[39m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "\u001b[2m  (2/5)\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Enter/Space to change · Esc to cancel\u001b[22m"
+        ],
+        [
+          "  Theme          \u001b[2mdark\u001b[22m",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36m中文\u001b[39m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "\u001b[2m  (2/5)\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Enter/Space to change · Esc to cancel\u001b[22m"
+        ],
+        [
+          "» \u001b[1mTheme        \u001b[22m  \u001b[36msolarized\u001b[39m",
+          "  Language       \u001b[2m中文\u001b[22m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "\u001b[2m  (1/5)\u001b[22m",
+          "",
+          "\u001b[3m  Color theme used for the\u001b[23m",
+          "\u001b[3m  interface.\u001b[23m",
+          "",
+          "\u001b[2m  Enter/Space to change · Esc t\u001b[0m...\u001b[0m"
+        ],
+        [
+          "» \u001b[1mTheme        \u001b[22m  \u001b[36mdark\u001b[39m",
+          "  Language       \u001b[2m中文\u001b[22m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "\u001b[2m  (1/5)\u001b[22m",
+          "",
+          "\u001b[3m  Color theme used for the\u001b[23m",
+          "\u001b[3m  interface.\u001b[23m",
+          "",
+          "\u001b[2m  Enter/Space to change · Esc t\u001b[0m...\u001b[0m"
+        ]
+      ],
+      "events": [
+        "change:language:中文",
+        "change:theme:dark",
+        "cancel"
+      ]
+    },
+    {
+      "name": "search-input-filter",
+      "outputs": [
+        [
+          "> \u001b[7m \u001b[27m                                           ",
+          "",
+          "» \u001b[1mTheme        \u001b[22m  \u001b[36mdark\u001b[39m",
+          "  Language       \u001b[2mEnglish\u001b[22m",
+          "  Output format  \u001b[2mcompact\u001b[22m",
+          "  Telemetry      \u001b[2moff\u001b[22m",
+          "\u001b[2m  (1/5)\u001b[22m",
+          "",
+          "\u001b[3m  Color theme used for the interface.\u001b[23m",
+          "",
+          "\u001b[2m  Type to search · Enter/Space to change · \u001b[0m...\u001b[0m"
+        ],
+        [
+          "> la\u001b[7m \u001b[27m                                         ",
+          "",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36mEnglish\u001b[39m",
+          "  Line wrapping  \u001b[2mauto\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Type to search · Enter/Space to change · \u001b[0m...\u001b[0m"
+        ],
+        [
+          "> l\u001b[7m \u001b[27m                          ",
+          "",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36mEnglish\u001b[39m",
+          "  Line wrapping  \u001b[2mauto\u001b[22m",
+          "  Telemetry      \u001b[2moff\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated\u001b[23m",
+          "\u001b[3m  text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Type to search · Enter/Sp\u001b[0m...\u001b[0m"
+        ],
+        [
+          "> l \u001b[7m \u001b[27m                         ",
+          "",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36mEnglish\u001b[39m",
+          "  Line wrapping  \u001b[2mauto\u001b[22m",
+          "  Telemetry      \u001b[2moff\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated\u001b[23m",
+          "\u001b[3m  text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Type to search · Enter/Sp\u001b[0m...\u001b[0m"
+        ],
+        [
+          "> l \u001b[7m \u001b[27m                                         ",
+          "",
+          "» \u001b[1mLanguage     \u001b[22m  \u001b[36m中文\u001b[39m",
+          "  Line wrapping  \u001b[2mauto\u001b[22m",
+          "  Telemetry      \u001b[2moff\u001b[22m",
+          "",
+          "\u001b[3m  Language for generated text and labels.\u001b[23m",
+          "",
+          "\u001b[2m  Type to search · Enter/Space to change · \u001b[0m...\u001b[0m"
+        ]
+      ],
+      "events": [
+        "change:language:中文",
+        "cancel"
+      ]
+    },
+    {
+      "name": "search-editor-key-subset",
+      "grapheme": [
+        "> A👩‍💻éZ\u001b[7m \u001b[27m            ",
+        "> A👩‍💻é\u001b[7mZ\u001b[27m             ",
+        "> A👩‍💻\u001b[7mé\u001b[27mZ             ",
+        "> A👩‍💻\u001b[7mZ\u001b[27m              ",
+        "> A\u001b[7mZ\u001b[27m                "
+      ],
+      "wordKillYankUndo": [
+        "> alpha-beta gamma\u001b[7m \u001b[27m     ",
+        "> alpha-beta \u001b[7mg\u001b[27mamma      ",
+        "> alpha-\u001b[7mb\u001b[27meta gamma      ",
+        "> alpha-\u001b[7m \u001b[27mgamma          ",
+        "> alpha\u001b[7m \u001b[27mgamma           ",
+        "> alpha-beta\u001b[7m \u001b[27mgamma      ",
+        "> \u001b[7ma\u001b[27mlpha-beta gamma      ",
+        "> alpha\u001b[7m-\u001b[27mbeta gamma      ",
+        "> alpha\u001b[7m \u001b[27m                ",
+        "> alpha-beta gamma\u001b[7m \u001b[27m     ",
+        "> \u001b[7m \u001b[27m                     ",
+        "> alpha-beta gamma\u001b[7m \u001b[27m     ",
+        "> -beta gamma\u001b[7m \u001b[27m          ",
+        "> alpha-beta gamma\u001b[7m \u001b[27m     ",
+        "> \u001b[7m \u001b[27m                     "
+      ],
+      "pasteViewport": [
+        "> Q\u001b[7m \u001b[27m        ",
+        "> Q\u001b[7m \u001b[27m        ",
+        "> wo    三Z\u001b[7m \u001b[27m",
+        "> \u001b[7mQ\u001b[27monetwo   ",
+        "> netwo\u001b[7m \u001b[27m    ",
+        "> wo    三Z\u001b[7m \u001b[27m"
+      ],
+      "undoCoalescing": [
+        "> a\u001b[7m \u001b[27m            ",
+        "> ab\u001b[7m \u001b[27m           ",
+        "> ab \u001b[7m \u001b[27m          ",
+        "> ab c\u001b[7m \u001b[27m         ",
+        "> ab\u001b[7m \u001b[27m           ",
+        "> \u001b[7m \u001b[27m             ",
+        "> \u001b[7m \u001b[27m             "
+      ],
+      "wordBoundaries": [
+        "> don't 3.14 word🙂!!\u001b[7m \u001b[27m          ",
+        "> \u001b[7md\u001b[27mon't 3.14 word🙂!!           ",
+        "> don\u001b[7m'\u001b[27mt 3.14 word🙂!!           ",
+        "> don'\u001b[7mt\u001b[27m 3.14 word🙂!!           ",
+        "> don't\u001b[7m \u001b[27m3.14 word🙂!!           ",
+        "> don't 3\u001b[7m.\u001b[27m14 word🙂!!           ",
+        "> don't 3.\u001b[7m1\u001b[27m4 word🙂!!           ",
+        "> don't 3.14\u001b[7m \u001b[27mword🙂!!           ",
+        "> don't 3.14 word\u001b[7m🙂\u001b[27m!!           ",
+        "> don't 3.14 word🙂!!\u001b[7m \u001b[27m          ",
+        "> don't 3.14 word🙂!!\u001b[7m \u001b[27m          ",
+        "> don't 3.14 word🙂!!\u001b[7m \u001b[27m          ",
+        "> don't 3.14 word\u001b[7m🙂\u001b[27m!!           ",
+        "> don't 3.14 \u001b[7mw\u001b[27mord🙂!!           ",
+        "> don't 3.\u001b[7m1\u001b[27m4 word🙂!!           ",
+        "> don't 3\u001b[7m.\u001b[27m14 word🙂!!           ",
+        "> don't \u001b[7m3\u001b[27m.14 word🙂!!           ",
+        "> don'\u001b[7mt\u001b[27m 3.14 word🙂!!           ",
+        "> don\u001b[7m'\u001b[27mt 3.14 word🙂!!           ",
+        "> \u001b[7md\u001b[27mon't 3.14 word🙂!!           ",
+        "> \u001b[7md\u001b[27mon't 3.14 word🙂!!           "
+      ]
+    },
+    {
+      "name": "empty-lists",
+      "outputs": [
+        [
+          "\u001b[2m  No settings available\u001b[22m"
+        ],
+        [
+          "> \u001b[7m \u001b[27m                     ",
+          "",
+          "\u001b[2m  No settings available\u001b[22m",
+          "",
+          "\u001b[2m  Type to search · En\u001b[0m...\u001b[0m"
+        ]
+      ],
+      "events": []
+    },
+    {
+      "name": "submenu-delegation",
+      "outputs": [
+        [
+          "» \u001b[1mBackend\u001b[22m  \u001b[36mold\u001b[39m",
+          "",
+          "\u001b[2m  Enter/Space to change · E\u001b[0m...\u001b[0m"
+        ],
+        [
+          "submenu:old:30"
+        ],
+        [
+          "» \u001b[1mBackend\u001b[22m  \u001b[36mnew\u001b[39m",
+          "",
+          "\u001b[2m  Enter/Space to change · E\u001b[0m...\u001b[0m"
+        ]
+      ],
+      "events": [
+        "submenu:invalidate",
+        "submenu:input:\"x\"",
+        "change:backend:new"
+      ]
+    },
+    {
+      "name": "submenu-completion-drainage",
+      "external": {
+        "outputs": [
+          [
+            "» \u001b[1mExternal\u001b[22m  \u001b[36mold\u001b[39m",
+            "",
+            "\u001b[2m  Enter/Space to change ·\u001b[0m...\u001b[0m"
+          ],
+          [
+            "external-submenu:28"
+          ],
+          [
+            "» \u001b[1mExternal\u001b[22m  \u001b[36masync\u001b[39m",
+            "",
+            "\u001b[2m  Enter/Space to change ·\u001b[0m...\u001b[0m"
+          ]
+        ],
+        "events": [
+          "change:external:async"
+        ]
+      },
+      "render": {
+        "outputs": [
+          [
+            "render-submenu:26"
+          ],
+          [
+            "» \u001b[1mRender\u001b[22m  \u001b[36mrendered\u001b[39m",
+            "",
+            "\u001b[2m  Enter/Space to change\u001b[0m...\u001b[0m"
+          ]
+        ],
+        "events": [
+          "submenu:render:26",
+          "change:render:rendered",
+          "cancel"
+        ]
+      },
+      "invalidate": {
+        "outputs": [
+          [
+            "» \u001b[1mInvalidate\u001b[22m  \u001b[36minvalidated\u001b[39m",
+            "",
+            "\u001b[2m  Enter/Space to change · E\u001b[0m...\u001b[0m"
+          ]
+        ],
+        "events": [
+          "submenu:invalidate",
+          "change:invalidate:invalidated",
+          "cancel"
+        ]
+      }
+    }
+  ],
+  "container": {
+    "outputs": [
+      [
+        "first:a:17",
+        "first:b:17",
+        "second:c:17"
+      ],
+      [
+        "second:c:9"
+      ],
+      []
+    ],
+    "events": [
+      "render:first:17",
+      "render:second:17",
+      "invalidate:first",
+      "invalidate:second",
+      "render:second:9"
+    ]
+  },
+  "containerIdentity": {
+    "outputs": [
+      [
+        "one:11",
+        "middle:11",
+        "one:11"
+      ],
+      [
+        "middle:7",
+        "two:7"
+      ],
+      [
+        "middle:5"
+      ],
+      [
+        "two:3"
+      ]
+    ],
+    "events": [
+      "render:one:11",
+      "render:middle:11",
+      "render:one:11",
+      "render:middle:7",
+      "render:two:7",
+      "render:middle:5",
+      "render:two:3"
+    ]
+  },
+  "boxLifecycle": {
+    "outputs": [
+      [
+        "\u001b[41m         \u001b[49m",
+        "\u001b[41m one     \u001b[49m",
+        "\u001b[41m two     \u001b[49m",
+        "\u001b[41m         \u001b[49m"
+      ],
+      [
+        "\u001b[41m         \u001b[49m",
+        "\u001b[41m one     \u001b[49m",
+        "\u001b[41m two     \u001b[49m",
+        "\u001b[41m         \u001b[49m"
+      ],
+      [
+        "\u001b[44m         \u001b[49m",
+        "\u001b[44m one     \u001b[49m",
+        "\u001b[44m two     \u001b[49m",
+        "\u001b[44m         \u001b[49m"
+      ],
+      [
+        "\u001b[44m       \u001b[49m",
+        "\u001b[44m two   \u001b[49m",
+        "\u001b[44m       \u001b[49m"
+      ],
+      []
+    ],
+    "events": [
+      "render:one:7",
+      "render:two:7",
+      "bg:red:test",
+      "bg:red:         ",
+      "bg:red: one     ",
+      "bg:red: two     ",
+      "bg:red:         ",
+      "render:one:7",
+      "render:two:7",
+      "bg:red:test",
+      "render:one:7",
+      "render:two:7",
+      "bg:blue:test",
+      "bg:blue:         ",
+      "bg:blue: one     ",
+      "bg:blue: two     ",
+      "bg:blue:         ",
+      "render:two:5",
+      "bg:blue:test",
+      "bg:blue:       ",
+      "bg:blue: two   ",
+      "bg:blue:       ",
+      "invalidate:two"
+    ]
+  },
+  "stack": {
+    "node": {
+      "type": "vstack",
+      "gap": 1,
+      "align": "start",
+      "entryShapes": [
+        {
+          "keys": [],
+          "basis": null,
+          "grow": null,
+          "shrink": null,
+          "minSize": null,
+          "maxSize": null,
+          "visibleAt6": true,
+          "visibleAt10": true
+        },
+        {
+          "keys": [
+            "basis",
+            "grow",
+            "shrink",
+            "minSize",
+            "maxSize",
+            "visible"
+          ],
+          "basis": 3,
+          "grow": 2,
+          "shrink": 4,
+          "minSize": 1,
+          "maxSize": 5,
+          "visibleAt6": false,
+          "visibleAt10": true
+        }
+      ]
+    },
+    "outputs": [
+      [
+        "first:a",
+        "first:b",
+        "",
+        "second:x",
+        "",
+        ""
+      ],
+      [
+        "first:a",
+        "first:b"
+      ],
+      [
+        "second:x",
+        "",
+        ""
+      ],
+      []
+    ],
+    "alignOutputs": {
+      "stretch": [
+        "\u001b[0m\u001b]8;;\u0007left-stretc\u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007right-stretch\u001b[0m\u001b]8;;\u0007",
+        "\u001b[0m\u001b]8;;\u0007left-stretc\u001b[0m\u001b]8;;\u0007              ",
+        "\u001b[0m\u001b]8;;\u0007left-stretc\u001b[0m\u001b]8;;\u0007              "
+      ],
+      "start": [
+        "\u001b[0m\u001b]8;;\u0007left-start:\u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007right-start:x\u001b[0m\u001b]8;;\u0007",
+        "\u001b[0m\u001b]8;;\u0007left-start:\u001b[0m\u001b]8;;\u0007              ",
+        "\u001b[0m\u001b]8;;\u0007left-start:\u001b[0m\u001b]8;;\u0007              "
+      ],
+      "center": [
+        "\u001b[0m\u001b]8;;\u0007left-center\u001b[0m\u001b]8;;\u0007              ",
+        "\u001b[0m\u001b]8;;\u0007left-center\u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007right-center:\u001b[0m\u001b]8;;\u0007",
+        "\u001b[0m\u001b]8;;\u0007left-center\u001b[0m\u001b]8;;\u0007              "
+      ],
+      "end": [
+        "\u001b[0m\u001b]8;;\u0007left-end:1\u001b[0m\u001b]8;;\u0007               ",
+        "\u001b[0m\u001b]8;;\u0007left-end:2\u001b[0m\u001b]8;;\u0007               ",
+        "\u001b[0m\u001b]8;;\u0007left-end:3\u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007right-end:x\u001b[0m\u001b]8;;\u0007   "
+      ]
+    },
+    "allocationCases": [
+      {
+        "name": "empty-options-intrinsic",
+        "result": [
+          5,
+          2
+        ]
+      },
+      {
+        "name": "grow-gap-max",
+        "result": [
+          4,
+          7
+        ]
+      },
+      {
+        "name": "shrink-min-weighted",
+        "result": [
+          6,
+          3
+        ]
+      }
+    ],
+    "events": [
+      "visible:6:false",
+      "visible:10:true",
+      "visible:10:true",
+      "render:first:10",
+      "render:second:10",
+      "visible:6:false",
+      "render:first:6",
+      "visible:10:true",
+      "render:second:10",
+      "render:left-stretch:25",
+      "render:right-stretch:25",
+      "render:left-stretch:11",
+      "render:right-stretch:13",
+      "render:left-start:25",
+      "render:right-start:25",
+      "render:left-start:11",
+      "render:right-start:13",
+      "render:left-center:25",
+      "render:right-center:25",
+      "render:left-center:11",
+      "render:right-center:13",
+      "render:left-end:25",
+      "render:right-end:25",
+      "render:left-end:10",
+      "render:right-end:11"
+    ]
+  },
+  "cancellableLoader": {
+    "outputs": [
+      [
+        "",
+        " A message:Working      "
+      ],
+      [
+        "",
+        " B message:Working      "
+      ],
+      [
+        "",
+        " inherited  "
+      ],
+      [
+        "",
+        " ⠋          ",
+        " message:Wo ",
+        " rking      ",
+        " again      "
+      ],
+      [
+        "",
+        " ⠋          ",
+        " message:Wo ",
+        " rking      ",
+        " again      "
+      ]
+    ],
+    "states": [
+      {
+        "aborted": false,
+        "sameSignal": true,
+        "frame": 0,
+        "scheduled": true,
+        "frames": [
+          "A",
+          "B"
+        ]
+      },
+      {
+        "frame": 1,
+        "scheduled": true
+      },
+      {
+        "frame": 1,
+        "scheduled": false
+      },
+      {
+        "frame": 1,
+        "scheduled": true
+      },
+      {
+        "frame": 0,
+        "scheduled": false,
+        "frames": [
+          "!"
+        ]
+      },
+      {
+        "frame": 0,
+        "scheduled": false,
+        "frames": []
+      },
+      {
+        "frame": 0,
+        "scheduled": true,
+        "frameCount": 10
+      },
+      {
+        "aborted": false
+      },
+      {
+        "aborted": true
+      },
+      {
+        "aborted": true
+      }
+    ],
+    "events": [
+      "request-render",
+      "request-render",
+      "request-render",
+      "request-render",
+      "request-render",
+      "request-render",
+      "request-render",
+      "signal-abort",
+      "abort",
+      "abort"
+    ]
+  },
+  "autocomplete": {
+    "triggerCharacters": null,
+    "suggestions": [
+      {
+        "name": "slash-empty",
+        "lines": [
+          "/"
+        ],
+        "line": 0,
+        "col": 1,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "config",
+              "label": "config",
+              "description": "[scope] — Configure the application"
+            },
+            {
+              "value": "commit",
+              "label": "commit",
+              "description": "Commit current changes"
+            },
+            {
+              "value": "model",
+              "label": "model",
+              "description": "Select model"
+            },
+            {
+              "value": "mode",
+              "label": "mode"
+            }
+          ],
+          "prefix": "/"
+        }
+      },
+      {
+        "name": "slash-fuzzy",
+        "lines": [
+          "/cf"
+        ],
+        "line": 0,
+        "col": 3,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "config",
+              "label": "config",
+              "description": "[scope] — Configure the application"
+            }
+          ],
+          "prefix": "/cf"
+        }
+      },
+      {
+        "name": "slash-arguments",
+        "lines": [
+          "/model f"
+        ],
+        "line": 0,
+        "col": 8,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "fast",
+              "label": "fast",
+              "description": "Fast model"
+            },
+            {
+              "value": "full",
+              "label": "full",
+              "description": "Full model"
+            }
+          ],
+          "prefix": "f"
+        }
+      },
+      {
+        "name": "slash-arguments-ready",
+        "lines": [
+          "/mode s"
+        ],
+        "line": 0,
+        "col": 7,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "safe",
+              "label": "safe"
+            },
+            {
+              "value": "speed",
+              "label": "speed"
+            }
+          ],
+          "prefix": "s"
+        }
+      },
+      {
+        "name": "local-prefix",
+        "lines": [
+          "open ./a"
+        ],
+        "line": 0,
+        "col": 8,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "./alpha-dir/",
+              "label": "alpha-dir/"
+            },
+            {
+              "value": "./alpha.txt",
+              "label": "alpha.txt"
+            }
+          ],
+          "prefix": "./a"
+        }
+      },
+      {
+        "name": "forced-empty-token",
+        "lines": [
+          "open "
+        ],
+        "line": 0,
+        "col": 5,
+        "force": true,
+        "result": {
+          "items": [
+            {
+              "value": "alpha-dir/",
+              "label": "alpha-dir/"
+            },
+            {
+              "value": "locale-order/",
+              "label": "locale-order/"
+            },
+            {
+              "value": "🎉.txt",
+              "label": "🎉.txt"
+            },
+            {
+              "value": "alpha.txt",
+              "label": "alpha.txt"
+            },
+            {
+              "value": "beta.md",
+              "label": "beta.md"
+            },
+            {
+              "value": "fake-fd.mjs",
+              "label": "fake-fd.mjs"
+            },
+            {
+              "value": "\"space dir/\"",
+              "label": "space dir/"
+            },
+            {
+              "value": "\"space file.txt\"",
+              "label": "space file.txt"
+            }
+          ],
+          "prefix": ""
+        }
+      },
+      {
+        "name": "quoted-space",
+        "lines": [
+          "open \"sp"
+        ],
+        "line": 0,
+        "col": 8,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "\"space dir/\"",
+              "label": "space dir/"
+            },
+            {
+              "value": "\"space file.txt\"",
+              "label": "space file.txt"
+            }
+          ],
+          "prefix": "\"sp"
+        }
+      },
+      {
+        "name": "at-fuzzy",
+        "lines": [
+          "attach @li"
+        ],
+        "line": 0,
+        "col": 10,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "@src/lib.rs",
+              "label": "lib.rs",
+              "description": "src/lib.rs"
+            },
+            {
+              "value": "@lib-top.txt",
+              "label": "lib-top.txt",
+              "description": "lib-top.txt"
+            }
+          ],
+          "prefix": "@li"
+        }
+      },
+      {
+        "name": "at-fuzzy-quoted",
+        "lines": [
+          "attach @\"sp"
+        ],
+        "line": 0,
+        "col": 11,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "@\"space dir/\"",
+              "label": "space dir/",
+              "description": "space dir"
+            },
+            {
+              "value": "@\"space file.txt\"",
+              "label": "space file.txt",
+              "description": "space file.txt"
+            }
+          ],
+          "prefix": "@\"sp"
+        }
+      },
+      {
+        "name": "at-fuzzy-multi-segment",
+        "lines": [
+          "attach @src/li"
+        ],
+        "line": 0,
+        "col": 14,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "@src/lib.rs",
+              "label": "lib.rs",
+              "description": "src/lib.rs"
+            }
+          ],
+          "prefix": "@src/li"
+        }
+      },
+      {
+        "name": "at-fuzzy-escaped-multi",
+        "lines": [
+          "attach @src.[x]/li+"
+        ],
+        "line": 0,
+        "col": 19,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "@src.[x]/li+.rs",
+              "label": "li+.rs",
+              "description": "src.[x]/li+.rs"
+            }
+          ],
+          "prefix": "@src.[x]/li+"
+        }
+      },
+      {
+        "name": "astral-cursor-input",
+        "lines": [
+          "🎉 attach @li"
+        ],
+        "line": 0,
+        "col": 13,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "@src/lib.rs",
+              "label": "lib.rs",
+              "description": "src/lib.rs"
+            },
+            {
+              "value": "@lib-top.txt",
+              "label": "lib-top.txt",
+              "description": "lib-top.txt"
+            }
+          ],
+          "prefix": "@li"
+        }
+      },
+      {
+        "name": "astral-local-prefix",
+        "lines": [
+          "🎉 open ./🎉"
+        ],
+        "line": 0,
+        "col": 12,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "./🎉.txt",
+              "label": "🎉.txt"
+            }
+          ],
+          "prefix": "./🎉"
+        }
+      },
+      {
+        "name": "locale-order",
+        "lines": [
+          "open ./locale-order/"
+        ],
+        "line": 0,
+        "col": 20,
+        "force": false,
+        "result": {
+          "items": [
+            {
+              "value": "./locale-order/_under",
+              "label": "_under"
+            },
+            {
+              "value": "\"./locale-order/a b\"",
+              "label": "a b"
+            },
+            {
+              "value": "./locale-order/a-b",
+              "label": "a-b"
+            },
+            {
+              "value": "./locale-order/alpha",
+              "label": "alpha"
+            },
+            {
+              "value": "./locale-order/Álpha",
+              "label": "Álpha"
+            },
+            {
+              "value": "./locale-order/äther",
+              "label": "äther"
+            },
+            {
+              "value": "./locale-order/Beta",
+              "label": "Beta"
+            },
+            {
+              "value": "./locale-order/file10",
+              "label": "file10"
+            },
+            {
+              "value": "./locale-order/file2",
+              "label": "file2"
+            },
+            {
+              "value": "./locale-order/Zoo",
+              "label": "Zoo"
+            }
+          ],
+          "prefix": "./locale-order/"
+        }
+      },
+      {
+        "name": "aborted-at-fuzzy",
+        "lines": [
+          "@li"
+        ],
+        "line": 0,
+        "col": 3,
+        "force": false,
+        "result": null
+      }
+    ],
+    "completionCases": [
+      {
+        "name": "slash",
+        "lines": [
+          "/cf tail"
+        ],
+        "line": 0,
+        "col": 3,
+        "item": {
+          "value": "config",
+          "label": "config"
+        },
+        "prefix": "/cf",
+        "result": {
+          "lines": [
+            "/config  tail"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 8
+        }
+      },
+      {
+        "name": "attachment-file",
+        "lines": [
+          "see @al now"
+        ],
+        "line": 0,
+        "col": 7,
+        "item": {
+          "value": "@alpha.txt",
+          "label": "alpha.txt"
+        },
+        "prefix": "@al",
+        "result": {
+          "lines": [
+            "see @alpha.txt  now"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 15
+        }
+      },
+      {
+        "name": "attachment-dir",
+        "lines": [
+          "see @al"
+        ],
+        "line": 0,
+        "col": 7,
+        "item": {
+          "value": "@alpha-dir/",
+          "label": "alpha-dir/"
+        },
+        "prefix": "@al",
+        "result": {
+          "lines": [
+            "see @alpha-dir/"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 15
+        }
+      },
+      {
+        "name": "quoted-existing-close",
+        "lines": [
+          "open \"sp\" tail"
+        ],
+        "line": 0,
+        "col": 8,
+        "item": {
+          "value": "\"space file.txt\"",
+          "label": "space file.txt"
+        },
+        "prefix": "\"sp",
+        "result": {
+          "lines": [
+            "open \"space file.txt\" tail"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 21
+        }
+      },
+      {
+        "name": "argument",
+        "lines": [
+          "/model f tail"
+        ],
+        "line": 0,
+        "col": 8,
+        "item": {
+          "value": "fast",
+          "label": "fast"
+        },
+        "prefix": "f",
+        "result": {
+          "lines": [
+            "/model fast tail"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 11
+        }
+      },
+      {
+        "name": "plain-path",
+        "lines": [
+          "open ./a tail"
+        ],
+        "line": 0,
+        "col": 8,
+        "item": {
+          "value": "./alpha.txt",
+          "label": "alpha.txt"
+        },
+        "prefix": "./a",
+        "result": {
+          "lines": [
+            "open ./alpha.txt tail"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 16
+        }
+      },
+      {
+        "name": "astral-input-output",
+        "lines": [
+          "🎉 see @x tail"
+        ],
+        "line": 0,
+        "col": 9,
+        "item": {
+          "value": "@🎉.txt",
+          "label": "🎉.txt"
+        },
+        "prefix": "@x",
+        "result": {
+          "lines": [
+            "🎉 see @🎉.txt  tail"
+          ],
+          "cursorLine": 0,
+          "cursorCol": 15
+        }
+      }
+    ],
+    "triggerCases": [
+      {
+        "name": "slash-command",
+        "lines": [
+          "/conf"
+        ],
+        "line": 0,
+        "col": 5,
+        "result": false
+      },
+      {
+        "name": "slash-argument",
+        "lines": [
+          "/conf path"
+        ],
+        "line": 0,
+        "col": 10,
+        "result": true
+      },
+      {
+        "name": "plain",
+        "lines": [
+          "hello"
+        ],
+        "line": 0,
+        "col": 5,
+        "result": true
+      }
+    ]
+  }
+}

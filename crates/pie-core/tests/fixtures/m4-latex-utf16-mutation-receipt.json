@@ -1,0 +1,72 @@
+{
+ "schema": "pie-tui-m4-latex-utf16-mutation-receipt-v1",
+ "date": "2026-08-30",
+ "oraclePhase": "raw-unit oracle committed at 4a6c343 before exact-core product 7356960",
+ "toolchain": "rustc 1.98.0 (88d9e12ae 2026-08-18)",
+ "mutations": [
+  {
+   "id": "revert-parser-to-scalar-chars",
+   "change": "strict-decode source units to a Rust String before parsing",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_the_finite_grammar_product_and_exact_edges -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "grammar-unbracedRoot-astral-direct",
+    "grammar-unbracedRoot-astral-grouped",
+    "grammar-unbracedRoot-astral-nested"
+   ]
+  },
+  {
+   "id": "use-terminal-width-for-fraction-grouping",
+   "change": "replace JavaScript string-element grouping with terminal visible width",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_the_finite_grammar_product_and_exact_edges -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "edge-fraction-cjk-denominator",
+    "edge-fraction-astral-denominator",
+    "edge-fraction-combining-denominator"
+   ]
+  },
+  {
+   "id": "erase-nested-group-script-wrapper",
+   "change": "inspect only top-level script nodes and stop recursion through Group",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_the_finite_grammar_product_and_exact_edges -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "edge-nested-group-script"
+   ]
+  },
+  {
+   "id": "lossy-conversion-inside-exact-core",
+   "change": "roundtrip exact output through String.from_utf16_lossy before returning units",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_the_finite_grammar_product_and_exact_edges -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "grammar-unbracedRoot-astral-direct",
+    "grammar-unbracedRoot-astral-grouped",
+    "grammar-unbracedRoot-astral-nested"
+   ],
+   "observation": "each separated surrogate was replaced by unit 65533"
+  },
+  {
+   "id": "reuse-bmp-private-use-padding-marker",
+   "change": "reserve U+E000 for padding even though it is a valid source unit",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 plain_text_roundtrip_property_covers_arbitrary_unit_products -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "plain UTF-16 unit product [57344]"
+   ]
+  },
+  {
+   "id": "collapse-empty-root",
+   "change": "render an empty square root as only the radical glyph",
+   "command": "rustup run 1.98.0 cargo test -p pie-core --test golden_m4_latex_utf16 raw_utf16_core_matches_the_finite_grammar_product_and_exact_edges -- --exact --nocapture",
+   "exitCode": 101,
+   "killedRows": [
+    "grammar-root-empty-direct",
+    "grammar-root-empty-grouped",
+    "grammar-root-empty-nested"
+   ]
+  }
+ ],
+ "restoration": "Each mutation was reverted by its inverse patch; the raw oracle, strict-wrapper checks, and 584-case unit product passed afterward."
+}

@@ -1,0 +1,28 @@
+[package]
+name = "pie-app"
+description = "Renderers (main/alt screen), golden-runner binary, app assembly."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "pie-golden-runner"
+path = "src/main.rs"
+
+[[bin]]
+name = "pie-demo"
+path = "src/bin/pie-demo.rs"
+
+[[bin]]
+name = "pie-screen-demo"
+path = "src/bin/pie-screen-demo.rs"
+
+[dependencies]
+serde_json = "1"
+
+[target.'cfg(unix)'.dependencies]
+libc = "0.2"
+
+pie-core = { path = "../pie-core" }
+pie-term = { path = "../pie-term" }
+pie-components = { path = "../pie-components" }

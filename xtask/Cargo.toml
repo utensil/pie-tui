@@ -1,0 +1,12 @@
+[package]
+name = "xt"
+description = "Repo tasks: boundary gate, drift checks. Deliberately dependency-free."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[[bin]]
+name = "xt"
+path = "src/main.rs"
+
+[dependencies]

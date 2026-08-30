@@ -1,0 +1,851 @@
+{
+  "oracle": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.1",
+    "files": {
+      "index.d.ts": "f86836256fea4329d5618a87ae503c89f73efa74523a11c0a84294b17b12bea3",
+      "index.js": "80fdafd86a5649384fde4be965ccf4b2375b168fc375c074cfd9b5e9e9d59f89",
+      "tui.d.ts": "0b34c1688da2789a4d73d66a748287c8731f906bee480c5ef79633b66c9ab2f9",
+      "tui.js": "b425ed8e8535cf76deaeeea7de91edfda3d07606ee5ef9b2f02028583600a05a",
+      "layout.d.ts": "cfa0950012579f3912d7f6887a2b24f8618fa5e7eb0df15447ec992cf806a40a",
+      "layout.js": "fdc6c58b4245e735a0daabdc93201017e77cbbb01d7d440eda6427270556b2af",
+      "layout-node.d.ts": "8a19dd70f320755c3793cbec86902ad037afedd4151f1d174c0175cc281cf77d",
+      "layout-node.js": "73c3942b68d52ed29072f1f78184c99d405f9259bb4e24a1b6b0e3688381f7f5",
+      "utils.d.ts": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+      "utils.js": "70c037e8c3c6ec909c4bab6b14777e1f33ab1f5c39f5f1f3aa6f8966357d8052",
+      "terminal-image.d.ts": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+      "terminal-image.js": "b2b60272f6f25dbb559722dffa369944f5c8846fa726c31fb841d1532470adc2",
+      "components/stack.d.ts": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+      "components/stack.js": "02b4dafebc728f1c0e8d01b5cc330f82eb760c58bc71c5cc9bff6d98bf34dbf3",
+      "components/v-stack.d.ts": "7b695980cc75b8cafe67ee61108769550fa4effc851a83054776f32ba1bc42cb",
+      "components/v-stack.js": "7b6e6f6e1fbb037f33a8238ab02ec9e6e5f65fe49029bb430acd59c40148bfa4",
+      "components/h-stack.d.ts": "ad3796f7ee53e96f5e46d62f2409b6232da3f53364d4eaa8f741e5463ecf027d",
+      "components/h-stack.js": "b4cf1819879bcbbf20f2cfd3a5d5960b92c7f69308310d2ad44f0dbae4ed9c0f",
+      "components/scroll-view.d.ts": "7ee8cf2eced7d5a3cc68f0f054c9813f93b43019bdd72745b56f0c603b13f097",
+      "components/scroll-view.js": "796fdaa30bfb850df9d3e9647cd7b08c1bf3f3775335ce90a158c177c282f53f"
+    }
+  },
+  "sizeValue": {
+    "declaration": "number | `${number}%`",
+    "percentRule": "floor(reference * percentage / 100)"
+  },
+  "layout": {
+    "vertical5x3": {
+      "frame": {
+        "width": 5,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007top  \u001b[0m\u001b]8;;\u0007",
+          "",
+          "\u001b[0m\u001b]8;;\u0007b2\u001b_pi:c\u0007   \u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": null,
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": null,
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 5,
+                "height": 1
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 5,
+                "height": 1
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 2,
+                "width": 5,
+                "height": 1
+              },
+              "clip": {
+                "x": 0,
+                "y": 2,
+                "width": 5,
+                "height": 1
+              },
+              "lineOffset": 2,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "calls": [
+        "top:5",
+        "cursor:5"
+      ]
+    },
+    "horizontal8x3": {
+      "frame": {
+        "width": 8,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007LL  \u001b[0m\u001b]8;;\u0007    ",
+          "\u001b[0m\u001b]8;;\u0007L2  \u001b[0m\u001b]8;;\u0007    ",
+          "\u001b[0m\u001b]8;;\u0007L3  \u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007R  \u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": null,
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": null,
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 3
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 3
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            },
+            {
+              "rect": {
+                "x": 5,
+                "y": 2,
+                "width": 3,
+                "height": 1
+              },
+              "clip": {
+                "x": 5,
+                "y": 2,
+                "width": 3,
+                "height": 1
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "calls": [
+        "left:8",
+        "right:8",
+        "left:4",
+        "right:3"
+      ]
+    },
+    "minimumViewport": {
+      "frame": {
+        "width": 1,
+        "height": 1,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007x\u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": null,
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 1,
+            "height": 1
+          },
+          "lineOffset": 0,
+          "scrollView": null,
+          "layer": 0,
+          "children": []
+        }
+      },
+      "calls": [
+        "safe:1"
+      ]
+    },
+    "stackEdgeCases": {
+      "maxSafeShrink": [
+        0
+      ],
+      "contradictoryGrow": [
+        5
+      ],
+      "contradictoryShrink": [
+        5
+      ],
+      "contradictoryAuto": [
+        7
+      ]
+    },
+    "shellZones": {
+      "frame": {
+        "width": 24,
+        "height": 6,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007alpha                   \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007beta                    \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007gamma                   \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007prefix\u001b]133;A\u0007inside            \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007\u001b]133;D\u0007unsupported             \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007\u001b]133;Aunterminated      \u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": null,
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 24,
+            "height": 6
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 24,
+            "height": 6
+          },
+          "lineOffset": 0,
+          "scrollView": null,
+          "layer": 0,
+          "children": []
+        }
+      },
+      "calls": [
+        "zones:24"
+      ]
+    }
+  },
+  "scroll": {
+    "always5x3": {
+      "first": {
+        "width": 5,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u00070000\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007#",
+          "\u001b[0m\u001b]8;;\u00071111\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007#",
+          "\u001b[0m\u001b]8;;\u00072222\u001b[0m\u001b]8;;\u0007 "
+        ],
+        "primaryScrollView": "always",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": "always",
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 6
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 3
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "firstGeometry": {
+        "column": 4,
+        "trackTop": 0,
+        "trackHeight": 3,
+        "thumbTop": 0,
+        "thumbHeight": 2,
+        "maxScrollTop": 3
+      },
+      "remainder": 0,
+      "second": {
+        "width": 5,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u00072222\u001b[0m\u001b]8;;\u0007 ",
+          "\u001b[0m\u001b]8;;\u00073333\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007#",
+          "\u001b[0m\u001b]8;;\u00074444\u001b[0m\u001b]8;;\u0007\u001b[0m\u001b]8;;\u0007#"
+        ],
+        "primaryScrollView": "always",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 5,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": "always",
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": -2,
+                "width": 4,
+                "height": 6
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 4,
+                "height": 3
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "secondGeometry": {
+        "column": 4,
+        "trackTop": 0,
+        "trackHeight": 3,
+        "thumbTop": 1,
+        "thumbHeight": 2,
+        "maxScrollTop": 3
+      },
+      "state": {
+        "scrollTop": 2,
+        "following": false,
+        "viewportHeight": 3
+      },
+      "calls": [
+        "always-child:4",
+        "always-child:4"
+      ],
+      "requests": [
+        "request"
+      ]
+    },
+    "auto8x3": {
+      "first": {
+        "width": 8,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007row-0000\u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007row-1111\u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007row-2222\u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": "auto",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": "auto",
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 6
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 3
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "firstVisible": false,
+      "remainder": 0,
+      "second": {
+        "width": 8,
+        "height": 3,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007row-111\u001b[0m\u001b]8;;\u0007#",
+          "\u001b[0m\u001b]8;;\u0007row-222\u001b[0m\u001b]8;;\u0007#",
+          "\u001b[0m\u001b]8;;\u0007row-3333\u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": "auto",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 3
+          },
+          "lineOffset": null,
+          "scrollView": "auto",
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": -1,
+                "width": 8,
+                "height": 6
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 3
+              },
+              "lineOffset": 0,
+              "scrollView": null,
+              "layer": 0,
+              "children": []
+            }
+          ]
+        }
+      },
+      "secondVisible": true,
+      "geometry": {
+        "column": 7,
+        "trackTop": 0,
+        "trackHeight": 3,
+        "thumbTop": 0,
+        "thumbHeight": 2,
+        "maxScrollTop": 3
+      },
+      "calls": [
+        "auto-child:8",
+        "auto-child:8"
+      ],
+      "requests": [
+        "request"
+      ]
+    },
+    "followEnd": {
+      "states": [
+        {
+          "name": "attached",
+          "scrollTop": 3,
+          "following": true,
+          "viewportHeight": 3
+        },
+        {
+          "name": "detach-remainder",
+          "remainder": 0
+        },
+        {
+          "name": "detached",
+          "scrollTop": 2,
+          "following": false,
+          "viewportHeight": 3
+        },
+        {
+          "name": "growth-detached",
+          "scrollTop": 2,
+          "following": false,
+          "viewportHeight": 3
+        },
+        {
+          "name": "reattached",
+          "scrollTop": 5,
+          "following": true,
+          "viewportHeight": 3
+        },
+        {
+          "name": "growth-attached",
+          "scrollTop": 7,
+          "following": true,
+          "viewportHeight": 3
+        }
+      ],
+      "calls": [
+        "follow:5:6",
+        "follow:5:8",
+        "follow:5:10"
+      ],
+      "requests": [
+        "request",
+        "request"
+      ]
+    },
+    "remainders": [
+      {
+        "overscroll": "chain",
+        "sequence": [
+          {
+            "delta": -2,
+            "remainder": -2,
+            "scrollTop": 0
+          },
+          {
+            "delta": 5,
+            "remainder": 2,
+            "scrollTop": 3
+          },
+          {
+            "delta": -5,
+            "remainder": -2,
+            "scrollTop": 0
+          }
+        ]
+      },
+      {
+        "overscroll": "contain",
+        "sequence": [
+          {
+            "delta": -2,
+            "remainder": -2,
+            "scrollTop": 0
+          },
+          {
+            "delta": 5,
+            "remainder": 2,
+            "scrollTop": 3
+          },
+          {
+            "delta": -5,
+            "remainder": -2,
+            "scrollTop": 0
+          }
+        ]
+      }
+    ],
+    "nestedHit": {
+      "frame": {
+        "width": 8,
+        "height": 4,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007top     \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007i0      \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007i1      \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007i2      \u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": "inner",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 4
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 4
+          },
+          "lineOffset": null,
+          "scrollView": "outer",
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 4
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 4
+              },
+              "lineOffset": null,
+              "scrollView": null,
+              "layer": 0,
+              "children": [
+                {
+                  "rect": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 8,
+                    "height": 1
+                  },
+                  "clip": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 8,
+                    "height": 1
+                  },
+                  "lineOffset": 0,
+                  "scrollView": null,
+                  "layer": 0,
+                  "children": []
+                },
+                {
+                  "rect": {
+                    "x": 0,
+                    "y": 1,
+                    "width": 8,
+                    "height": 3
+                  },
+                  "clip": {
+                    "x": 0,
+                    "y": 1,
+                    "width": 8,
+                    "height": 3
+                  },
+                  "lineOffset": null,
+                  "scrollView": "inner",
+                  "layer": 0,
+                  "children": [
+                    {
+                      "rect": {
+                        "x": 0,
+                        "y": 1,
+                        "width": 8,
+                        "height": 5
+                      },
+                      "clip": {
+                        "x": 0,
+                        "y": 1,
+                        "width": 8,
+                        "height": 3
+                      },
+                      "lineOffset": 0,
+                      "scrollView": null,
+                      "layer": 0,
+                      "children": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "at2x2": [
+        "inner",
+        "outer"
+      ],
+      "at2x0": [
+        "outer"
+      ]
+    },
+    "explicitPrimary": {
+      "frame": {
+        "width": 8,
+        "height": 4,
+        "lines": [
+          "\u001b[0m\u001b]8;;\u0007n0      \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007n1      \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007e0      \u001b[0m\u001b]8;;\u0007",
+          "\u001b[0m\u001b]8;;\u0007e1      \u001b[0m\u001b]8;;\u0007"
+        ],
+        "primaryScrollView": "explicit",
+        "root": {
+          "rect": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 4
+          },
+          "clip": {
+            "x": 0,
+            "y": 0,
+            "width": 8,
+            "height": 4
+          },
+          "lineOffset": null,
+          "scrollView": null,
+          "layer": 0,
+          "children": [
+            {
+              "rect": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 2
+              },
+              "clip": {
+                "x": 0,
+                "y": 0,
+                "width": 8,
+                "height": 2
+              },
+              "lineOffset": null,
+              "scrollView": "natural",
+              "layer": 0,
+              "children": [
+                {
+                  "rect": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 8,
+                    "height": 2
+                  },
+                  "clip": {
+                    "x": 0,
+                    "y": 0,
+                    "width": 8,
+                    "height": 2
+                  },
+                  "lineOffset": 0,
+                  "scrollView": null,
+                  "layer": 0,
+                  "children": []
+                }
+              ]
+            },
+            {
+              "rect": {
+                "x": 0,
+                "y": 2,
+                "width": 8,
+                "height": 2
+              },
+              "clip": {
+                "x": 0,
+                "y": 2,
+                "width": 8,
+                "height": 2
+              },
+              "lineOffset": null,
+              "scrollView": "explicit",
+              "layer": 0,
+              "children": [
+                {
+                  "rect": {
+                    "x": 0,
+                    "y": 2,
+                    "width": 8,
+                    "height": 2
+                  },
+                  "clip": {
+                    "x": 0,
+                    "y": 2,
+                    "width": 8,
+                    "height": 2
+                  },
+                  "lineOffset": 0,
+                  "scrollView": null,
+                  "layer": 0,
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "calls": [
+        "natural:8",
+        "explicit:8"
+      ]
+    },
+    "fakeClock": {
+      "activeVisible": true,
+      "waitingVisible": true,
+      "beforeDeadlineVisible": true,
+      "hiddenVisible": false,
+      "scrolledVisible": true,
+      "requests": [
+        "request",
+        "request",
+        "request"
+      ],
+      "events": [
+        "set:1:10",
+        "unref:1",
+        "fire:1",
+        "set:2:10",
+        "unref:2",
+        "clear:2:true"
+      ],
+      "pendingTimers": 0
+    },
+    "errors": [
+      {
+        "name": "addChild",
+        "message": "ScrollView has exactly one child"
+      },
+      {
+        "name": "removeChild",
+        "message": "ScrollView child cannot be removed"
+      },
+      {
+        "name": "clear",
+        "message": "ScrollView child cannot be cleared"
+      },
+      {
+        "name": "axis",
+        "message": "Unsupported ScrollView axis: horizontal"
+      }
+    ]
+  }
+}

@@ -1,0 +1,251 @@
+{
+ "generator": "gen-golden-m4-latex.mjs",
+ "reference": {
+  "package": "@earendil-works/pi-tui",
+  "version": "0.84.1",
+  "indexDtsSha256": "f86836256fea4329d5618a87ae503c89f73efa74523a11c0a84294b17b12bea3",
+  "latexDtsSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+  "latexJsSha256": "d8778b4166001faf09fa555d550c06a8d63b84b86244e04b45fa1b3fc68b1716"
+ },
+ "cases": [
+  {
+   "name": "variant-greek",
+   "source": "\\varepsilon \\vartheta \\varpi \\varrho \\varsigma \\varphi",
+   "output": "ε ϑ ϖ ϱ ς φ"
+  },
+  {
+   "name": "uppercase-greek",
+   "source": "\\Gamma \\Delta \\Theta \\Lambda \\Xi \\Pi \\Sigma \\Upsilon \\Phi \\Psi \\Omega",
+   "output": "Γ Δ Θ Λ Ξ Π Σ Υ Φ Ψ Ω"
+  },
+  {
+   "name": "arrow-family",
+   "source": "\\leftarrow \\rightarrow \\leftrightarrow \\Leftarrow \\Rightarrow \\Leftrightarrow \\mapsto \\uparrow \\downarrow",
+   "output": "← → ↔ ⇐ ⇒ ⇔ ↦ ↑ ↓"
+  },
+  {
+   "name": "set-logic-family",
+   "source": "\\notin \\ni \\subset \\supset \\subseteq \\supseteq \\cup \\cap \\wedge \\vee",
+   "output": "∉ ∋ ⊂ ⊃ ⊆ ⊇ ∪ ∩ ∧ ∨"
+  },
+  {
+   "name": "binary-symbol-family",
+   "source": "\\pm \\mp \\times \\div \\cdot \\ast \\star \\circ \\bullet \\oplus \\otimes",
+   "output": "± ∓ × ÷ · ∗ ⋆ ∘ • ⊕ ⊗"
+  },
+  {
+   "name": "relation-family",
+   "source": "\\equiv \\sim \\simeq \\cong \\approx \\propto \\ll \\gg",
+   "output": "≡ ∼ ≃ ≅ ≈ ∝ ≪ ≫"
+  },
+  {
+   "name": "left-angle-middle",
+   "source": "\\left\\langle x \\middle| y \\right\\rangle",
+   "output": "⟨ x | y ⟩"
+  },
+  {
+   "name": "left-brace-middle",
+   "source": "\\left\\{ x \\middle\\| y \\right\\}",
+   "output": "{ x ‖ y }"
+  },
+  {
+   "name": "nth-root-two",
+   "source": "\\sqrt[2]{x+1}",
+   "output": "√(x+1)"
+  },
+  {
+   "name": "nth-root-three",
+   "source": "\\sqrt[3]{x+1}",
+   "output": "∛(x+1)"
+  },
+  {
+   "name": "nth-root-four",
+   "source": "\\sqrt[4]{x+1}",
+   "output": "∜(x+1)"
+  },
+  {
+   "name": "nth-root-five",
+   "source": "\\sqrt[5]{x+1}",
+   "output": "⁵√(x+1)"
+  },
+  {
+   "name": "root-unbraced",
+   "source": "\\sqrt x",
+   "output": "√x"
+  },
+  {
+   "name": "fraction-unbraced",
+   "source": "\\frac12",
+   "output": "1/2"
+  },
+  {
+   "name": "fraction-empty-both",
+   "source": "\\frac{}{}",
+   "output": "()/()"
+  },
+  {
+   "name": "fraction-empty-numerator",
+   "source": "\\frac{}{x}",
+   "output": "()/x"
+  },
+  {
+   "name": "fraction-empty-denominator",
+   "source": "\\frac{x}{}",
+   "output": "x/()"
+  },
+  {
+   "name": "fraction-nested-inline",
+   "source": "\\frac{\\frac{a}{b}}{\\frac{c}{d}}",
+   "output": "(a/b)/(c/d)"
+  },
+  {
+   "name": "fraction-nested-display",
+   "source": "\\frac{\\frac{a}{b}}{\\frac{c}{d}}",
+   "options": {
+    "display": true
+   },
+   "output": "a/b\n───\nc/d"
+  },
+  {
+   "name": "scripts-sub-then-super",
+   "source": "x_1^2",
+   "output": "x₁²"
+  },
+  {
+   "name": "scripts-super-then-sub",
+   "source": "x^2_1",
+   "output": "x²₁"
+  },
+  {
+   "name": "scripts-repeated-super",
+   "source": "x^2^3",
+   "output": "x²³"
+  },
+  {
+   "name": "scripts-repeated-sub",
+   "source": "x_1_2",
+   "output": "x₁₂"
+  },
+  {
+   "name": "scripts-empty",
+   "source": "x^{}_{}",
+   "output": "x"
+  },
+  {
+   "name": "operator-super-then-sub",
+   "source": "\\sum^n_{i=0}x",
+   "options": {
+    "display": true
+   },
+   "output": " n\n ∑  x\ni=0"
+  },
+  {
+   "name": "operator-sub-then-super",
+   "source": "\\sum_{i=0}^n x",
+   "options": {
+    "display": true
+   },
+   "output": " n\n ∑  x\ni=0"
+  },
+  {
+   "name": "pmatrix-one-row",
+   "source": "\\begin{pmatrix}a & bb\\end{pmatrix}",
+   "output": "⎛ a │ bb ⎞"
+  },
+  {
+   "name": "cases-two-row",
+   "source": "\\begin{cases}x & x>0 \\\\ -x & x\\leq0\\end{cases}",
+   "output": "⎧ x if x > 0\n⎩ -x if x ≤ 0"
+  },
+  {
+   "name": "cases-three-row",
+   "source": "\\begin{cases}a & p \\\\ b & q \\\\ c & r\\end{cases}",
+   "output": "⎧ a if p\n⎨ b if q\n⎩ c if r"
+  },
+  {
+   "name": "line-break-compact",
+   "source": "a\\\\b",
+   "output": "a\nb"
+  },
+  {
+   "name": "line-break-spaced",
+   "source": "a \\\\ b",
+   "output": "a\nb"
+  },
+  {
+   "name": "raw-combining-acute",
+   "source": "x́ + y",
+   "output": "x́ + y"
+  },
+  {
+   "name": "raw-combining-alone",
+   "source": "́",
+   "output": "́"
+  },
+  {
+   "name": "escaped-literals",
+   "source": "\\{x\\} \\_ \\% \\# \\&",
+   "output": "{x} _ % # &"
+  },
+  {
+   "name": "unknown-bare",
+   "source": "x+\\definitelyUnsupported",
+   "output": null
+  },
+  {
+   "name": "malformed-left",
+   "source": "\\left( x",
+   "output": "( x"
+  },
+  {
+   "name": "matrix-nested-fraction",
+   "source": "\\begin{bmatrix}\\frac{a}{b} & x \\\\ y & \\sqrt{z}\\end{bmatrix}",
+   "output": "⎡ a/b │ x  ⎤\n⎣ y   │ √z ⎦"
+  },
+  {
+   "name": "spacing-pm-div",
+   "source": "a\\pm b\\div c",
+   "output": "a± b÷ c"
+  },
+  {
+   "name": "quantifiers-long-arrow",
+   "source": "\\forall x \\exists y x\\longrightarrow y",
+   "output": "∀ x ∃ y x → y"
+  },
+  {
+   "name": "bar-combining-overline",
+   "source": "\\bar{x}",
+   "output": "x̅"
+  },
+  {
+   "name": "root-structural-empty",
+   "source": "\\sqrt{}",
+   "output": "√()"
+  },
+  {
+   "name": "fraction-multichar",
+   "source": "\\frac{ab}{cd}",
+   "output": "ab/(cd)"
+  },
+  {
+   "name": "fraction-spaced-numerator",
+   "source": "\\frac{a b}{cd}",
+   "output": "(a b)/(cd)"
+  },
+  {
+   "name": "fraction-spaced-denominator",
+   "source": "\\frac{ab}{c d}",
+   "output": "ab/(c d)"
+  },
+  {
+   "name": "fraction-unbraced-after-space",
+   "source": "\\frac ab",
+   "output": "a/b"
+  },
+  {
+   "name": "nested-script-expression",
+   "source": "y_{a^b}",
+   "output": "y_(aᵇ)"
+  }
+ ]
+}

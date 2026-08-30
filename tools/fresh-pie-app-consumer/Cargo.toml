@@ -1,0 +1,12 @@
+[package]
+name = "fresh-pie-app-consumer"
+version = "0.0.0"
+edition = "2024"
+publish = false
+
+[workspace]
+
+[dependencies]
+pie-app = { path = "../pie-tui/crates/pie-app" }
+pie-components = { path = "../pie-tui/crates/pie-components" }
+pie-term = { path = "../pie-tui/crates/pie-term" }

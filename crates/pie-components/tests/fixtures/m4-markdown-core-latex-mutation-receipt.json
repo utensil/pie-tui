@@ -1,0 +1,34 @@
+{
+  "schema": "pie-tui-m4-markdown-core-latex-mutation-receipt-v1",
+  "date": "2026-08-30",
+  "oracleCommit": "b27e5e2",
+  "oraclePhase": "committed intentional-red before the component delegated to pie_core::latex",
+  "mutations": [
+    {
+      "id": "return-raw-markdown-math",
+      "family": "bypass-canonical-latex",
+      "change": "replace both canonical render_latex calls with their raw Markdown fallbacks",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_core_latex markdown_routes_scalar_safe_math_through_the_canonical_latex_model -- --exact",
+      "exitCode": 101,
+      "mismatchCount": 6,
+      "killedRows": [
+        "inline-unbraced-accent",
+        "inline-symbols-and-quantifiers",
+        "inline-decimal-root",
+        "inline-astral-fraction-grouping",
+        "inline-combining-fraction-grouping",
+        "display-empty-denominator"
+      ]
+    },
+    {
+      "id": "mutate-imported-latex-runtime",
+      "family": "latex-import-provenance",
+      "change": "append a harmless comment to a copied pinned latex.js before the Markdown oracle imports it",
+      "command": "PI_TUI_DIST=<mutated-pi-tui-dist> MARKED_ROOT=<pinned-marked-root> node tools/golden/gen-golden-m4-markdown.mjs",
+      "exitCode": 1,
+      "diagnostic": "unexpected latex.js sha256",
+      "fixtureWrites": 0
+    }
+  ],
+  "restoration": "Both isolated mutations were discarded; the canonical route test and full pinned generator passed after restoration."
+}

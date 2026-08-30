@@ -1,0 +1,740 @@
+{
+  "generator": "tools/extract-surface.mjs",
+  "reference": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.2",
+    "sourceDigest": "2eb2c4d88617",
+    "exportedStatementCount": 182
+  },
+  "note": "Each entry is one export statement from the reference .d.ts tree. Porting status is kept in tools/surface-coverage.json (separate so re-extraction never clobbers progress).",
+  "statements": [
+    {
+      "rel": "alt-screen-search.d.ts",
+      "stmt": "export interface AltScreenSearchSegment { row: number; startCol: number; endCol: number; } export interface AltScreenSearchMatch { segments: AltScreenSearchSegment[];"
+    },
+    {
+      "rel": "alt-screen-search.d.ts",
+      "stmt": "export declare function findAltScreenSearchMatches(lines: readonly string[], query: string): AltScreenSearchMatch[];"
+    },
+    {
+      "rel": "alt-screen-search.d.ts",
+      "stmt": "export declare function getAltScreenSearchMatchKey(match: AltScreenSearchMatch): string;"
+    },
+    {
+      "rel": "alt-screen-search.d.ts",
+      "stmt": "export declare class AltScreenSearchComponent implements Component, Focusable { private readonly input; private readonly onQueryChange; private resultCount; private resultIndex; private _focused; constructor(onQueryChange: (query: string) => void); get focused(): boolean; set focused(value: boolean); setResult(index: number, count: number): void; handleInput(data: string): void; invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=alt-screen-search.d.ts.map"
+    },
+    {
+      "rel": "autocomplete.d.ts",
+      "stmt": "export interface AutocompleteItem { value: string; label: string; description?: string; } type Awaitable<T> = T | Promise<T>;"
+    },
+    {
+      "rel": "autocomplete.d.ts",
+      "stmt": "export interface SlashCommand { name: string; description?: string; argumentHint?: string; getArgumentCompletions?(argumentPrefix: string): Awaitable<AutocompleteItem[] | null>; } export interface AutocompleteSuggestions { items: AutocompleteItem[];"
+    },
+    {
+      "rel": "autocomplete.d.ts",
+      "stmt": "export interface AutocompleteProvider { /** Characters that should naturally trigger this provider at token boundaries. */ triggerCharacters?: string[]; getSuggestions(lines: string[], cursorLine: number, cursorCol: number, options: { signal: AbortSignal; force?: boolean; }): Promise<AutocompleteSuggestions | null>; applyCompletion(lines: string[], cursorLine: number, cursorCol: number, item: AutocompleteItem, prefix: string): { lines: string[]; cursorLine: number; cursorCol: number; }; shouldTriggerFileCompletion?(lines: string[], cursorLine: number, cursorCol: number): boolean; } export declare class CombinedAutocompleteProvider implements AutocompleteProvider { private commands;"
+    },
+    {
+      "rel": "autocomplete.d.ts",
+      "stmt": "export {};"
+    },
+    {
+      "rel": "components/alt-screen-flash.d.ts",
+      "stmt": "export declare class AltScreenFlashContainer implements Component { private readonly entries; private nextId; private readonly requestRender; constructor(requestRender: () => void); flash(message: string, durationMs?: number): void; dispose(): void; invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=alt-screen-flash.d.ts.map"
+    },
+    {
+      "rel": "components/box.d.ts",
+      "stmt": "export declare class Box implements Component { children: Component[]; private paddingX; private paddingY; private bgFn?; private cache?; constructor(paddingX?: number, paddingY?: number, bgFn?: (text: string) => string); addChild(component: Component): void; removeChild(component: Component): void; clear(): void; setBgFn(bgFn?: (text: string) => string): void; private invalidateCache; private matchCache; invalidate(): void; render(width: number): string[]; private applyBg; } //# sourceMappingURL=box.d.ts.map"
+    },
+    {
+      "rel": "components/cancellable-loader.d.ts",
+      "stmt": "export declare class CancellableLoader extends Loader { private abortController; /** Called when user presses Escape */ onAbort?: () => void; /** AbortSignal that is aborted when user presses Escape */ get signal(): AbortSignal; /** Whether the loader was aborted */ get aborted(): boolean; handleInput(data: string): void; dispose(): void; } //# sourceMappingURL=cancellable-loader.d.ts.map"
+    },
+    {
+      "rel": "components/editor.d.ts",
+      "stmt": "export interface TextChunk { text: string; startIndex: number; endIndex: number; } /** * Split a line into word-wrapped chunks. * Wraps at word boundaries when possible, falling back to character-level * wrapping for words longer than the available width. * * @param line - The text line to wrap * @param maxWidth - Maximum visible width per chunk * @param preSegmented - Optional pre-segmented graphemes (e.g. with paste-marker awareness). * When omitted the default Intl.Segmenter is used. * @returns Array of chunks with text and position information */ export declare function wordWrapLine(line: string, maxWidth: number, preSegmented?: Intl.SegmentData[]): TextChunk[];"
+    },
+    {
+      "rel": "components/editor.d.ts",
+      "stmt": "export interface EditorTheme { borderColor: (str: string) => string; selectList: SelectListTheme; } export interface EditorOptions { paddingX?: number;"
+    },
+    {
+      "rel": "components/editor.d.ts",
+      "stmt": "export declare class Editor implements Component, Focusable { private state; /** Focusable interface - set by TUI when focus changes */ focused: boolean; protected tui: TUI; private theme; private paddingX; private lastWidth; private scrollOffset; borderColor: (str: string) => string; private autocompleteProvider?; private autocompleteTriggerCharacters; private autocompleteTriggerPattern; private autocompleteDebouncePattern; private autocompleteList?; private autocompleteState; private autocompletePrefix; private autocompleteMaxVisible; private autocompleteAbort?; private autocompleteDebounceTimer?; private autocompleteRequestTask; private autocompleteStartToken; private autocompleteRequestId; private pastes; private pasteCounter; private pasteBuffer; private isInPaste; private history; private historyIndex; private historyDraft; private killRing; private lastAction; private jumpMode; private preferredVisualCol; private snappedFromCursorCol; private undoStack; onSubmit?: (text: string) => void; onChange?: (text: string) => void; disableSubmit: boolean; constructor(tui: TUI, theme: EditorTheme, options?: EditorOptions); /** Set of currently valid paste IDs, for marker-aware segmentation. */ private validPasteIds; /** Segment text with paste-marker awareness, only merging markers with valid IDs. */ private segment; getPaddingX(): number; setPaddingX(padding: number): void; getAutocompleteMaxVisible(): number; setAutocompleteMaxVisible(maxVisible: number): void; setAutocompleteProvider(provider: AutocompleteProvider): void; /** * Add a prompt to history for up/down arrow navigation. * Called after successful submission. */ addToHistory(text: string): void; private isEditorEmpty; private isOnFirstVisualLine; private isOnLastVisualLine; private navigateHistory; private exitHistoryBrowsing; /** Internal setText that doesn't reset history state - used by navigateHistory */ private setTextInternal; invalidate(): void; render(width: number): string[]; handleInput(data: string): void; private layoutText; getText(): string; private expandPasteMarkers; /** * Get text with paste markers expanded to their actual content. * Use this when you need the full content (e.g., for external editor). */ getExpandedText(): string; getLines(): string[]; getCursor(): { line: number; col: number; }; setText(text: string): void; /** * Insert text at the current cursor position. * Used for programmatic insertion (e.g., clipboard image markers). * This is atomic for undo - single undo restores entire pre-insert state. */ insertTextAtCursor(text: string): void; /** * Normalize text for editor storage: * - Normalize line endings (\\r\\n and \\r -> \\n) * - Expand tabs to 4 spaces */ private normalizeText; /** * Internal text insertion at cursor. Handles single and multi-line text. * Does not push undo snapshots or trigger autocomplete - caller is responsible. * Normalizes line endings and calls onChange once at the end. */ private insertTextAtCursorInternal; private insertCharacter; private handlePaste; private addNewLine; private shouldSubmitOnBackslashEnter; private submitValue; private handleBackspace; /** * Set cursor column and clear preferredVisualCol. * Use this for all non-vertical cursor movements to reset sticky column behavior. */ private setCursorCol; /** * Move cursor to a target visual line, applying sticky column logic. * Shared by moveCursor() and pageScroll(). */ private moveToVisualLine; /** * Compute the target visual column for vertical cursor movement. * Implements the sticky column decision table: * * | P | S | T | U | Scenario | Set Preferred | Move To | * |---|---|---|---| ---------------------------------------------------- |---------------|-------------| * | 0 | * | 0 | - | Start nav, target fits | null | current | * | 0 | * | 1 | - | Start nav, target shorter | current | target end | * | 1 | 0 | 0 | 0 | Clamped, target fits preferred | null | preferred | * | 1 | 0 | 0 | 1 | Clamped, target longer but still can't fit preferred | keep | target end | * | 1 | 0 | 1 | - | Clamped, target even shorter | keep | target end | * | 1 | 1 | 0 | - | Rewrapped, target fits current | null | current | * | 1 | 1 | 1 | - | Rewrapped, target shorter than current | current | target end | * * Where: * - P = preferred col is set * - S = cursor in middle of source line (not clamped to end) * - T = target line shorter than current visual col * - U = target line shorter than preferred col */ private computeVerticalMoveColumn; private moveToLineStart; private moveToLineEnd; private deleteToStartOfLine; private deleteToEndOfLine; private deleteWordBackwards; private deleteWordForward; private handleForwardDelete; /** * Build a mapping from visual lines to logical positions. * Returns an array where each element represents a visual line with: * - logicalLine: index into this.state.lines * - startCol: starting column in the logical line * - length: length of this visual line segment */ private buildVisualLineMap; /** * Find the visual line index that contains the given logical position. */ private findVisualLineAt; /** * Find the visual line index for the current cursor position. */ private findCurrentVisualLine; private moveCursor; /** * Scroll by a page (direction: -1 for up, 1 for down). * Moves cursor by the page size while keeping it in bounds. */ private pageScroll; private moveWordBackwards; /** * Yank (paste) the most recent kill ring entry at cursor position. */ private yank; /** * Cycle through kill ring (only works immediately after yank or yank-pop). * Replaces the last yanked text with the previous entry in the ring. */ private yankPop; /** * Insert text at cursor position (used by yank operations). */ private insertYankedText; /** * Delete the previously yanked text (used by yank-pop). * The yanked text is derived from killRing[end] since it hasn't been rotated yet. */ private deleteYankedText; private pushUndoSnapshot; private undo; /** * Jump to the first occurrence of a character in the specified direction. * Multi-line search. Case-sensitive. Skips the current cursor position. */ private jumpToChar; private moveWordForwards; private isSlashMenuAllowed; private isAtStartOfMessage; private isInSlashCommandContext; /** * Find the best autocomplete item index for the given prefix. * Returns -1 if no match is found. * * Match priority: * 1. Exact match (prefix === item.value) -> always selected * 2. Prefix match -> first item whose value starts with prefix * 3. No match -> -1 (keep default highlight) * * Matching is case-sensitive and checks item.value only. */ private getBestAutocompleteMatchIndex; private createAutocompleteList; private tryTriggerAutocomplete; private handleTabCompletion; private handleSlashCommandCompletion; private forceFileAutocomplete; private requestAutocomplete; private startAutocompleteRequest; private setAutocompleteTriggerCharacters; private getAutocompleteDebounceMs; private runAutocompleteRequest; private isAutocompleteRequestCurrent; private applyAutocompleteSuggestions; private cancelAutocompleteRequest; private clearAutocompleteUi; private cancelAutocomplete; isShowingAutocomplete(): boolean; private updateAutocomplete; } //# sourceMappingURL=editor.d.ts.map"
+    },
+    {
+      "rel": "components/h-stack.d.ts",
+      "stmt": "export declare class HStack extends Stack { protected readonly layoutType: \"hstack\"; constructor(children?: StackChild[], options?: StackOptions); render(width: number): string[]; } //# sourceMappingURL=h-stack.d.ts.map"
+    },
+    {
+      "rel": "components/image.d.ts",
+      "stmt": "export interface ImageTheme { fallbackColor: (str: string) => string; } export interface ImageOptions { maxWidthCells?: number;"
+    },
+    {
+      "rel": "components/image.d.ts",
+      "stmt": "export declare class Image implements Component { private base64Data; private mimeType; private dimensions; private theme; private options; private imageId?; private cachedLines?; private cachedWidth?; constructor(base64Data: string, mimeType: string, theme: ImageTheme, options?: ImageOptions, dimensions?: ImageDimensions); /** Get the Kitty image ID used by this image (if any). */ getImageId(): number | undefined; invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=image.d.ts.map"
+    },
+    {
+      "rel": "components/input.d.ts",
+      "stmt": "export declare class Input implements Component, Focusable { private value; private cursor; onSubmit?: (value: string) => void; onEscape?: () => void; /** Focusable interface - set by TUI when focus changes */ focused: boolean; private pasteBuffer; private isInPaste; private killRing; private lastAction; private undoStack; getValue(): string; setValue(value: string): void; handleInput(data: string): void; private insertCharacter; private handleBackspace; private handleForwardDelete; private deleteToLineStart; private deleteToLineEnd; private deleteWordBackwards; private deleteWordForward; private yank; private yankPop; private pushUndo; private undo; private moveWordBackwards; private moveWordForwards; private handlePaste; invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=input.d.ts.map"
+    },
+    {
+      "rel": "components/loader.d.ts",
+      "stmt": "export interface LoaderIndicatorOptions { /** Animation frames. Use an empty array to hide the indicator. */ frames?: string[]; /** Frame interval in milliseconds for animated indicators. */ intervalMs?: number; } /** * Loader component that updates with an optional spinning animation. */ export declare class Loader extends Text { private frames;"
+    },
+    {
+      "rel": "components/markdown.d.ts",
+      "stmt": "export interface DefaultTextStyle { /** Foreground color function */ color?: (text: string) => string; /** Background color function */ bgColor?: (text: string) => string; /** Bold text */ bold?: boolean; /** Italic text */ italic?: boolean; /** Strikethrough text */ strikethrough?: boolean; /** Underline text */ underline?: boolean; } /** * Theme functions for markdown elements. * Each function takes text and returns styled text with ANSI codes. */ export interface MarkdownTheme { heading: (text: string) => string;"
+    },
+    {
+      "rel": "components/markdown.d.ts",
+      "stmt": "export interface MarkdownOptions { /** Preserve source list markers instead of normalizing them. */ preserveOrderedListMarkers?: boolean; /** Preserve source backslash escapes instead of normalizing escaped punctuation. */ preserveBackslashEscapes?: boolean; /** Transform source Markdown before parsing, with the exact width available for content. */ transform?: (markdown: string, availableWidth: number) => string; /** Render supported LaTeX math expressions as Unicode text (default: true). */ renderLatex?: boolean; } export declare class Markdown implements Component { private text;"
+    },
+    {
+      "rel": "components/scroll-view.d.ts",
+      "stmt": "export type ScrollViewScrollbar = \"hidden\" | \"auto\" | \"always\";"
+    },
+    {
+      "rel": "components/scroll-view.d.ts",
+      "stmt": "export interface ScrollViewOptions { axis?: \"vertical\"; follow?: \"none\" | \"end\"; primary?: boolean; overscroll?: \"chain\" | \"contain\"; scrollbar?: ScrollViewScrollbar; scrollbarStyle?: (text: string) => string; scrollbarHideDelayMs?: number; } export interface ScrollViewScrollToOptions { /** Keep follow-end disabled even when the target is the current content end. */ disableFollow?: boolean;"
+    },
+    {
+      "rel": "components/scroll-view.d.ts",
+      "stmt": "export declare class ScrollView extends Container { private readonly child; private readonly followEnd; readonly primary: boolean; readonly overscroll: \"chain\" | \"contain\"; readonly scrollbarStyle: (text: string) => string; private currentScrollbar; private readonly scrollbarHideDelayMs; private currentScrollTop; private contentHeight; private currentViewportHeight; private followingEnd; private followSuppressedAtEnd; private requestRenderCallback; private transientScrollbarVisible; private scrollbarActive; private scrollbarHideTimer; constructor(component: Component, options?: ScrollViewOptions); get scrollTop(): number; get isFollowingEnd(): boolean; get viewportHeight(): number; get scrollbar(): ScrollViewScrollbar; get isScrollbarVisible(): boolean; setScrollbar(scrollbar: ScrollViewScrollbar): void; getContentWidth(width: number): number; private markScrollbarActivity; private hideTransientScrollbar; setScrollbarActive(active: boolean): void; scrollTo(scrollTop: number, options?: ScrollViewScrollToOptions): void; scrollBy(lines: number): number; scrollToStart(): void; scrollToEnd(): void; updateLayout(contentHeight: number, viewportHeight: number, requestRender: () => void): void; addChild(_component: Component): void; removeChild(_component: Component): void; clear(): void; render(width: number): string[]; [LAYOUT_NODE](): ScrollLayoutNode; } //# sourceMappingURL=scroll-view.d.ts.map"
+    },
+    {
+      "rel": "components/select-list.d.ts",
+      "stmt": "export interface SelectItem { value: string; label: string; description?: string; } export interface SelectListTheme { selectedPrefix: (text: string) => string;"
+    },
+    {
+      "rel": "components/select-list.d.ts",
+      "stmt": "export interface SelectListTruncatePrimaryContext { text: string; maxWidth: number; columnWidth: number; item: SelectItem; isSelected: boolean; } export interface SelectListLayoutOptions { minPrimaryColumnWidth?: number;"
+    },
+    {
+      "rel": "components/select-list.d.ts",
+      "stmt": "export declare class SelectList implements Component { private items; private filteredItems; private selectedIndex; private maxVisible; private theme; private layout; onSelect?: (item: SelectItem) => void; onCancel?: () => void; onSelectionChange?: (item: SelectItem) => void; constructor(items: SelectItem[], maxVisible: number, theme: SelectListTheme, layout?: SelectListLayoutOptions); setFilter(filter: string): void; setSelectedIndex(index: number): void; invalidate(): void; render(width: number): string[]; handleInput(keyData: string): void; private renderItem; private getPrimaryColumnWidth; private getPrimaryColumnBounds; private truncatePrimary; private getDisplayValue; private notifySelectionChange; getSelectedItem(): SelectItem | null; } //# sourceMappingURL=select-list.d.ts.map"
+    },
+    {
+      "rel": "components/settings-list.d.ts",
+      "stmt": "export interface SettingItem { /** Unique identifier for this setting */ id: string; /** Display label (left side) */ label: string; /** Optional description shown when selected */ description?: string; /** Current value to display (right side) */ currentValue: string; /** If provided, Enter/Space cycles through these values */ values?: string[]; /** If provided, Enter opens this submenu. Receives current value and done callback. */ submenu?: (currentValue: string, done: (selectedValue?: string) => void) => Component; } export interface SettingsListTheme { label: (text: string, selected: boolean) => string;"
+    },
+    {
+      "rel": "components/settings-list.d.ts",
+      "stmt": "export interface SettingsListOptions { enableSearch?: boolean; } export declare class SettingsList implements Component { private items;"
+    },
+    {
+      "rel": "components/spacer.d.ts",
+      "stmt": "export declare class Spacer implements Component { private lines; constructor(lines?: number); setLines(lines: number): void; invalidate(): void; render(_width: number): string[]; } //# sourceMappingURL=spacer.d.ts.map"
+    },
+    {
+      "rel": "components/stack.d.ts",
+      "stmt": "export interface StackEntryOptions { basis?: number | \"auto\"; grow?: number; shrink?: number; minSize?: number; maxSize?: number; visible?: (viewport: LayoutViewport) => boolean; } export interface StackEntry extends StackEntryOptions { component: Component;"
+    },
+    {
+      "rel": "components/stack.d.ts",
+      "stmt": "export type StackChild = Component | StackEntry;"
+    },
+    {
+      "rel": "components/stack.d.ts",
+      "stmt": "export interface StackOptions { gap?: number; align?: \"stretch\" | \"start\" | \"center\" | \"end\"; } export declare abstract class Stack extends Container { protected readonly entries: StackLayoutEntry[];"
+    },
+    {
+      "rel": "components/stack.d.ts",
+      "stmt": "export declare function visibleStackEntries(entries: readonly StackLayoutEntry[], viewport: LayoutViewport): StackLayoutEntry[];"
+    },
+    {
+      "rel": "components/stack.d.ts",
+      "stmt": "export declare function allocateStackSizes(entries: readonly StackLayoutEntry[], intrinsicSizes: readonly number[], availableSize: number | undefined, gap: number): number[];"
+    },
+    {
+      "rel": "components/text.d.ts",
+      "stmt": "export declare class Text implements Component { private text; private paddingX; private paddingY; private customBgFn?; private cachedText?; private cachedWidth?; private cachedLines?; constructor(text?: string, paddingX?: number, paddingY?: number, customBgFn?: (text: string) => string); setText(text: string): void; setCustomBgFn(customBgFn?: (text: string) => string): void; invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=text.d.ts.map"
+    },
+    {
+      "rel": "components/truncated-text.d.ts",
+      "stmt": "export declare class TruncatedText implements Component { private text; private paddingX; private paddingY; constructor(text: string, paddingX?: number, paddingY?: number); invalidate(): void; render(width: number): string[]; } //# sourceMappingURL=truncated-text.d.ts.map"
+    },
+    {
+      "rel": "components/v-stack.d.ts",
+      "stmt": "export declare class VStack extends Stack { protected readonly layoutType: \"vstack\"; constructor(children?: StackChild[], options?: StackOptions); render(width: number): string[]; } export type { StackChild, StackEntry, StackEntryOptions, StackOptions } from \"./stack.ts\";"
+    },
+    {
+      "rel": "editor-component.d.ts",
+      "stmt": "export interface EditorComponent extends Component { /** Get the current text content */ getText(): string; /** Set the text content */ setText(text: string): void; /** Handle raw terminal input (key presses, paste sequences, etc.) */ handleInput(data: string): void; /** Called when user submits (e.g., Enter key) */ onSubmit?: (text: string) => void; /** Called when text changes */ onChange?: (text: string) => void; /** Add text to history for up/down navigation */ addToHistory?(text: string): void; /** Insert text at current cursor position */ insertTextAtCursor?(text: string): void; /** * Get text with any markers expanded (e.g., paste markers). * Falls back to getText() if not implemented. */ getExpandedText?(): string; /** Set the autocomplete provider */ setAutocompleteProvider?(provider: AutocompleteProvider): void; /** Border color function */ borderColor?: (str: string) => string; /** Set horizontal padding */ setPaddingX?(padding: number): void; /** Set max visible items in autocomplete dropdown */ setAutocompleteMaxVisible?(maxVisible: number): void; } //# sourceMappingURL=editor-component.d.ts.map"
+    },
+    {
+      "rel": "fuzzy.d.ts",
+      "stmt": "export interface FuzzyMatch { matches: boolean; score: number; } export declare function fuzzyMatch(query: string, text: string): FuzzyMatch;"
+    },
+    {
+      "rel": "fuzzy.d.ts",
+      "stmt": "export declare function fuzzyFilter<T>(items: T[], query: string, getText: (item: T) => string): T[];"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Marked, type Token, type Tokens } from \"marked\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type AutocompleteItem, type AutocompleteProvider, type AutocompleteSuggestions, CombinedAutocompleteProvider, type SlashCommand, } from \"./autocomplete.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Box } from \"./components/box.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { CancellableLoader } from \"./components/cancellable-loader.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Editor, type EditorOptions, type EditorTheme } from \"./components/editor.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { HStack } from \"./components/h-stack.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Image, type ImageOptions, type ImageTheme } from \"./components/image.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Input } from \"./components/input.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Loader, type LoaderIndicatorOptions } from \"./components/loader.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type DefaultTextStyle, Markdown, type MarkdownOptions, type MarkdownTheme } from \"./components/markdown.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { ScrollView, type ScrollViewOptions, type ScrollViewScrollbar, type ScrollViewScrollToOptions, } from \"./components/scroll-view.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type SelectItem, SelectList, type SelectListLayoutOptions, type SelectListTheme, type SelectListTruncatePrimaryContext, } from \"./components/select-list.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type SettingItem, SettingsList, type SettingsListTheme } from \"./components/settings-list.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Spacer } from \"./components/spacer.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { Text } from \"./components/text.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { TruncatedText } from \"./components/truncated-text.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type StackChild, type StackEntry, type StackEntryOptions, type StackOptions, VStack, } from \"./components/v-stack.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export type { EditorComponent } from \"./editor-component.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type FuzzyMatch, fuzzyFilter, fuzzyMatch } from \"./fuzzy.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { getKeybindings, type Keybinding, type KeybindingConflict, type KeybindingDefinition, type KeybindingDefinitions, type Keybindings, type KeybindingsConfig, KeybindingsManager, setKeybindings, TUI_KEYBINDINGS, } from \"./keybindings.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { decodeKittyPrintable, isKeyRelease, isKeyRepeat, isKittyProtocolActive, Key, type KeyEventType, type KeyId, matchesKey, parseKey, setKittyProtocolActive, } from \"./keys.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type RenderLatexOptions, renderLatex } from \"./latex.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { StdinBuffer, type StdinBufferEventMap, type StdinBufferOptions } from \"./stdin-buffer.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { ProcessTerminal, type Terminal } from \"./terminal.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { parseOsc11BackgroundColor, parseTerminalColorSchemeReport, type RgbColor, type TerminalColorScheme, } from \"./terminal-colors.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { allocateImageId, type CellDimensions, calculateImageRows, deleteAllKittyImages, deleteKittyImage, detectCapabilities, encodeITerm2, encodeKitty, getCapabilities, getCellDimensions, getGifDimensions, getImageDimensions, getJpegDimensions, getPngDimensions, getWebpDimensions, hyperlink, type ImageDimensions, type ImageProtocol, type ImageRenderOptions, imageFallback, renderImage, resetCapabilitiesCache, setCapabilities, setCellDimensions, type TerminalCapabilities, } from \"./terminal-image.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { type Component, Container, CURSOR_MARKER, compositeTuiLine, type Focusable, isFocusable, isViewportTUI, type OverlayAnchor, type OverlayHandle, type OverlayMargin, type OverlayOptions, type OverlayUnfocusOptions, type SizeValue, type TUI, type TuiInputListener, type TuiInputListenerResult, type TuiMode, type TuiStopOptions, type ViewportTUI, } from \"./tui.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { TuiAltScreen, type TuiAltScreenOptions } from \"./tui-alt-screen.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { TuiMainScreen, type TuiMainScreenRenderState } from \"./tui-main-screen.ts\";"
+    },
+    {
+      "rel": "index.d.ts",
+      "stmt": "export { getOsc8LinkAtColumn, sliceByColumn, stripTerminalSequences, truncateToWidth, visibleWidth, wrapTextWithAnsi, } from \"./utils.ts\";"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export interface Keybindings { \"tui.editor.cursorUp\": true; \"tui.editor.cursorDown\": true; \"tui.editor.historyPrevious\": true; \"tui.editor.historyNext\": true; \"tui.editor.cursorLeft\": true; \"tui.editor.cursorRight\": true; \"tui.editor.cursorWordLeft\": true; \"tui.editor.cursorWordRight\": true; \"tui.editor.cursorLineStart\": true; \"tui.editor.cursorLineEnd\": true; \"tui.editor.jumpForward\": true; \"tui.editor.jumpBackward\": true; \"tui.editor.pageUp\": true; \"tui.editor.pageDown\": true; \"tui.editor.deleteCharBackward\": true; \"tui.editor.deleteCharForward\": true; \"tui.editor.deleteWordBackward\": true; \"tui.editor.deleteWordForward\": true; \"tui.editor.deleteToLineStart\": true; \"tui.editor.deleteToLineEnd\": true; \"tui.editor.yank\": true; \"tui.editor.yankPop\": true; \"tui.editor.undo\": true; \"tui.input.newLine\": true; \"tui.input.submit\": true; \"tui.input.tab\": true; \"tui.input.copy\": true; \"tui.select.up\": true; \"tui.select.down\": true; \"tui.select.pageUp\": true; \"tui.select.pageDown\": true; \"tui.select.confirm\": true; \"tui.select.cancel\": true; \"tui.altScreen.pageUp\": true; \"tui.altScreen.pageDown\": true; \"tui.altScreen.halfPageUp\": true; \"tui.altScreen.halfPageDown\": true; \"tui.altScreen.lineUp\": true; \"tui.altScreen.lineDown\": true; \"tui.altScreen.previousPrompt\": true; \"tui.altScreen.nextPrompt\": true; \"tui.altScreen.search\": true; \"tui.altScreen.searchNext\": true; \"tui.altScreen.searchPrevious\": true; \"tui.altScreen.searchClose\": true; \"tui.altScreen.top\": true; \"tui.altScreen.bottom\": true; } export type Keybinding = keyof Keybindings;"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export interface KeybindingDefinition { defaultKeys: KeyId | KeyId[]; description?: string; } export type KeybindingDefinitions = Record<string, KeybindingDefinition>;"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export type KeybindingsConfig = Record<string, KeyId | KeyId[] | undefined>;"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export declare const TUI_KEYBINDINGS: { readonly \"tui.editor.cursorUp\": { readonly defaultKeys: \"up\"; readonly description: \"Move cursor up\"; }; readonly \"tui.editor.cursorDown\": { readonly defaultKeys: \"down\"; readonly description: \"Move cursor down\"; }; readonly \"tui.editor.historyPrevious\": { readonly defaultKeys: []; readonly description: \"Select previous prompt history entry\"; }; readonly \"tui.editor.historyNext\": { readonly defaultKeys: []; readonly description: \"Select next prompt history entry\"; }; readonly \"tui.editor.cursorLeft\": { readonly defaultKeys: [\"left\", \"ctrl+b\"]; readonly description: \"Move cursor left\"; }; readonly \"tui.editor.cursorRight\": { readonly defaultKeys: [\"right\", \"ctrl+f\"]; readonly description: \"Move cursor right\"; }; readonly \"tui.editor.cursorWordLeft\": { readonly defaultKeys: [\"alt+left\", \"ctrl+left\", \"alt+b\"]; readonly description: \"Move cursor word left\"; }; readonly \"tui.editor.cursorWordRight\": { readonly defaultKeys: [\"alt+right\", \"ctrl+right\", \"alt+f\"]; readonly description: \"Move cursor word right\"; }; readonly \"tui.editor.cursorLineStart\": { readonly defaultKeys: [\"home\", \"ctrl+home\", \"ctrl+a\"]; readonly description: \"Move to line start\"; }; readonly \"tui.editor.cursorLineEnd\": { readonly defaultKeys: [\"end\", \"ctrl+end\", \"ctrl+e\"]; readonly description: \"Move to line end\"; }; readonly \"tui.editor.jumpForward\": { readonly defaultKeys: \"ctrl+]\"; readonly description: \"Jump forward to character\"; }; readonly \"tui.editor.jumpBackward\": { readonly defaultKeys: \"ctrl+alt+]\"; readonly description: \"Jump backward to character\"; }; readonly \"tui.editor.pageUp\": { readonly defaultKeys: [\"pageUp\", \"ctrl+pageUp\"]; readonly description: \"Page up\"; }; readonly \"tui.editor.pageDown\": { readonly defaultKeys: [\"pageDown\", \"ctrl+pageDown\"]; readonly description: \"Page down\"; }; readonly \"tui.editor.deleteCharBackward\": { readonly defaultKeys: \"backspace\"; readonly description: \"Delete character backward\"; }; readonly \"tui.editor.deleteCharForward\": { readonly defaultKeys: [\"delete\", \"ctrl+d\"]; readonly description: \"Delete character forward\"; }; readonly \"tui.editor.deleteWordBackward\": { readonly defaultKeys: [\"ctrl+w\", \"alt+backspace\"]; readonly description: \"Delete word backward\"; }; readonly \"tui.editor.deleteWordForward\": { readonly defaultKeys: [\"alt+d\", \"alt+delete\"]; readonly description: \"Delete word forward\"; }; readonly \"tui.editor.deleteToLineStart\": { readonly defaultKeys: \"ctrl+u\"; readonly description: \"Delete to line start\"; }; readonly \"tui.editor.deleteToLineEnd\": { readonly defaultKeys: \"ctrl+k\"; readonly description: \"Delete to line end\"; }; readonly \"tui.editor.yank\": { readonly defaultKeys: \"ctrl+y\"; readonly description: \"Yank\"; }; readonly \"tui.editor.yankPop\": { readonly defaultKeys: \"alt+y\"; readonly description: \"Yank pop\"; }; readonly \"tui.editor.undo\": { readonly defaultKeys: \"ctrl+-\"; readonly description: \"Undo\"; }; readonly \"tui.input.newLine\": { readonly defaultKeys: [\"shift+enter\", \"ctrl+j\"]; readonly description: \"Insert newline\"; }; readonly \"tui.input.submit\": { readonly defaultKeys: \"enter\"; readonly description: \"Submit input\"; }; readonly \"tui.input.tab\": { readonly defaultKeys: \"tab\"; readonly description: \"Tab / autocomplete\"; }; readonly \"tui.input.copy\": { readonly defaultKeys: \"ctrl+c\"; readonly description: \"Copy selection\"; }; readonly \"tui.select.up\": { readonly defaultKeys: \"up\"; readonly description: \"Move selection up\"; }; readonly \"tui.select.down\": { readonly defaultKeys: \"down\"; readonly description: \"Move selection down\"; }; readonly \"tui.select.pageUp\": { readonly defaultKeys: \"pageUp\"; readonly description: \"Selection page up\"; }; readonly \"tui.select.pageDown\": { readonly defaultKeys: \"pageDown\"; readonly description: \"Selection page down\"; }; readonly \"tui.select.confirm\": { readonly defaultKeys: \"enter\"; readonly description: \"Confirm selection\"; }; readonly \"tui.select.cancel\": { readonly defaultKeys: [\"escape\", \"ctrl+c\"]; readonly description: \"Cancel selection\"; }; readonly \"tui.altScreen.pageUp\": { readonly defaultKeys: \"pageUp\"; readonly description: \"Scroll viewport up one page\"; }; readonly \"tui.altScreen.pageDown\": { readonly defaultKeys: \"pageDown\"; readonly description: \"Scroll viewport down one page\"; }; readonly \"tui.altScreen.halfPageUp\": { readonly defaultKeys: []; readonly description: \"Scroll viewport up half a page\"; }; readonly \"tui.altScreen.halfPageDown\": { readonly defaultKeys: []; readonly description: \"Scroll viewport down half a page\"; }; readonly \"tui.altScreen.lineUp\": { readonly defaultKeys: []; readonly description: \"Scroll viewport up one line\"; }; readonly \"tui.altScreen.lineDown\": { readonly defaultKeys: []; readonly description: \"Scroll viewport down one line\"; }; readonly \"tui.altScreen.previousPrompt\": { readonly defaultKeys: \"ctrl+shift+up\"; readonly description: \"Jump to previous semantic prompt\"; }; readonly \"tui.altScreen.nextPrompt\": { readonly defaultKeys: \"ctrl+shift+down\"; readonly description: \"Jump to next semantic prompt\"; }; readonly \"tui.altScreen.search\": { readonly defaultKeys: \"ctrl+shift+f\"; readonly description: \"Search the primary scroll view\"; }; readonly \"tui.altScreen.searchNext\": { readonly defaultKeys: [\"enter\", \"ctrl+g\"]; readonly description: \"Select the next search match\"; }; readonly \"tui.altScreen.searchPrevious\": { readonly defaultKeys: [\"shift+enter\", \"ctrl+shift+g\"]; readonly description: \"Select the previous search match\"; }; readonly \"tui.altScreen.searchClose\": { readonly defaultKeys: \"escape\"; readonly description: \"Close transcript search\"; }; readonly \"tui.altScreen.top\": { readonly defaultKeys: \"home\"; readonly description: \"Scroll viewport to top\"; }; readonly \"tui.altScreen.bottom\": { readonly defaultKeys: \"end\"; readonly description: \"Scroll viewport to bottom\"; }; };"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export interface KeybindingConflict { key: KeyId; keybindings: string[]; } export declare class KeybindingsManager { private definitions;"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export declare function setKeybindings(keybindings: KeybindingsManager): void;"
+    },
+    {
+      "rel": "keybindings.d.ts",
+      "stmt": "export declare function getKeybindings(): KeybindingsManager;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function setKittyProtocolActive(active: boolean): void;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function isKittyProtocolActive(): boolean;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export type KeyId = BaseKey | ModifiedKeyId<BaseKey>;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare const Key: { readonly escape: \"escape\"; readonly esc: \"esc\"; readonly enter: \"enter\"; readonly return: \"return\"; readonly tab: \"tab\"; readonly space: \"space\"; readonly backspace: \"backspace\"; readonly delete: \"delete\"; readonly insert: \"insert\"; readonly clear: \"clear\"; readonly home: \"home\"; readonly end: \"end\"; readonly pageUp: \"pageUp\"; readonly pageDown: \"pageDown\"; readonly up: \"up\"; readonly down: \"down\"; readonly left: \"left\"; readonly right: \"right\"; readonly f1: \"f1\"; readonly f2: \"f2\"; readonly f3: \"f3\"; readonly f4: \"f4\"; readonly f5: \"f5\"; readonly f6: \"f6\"; readonly f7: \"f7\"; readonly f8: \"f8\"; readonly f9: \"f9\"; readonly f10: \"f10\"; readonly f11: \"f11\"; readonly f12: \"f12\"; readonly backtick: \"`\"; readonly hyphen: \"-\"; readonly equals: \"=\"; readonly leftbracket: \"[\"; readonly rightbracket: \"]\"; readonly backslash: \"\\\\\"; readonly semicolon: \";\"; readonly quote: \"'\"; readonly comma: \",\"; readonly period: \".\"; readonly slash: \"/\"; readonly exclamation: \"!\"; readonly at: \"@\"; readonly hash: \"#\"; readonly dollar: \"$\"; readonly percent: \"%\"; readonly caret: \"^\"; readonly ampersand: \"&\"; readonly asterisk: \"*\"; readonly leftparen: \"(\"; readonly rightparen: \")\"; readonly underscore: \"_\"; readonly plus: \"+\"; readonly pipe: \"|\"; readonly tilde: \"~\"; readonly leftbrace: \"{\"; readonly rightbrace: \"}\"; readonly colon: \":\"; readonly lessthan: \"<\"; readonly greaterthan: \">\"; readonly question: \"?\"; readonly ctrl: <K extends BaseKey>(key: K) => `ctrl+${K}`; readonly shift: <K extends BaseKey>(key: K) => `shift+${K}`; readonly alt: <K extends BaseKey>(key: K) => `alt+${K}`; readonly super: <K extends BaseKey>(key: K) => `super+${K}`; readonly ctrlShift: <K extends BaseKey>(key: K) => `ctrl+shift+${K}`; readonly shiftCtrl: <K extends BaseKey>(key: K) => `shift+ctrl+${K}`; readonly ctrlAlt: <K extends BaseKey>(key: K) => `ctrl+alt+${K}`; readonly altCtrl: <K extends BaseKey>(key: K) => `alt+ctrl+${K}`; readonly shiftAlt: <K extends BaseKey>(key: K) => `shift+alt+${K}`; readonly altShift: <K extends BaseKey>(key: K) => `alt+shift+${K}`; readonly ctrlSuper: <K extends BaseKey>(key: K) => `ctrl+super+${K}`; readonly superCtrl: <K extends BaseKey>(key: K) => `super+ctrl+${K}`; readonly shiftSuper: <K extends BaseKey>(key: K) => `shift+super+${K}`; readonly superShift: <K extends BaseKey>(key: K) => `super+shift+${K}`; readonly altSuper: <K extends BaseKey>(key: K) => `alt+super+${K}`; readonly superAlt: <K extends BaseKey>(key: K) => `super+alt+${K}`; readonly ctrlShiftAlt: <K extends BaseKey>(key: K) => `ctrl+shift+alt+${K}`; readonly ctrlShiftSuper: <K extends BaseKey>(key: K) => `ctrl+shift+super+${K}`; };"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export type KeyEventType = \"press\" | \"repeat\" | \"release\";"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function isKeyRelease(data: string): boolean;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function isKeyRepeat(data: string): boolean;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function matchesKey(data: string, keyId: KeyId): boolean;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function parseKey(data: string): string | undefined;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function decodeKittyPrintable(data: string): string | undefined;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export declare function decodePrintableKey(data: string): string | undefined;"
+    },
+    {
+      "rel": "keys.d.ts",
+      "stmt": "export {};"
+    },
+    {
+      "rel": "kill-ring.d.ts",
+      "stmt": "export declare class KillRing { private ring; /** * Add text to the kill ring. * * @param text - The killed text to add * @param opts - Push options * @param opts.prepend - If accumulating, prepend (backward deletion) or append (forward deletion) * @param opts.accumulate - Merge with the most recent entry instead of creating a new one */ push(text: string, opts: { prepend: boolean; accumulate?: boolean; }): void; /** Get most recent entry without modifying the ring. */ peek(): string | undefined; /** Move last entry to front (for yank-pop cycling). */ rotate(): void; get length(): number; } //# sourceMappingURL=kill-ring.d.ts.map"
+    },
+    {
+      "rel": "latex.d.ts",
+      "stmt": "export interface RenderLatexOptions { /** Stack fractions and operator limits vertically for display math (default: false). */ display?: boolean; } /** * Render a basic LaTeX math expression as terminal-friendly Unicode text. * Returns undefined when the expression contains unsupported or malformed syntax. */ export declare function renderLatex(source: string, options?: RenderLatexOptions): string | undefined;"
+    },
+    {
+      "rel": "layout-node.d.ts",
+      "stmt": "export declare const LAYOUT_NODE: unique symbol;"
+    },
+    {
+      "rel": "layout-node.d.ts",
+      "stmt": "export interface LayoutViewport { width: number; height: number; } export interface StackLayoutEntry { component: Component;"
+    },
+    {
+      "rel": "layout-node.d.ts",
+      "stmt": "export interface StackLayoutNode { type: \"vstack\" | \"hstack\"; entries: readonly StackLayoutEntry[]; gap: number; align: \"stretch\" | \"start\" | \"center\" | \"end\"; } export interface ScrollLayoutState { readonly scrollTop: number;"
+    },
+    {
+      "rel": "layout-node.d.ts",
+      "stmt": "export interface ScrollLayoutNode { type: \"scroll\"; component: Component; state: ScrollLayoutState; } export type LayoutNode = StackLayoutNode | ScrollLayoutNode;"
+    },
+    {
+      "rel": "layout-node.d.ts",
+      "stmt": "export interface LayoutComponent extends Component { [LAYOUT_NODE](): LayoutNode; } export declare function getLayoutNode(component: Component): LayoutNode | undefined;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export interface LayoutRect { x: number; y: number; width: number; height: number; } export interface LayoutBox { component: Component;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export interface LayoutFrame { root: LayoutBox; width: number; height: number; lines: string[]; primaryScrollView?: ScrollView; } export interface ScrollbarGeometry { column: number;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export declare function getScrollbarGeometry(box: LayoutBox): ScrollbarGeometry | undefined;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export declare function renderLayoutFrame(root: Component, width: number, height: number, requestRender: () => void): LayoutFrame;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export declare function getScrollViewBox(frame: LayoutFrame, scrollView: ScrollView): LayoutBox | undefined;"
+    },
+    {
+      "rel": "layout.d.ts",
+      "stmt": "export declare function getScrollViewsAt(frame: LayoutFrame, x: number, y: number): ScrollView[];"
+    },
+    {
+      "rel": "native-modifiers.d.ts",
+      "stmt": "export type ModifierKey = \"shift\" | \"command\" | \"control\" | \"option\";"
+    },
+    {
+      "rel": "native-modifiers.d.ts",
+      "stmt": "export declare function isNativeModifierPressed(key: ModifierKey): boolean;"
+    },
+    {
+      "rel": "stdin-buffer.d.ts",
+      "stmt": "export type StdinBufferOptions = { /** * Maximum time to wait for an incomplete sequence such as CSI or mouse * (default: 50ms). */ timeout?: number; /** * Maximum time to wait after a lone ESC before treating it as Escape * (default: 10ms). Increase for high-latency Alt+key input (SSH). */ escapeTimeout?: number; };"
+    },
+    {
+      "rel": "stdin-buffer.d.ts",
+      "stmt": "export type StdinBufferEventMap = { data: [string]; paste: [string]; };"
+    },
+    {
+      "rel": "stdin-buffer.d.ts",
+      "stmt": "export declare class StdinBuffer extends EventEmitter<StdinBufferEventMap> { private buffer; private timeout; private readonly timeoutMs; private readonly escapeTimeoutMs; private pasteMode; private pasteBuffer; private pendingKittyPrintableCodepoint; constructor(options?: StdinBufferOptions); process(data: string | Buffer): void; private emitDataSequence; flush(): string[]; clear(): void; getBuffer(): string; destroy(): void; } //# sourceMappingURL=stdin-buffer.d.ts.map"
+    },
+    {
+      "rel": "terminal-colors.d.ts",
+      "stmt": "export interface RgbColor { r: number; g: number; b: number; } export type TerminalColorScheme = \"dark\" | \"light\";"
+    },
+    {
+      "rel": "terminal-colors.d.ts",
+      "stmt": "export declare function isOsc11BackgroundColorResponse(data: string): boolean;"
+    },
+    {
+      "rel": "terminal-colors.d.ts",
+      "stmt": "export declare function parseOsc11BackgroundColor(data: string): RgbColor | undefined;"
+    },
+    {
+      "rel": "terminal-colors.d.ts",
+      "stmt": "export declare function parseTerminalColorSchemeReport(data: string): TerminalColorScheme | undefined;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export type ImageProtocol = \"kitty\" | \"iterm2\" | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export interface TerminalCapabilities { images: ImageProtocol; trueColor: boolean; hyperlinks: boolean; } export interface CellDimensions { widthPx: number;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export interface ImageDimensions { widthPx: number; heightPx: number; } export interface ImageRenderOptions { maxWidthCells?: number;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getCellDimensions(): CellDimensions;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function setCellDimensions(dims: CellDimensions): void;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function detectCapabilities(tmuxForwardsHyperlink?: () => boolean): TerminalCapabilities;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getCapabilities(): TerminalCapabilities;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function resetCapabilitiesCache(): void;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function setCapabilities(caps: TerminalCapabilities): void;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function isImageLine(line: string): boolean;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function allocateImageId(): number;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function encodeKitty(base64Data: string, options?: { columns?: number; rows?: number; imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. Default: true. */ moveCursor?: boolean; }): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function deleteKittyImage(imageId: number): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function deleteAllKittyImages(): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function deleteAllKittyPlacements(): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function encodeITerm2(base64Data: string, options?: { width?: number | string; height?: number | string; name?: string; preserveAspectRatio?: boolean; inline?: boolean; }): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export interface ImageCellSize { columns: number; rows: number; } export interface KittyImageMetadata extends ImageCellSize { imageId: number;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export interface KittyImagePlacement { imageId: number; transmissionGeneration: number; transmissionBytes: number; estimatedDecodedBytes: number; sequence: string; replacementLine: string; } export declare function registerKittyImageMetadata(metadata: KittyImageMetadata): void;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getKittyImageMetadata(line: string): KittyImageMetadata | undefined;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getKittyImagePlacement(line: string): KittyImagePlacement | undefined;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function cropKittyImageLine(line: string, hiddenRows: number, visibleRows: number): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function calculateImageCellSize(imageDimensions: ImageDimensions, maxWidthCells: number, maxHeightCells?: number, cellDimensions?: CellDimensions): ImageCellSize;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function calculateImageRows(imageDimensions: ImageDimensions, targetWidthCells: number, cellDimensions?: CellDimensions): number;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getPngDimensions(base64Data: string): ImageDimensions | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getJpegDimensions(base64Data: string): ImageDimensions | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getGifDimensions(base64Data: string): ImageDimensions | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getWebpDimensions(base64Data: string): ImageDimensions | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function getImageDimensions(base64Data: string, mimeType: string): ImageDimensions | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function renderImage(base64Data: string, imageDimensions: ImageDimensions, options?: ImageRenderOptions): { sequence: string; columns: number; rows: number; imageId?: number; } | null;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function hyperlink(text: string, url: string): string;"
+    },
+    {
+      "rel": "terminal-image.d.ts",
+      "stmt": "export declare function imageFallback(mimeType: string, dimensions?: ImageDimensions, filename?: string): string;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export type KeyboardProtocolNegotiationSequence = { type: \"kitty-flags\"; flags: number; } | { type: \"device-attributes\";"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export declare function parseKeyboardProtocolNegotiationSequence(sequence: string): KeyboardProtocolNegotiationSequence | undefined;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export declare function isAppleTerminalSession(): boolean;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export declare function normalizeNativeShiftEnterInput(data: string, shouldDetectNativeShiftEnter: boolean, isShiftPressed: boolean): string;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export declare function normalizeAppleTerminalInput(data: string, isAppleTerminal: boolean, isShiftPressed: boolean): string;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export interface Terminal { start(onInput: (data: string) => void, onResize: () => void): void; stop(): void; /** * Drain stdin before exiting to prevent Kitty key release events from * leaking to the parent shell over slow SSH connections. * @param maxMs - Maximum time to drain (default: 1000ms) * @param idleMs - Exit early if no input arrives within this time (default: 50ms) */ drainInput(maxMs?: number, idleMs?: number): Promise<void>; write(data: string): void; get columns(): number; get rows(): number; get kittyProtocolActive(): boolean; moveBy(lines: number): void; hideCursor(): void; showCursor(): void; clearLine(): void; clearFromCursor(): void; clearScreen(): void; setTitle(title: string): void; setProgress(active: boolean): void; } /** * Resolve how long to wait for the rest of an escape sequence before * dispatching a lone ESC as the Escape key. Legacy Alt+key input is ESC plus * another byte, so high-latency transports need a longer reassembly window. */ export declare function resolveEscapeTimeoutMs(env?: NodeJS.ProcessEnv): number;"
+    },
+    {
+      "rel": "terminal.d.ts",
+      "stmt": "export declare class ProcessTerminal implements Terminal { private wasRaw; private inputHandler?; private resizeHandler?; private _kittyProtocolActive; private _modifyOtherKeysActive; private keyboardProtocolPushed; private keyboardProtocolNegotiationBuffer; private keyboardProtocolBufferFlushTimer?; private stdinBuffer?; private stdinDataHandler?; private progressInterval?; private writeLogPath; get kittyProtocolActive(): boolean; get modifyOtherKeysActive(): boolean; start(onInput: (data: string) => void, onResize: () => void): void; /** * Set up StdinBuffer to split batched input into individual sequences. * This ensures components receive single events, making matchesKey/isKeyRelease work correctly. * * Also watches for Kitty protocol response and enables it when detected. * This is done here (after stdinBuffer parsing) rather than on raw stdin * to handle the case where the response arrives split across multiple events. */ private setupStdinBuffer; /** * Query terminal for Kitty keyboard protocol support and enable it if available. * * Kitty's progressive enhancement detection requires requesting the desired * flags before querying them. The trailing DA query is a sentinel supported by * terminals that do not know Kitty keyboard protocol; receiving DA before a * Kitty response enables modifyOtherKeys fallback without a startup timeout. * * The requested flags are: * - 1 = disambiguate escape codes * - 2 = report event types (press/repeat/release) * - 4 = report alternate keys (shifted key, base layout key) */ private queryAndEnableKittyProtocol; private handleKeyboardProtocolNegotiationSequence; private readKeyboardProtocolNegotiationSequence; private setKeyboardProtocolNegotiationBuffer; private clearKeyboardProtocolNegotiationBuffer; private flushKeyboardProtocolNegotiationBufferAsInput; private scheduleKeyboardProtocolNegotiationBufferFlush; private clearKeyboardProtocolNegotiationBufferFlushTimer; private forwardInputSequence; private enableModifyOtherKeys; private disableModifyOtherKeys; /** * On Windows, add ENABLE_VIRTUAL_TERMINAL_INPUT (0x0200) to the stdin * console handle so the terminal sends VT sequences for modified keys * (e.g. \\x1b[Z for Shift+Tab). Without this, libuv's ReadConsoleInputW * discards modifier state and Shift+Tab arrives as plain \\t. */ private enableWindowsVTInput; drainInput(maxMs?: number, idleMs?: number): Promise<void>; stop(): void; write(data: string): void; get columns(): number; get rows(): number; moveBy(lines: number): void; hideCursor(): void; showCursor(): void; clearLine(): void; clearFromCursor(): void; clearScreen(): void; setTitle(title: string): void; setProgress(active: boolean): void; private clearProgressInterval; } //# sourceMappingURL=terminal.d.ts.map"
+    },
+    {
+      "rel": "tui-alt-screen.d.ts",
+      "stmt": "export interface TuiAltScreenOptions { /** Number of logical lines moved for each mouse-wheel event. */ wheelScrollLines?: number; /** Capture mouse events for viewport scrolling and application-owned text selection. */ mouse?: boolean; /** Style a non-current transcript search match. */ searchMatchStyle?: (text: string) => string; /** Style the current transcript search match. */ searchCurrentMatchStyle?: (text: string) => string; /** Open an OSC 8 hyperlink activated with a primary-button click. */ openUrl?: (url: string) => void; /** Handle an unmodified secondary-button press for clipboard paste. Currently enabled on Windows only. */ onRightClickPaste?: () => void; /** * Copy selected text to the system clipboard. Return `true` on success; the caller flashes * an error otherwise. When omitted, the selection is copied via an OSC 52 write. */ copySelection?: (text: string) => Promise<boolean>; } /** Alternate-screen TUI with a scrollable, application-owned viewport. */ export declare class TuiAltScreen extends TuiBase implements ViewportTUI { readonly mode: \"fullscreen\";"
+    },
+    {
+      "rel": "tui-main-screen.d.ts",
+      "stmt": "export interface TuiMainScreenRenderState { previousLines: string[]; previousWidth: number; previousHeight: number; cursorRow: number; hardwareCursorRow: number; maxLinesRendered: number; previousViewportTop: number; } /** TUI implementation that renders into the terminal's main screen and scrollback. */ export declare class TuiMainScreen extends TuiBase implements TUI { readonly mode: \"regular\";"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export interface Component { /** * Render the component to lines for the given viewport width * @param width - Current viewport width * @returns Array of strings, each representing a line */ render(width: number): string[]; /** * Optional handler for keyboard input when component has focus */ handleInput?(data: string): void; /** * If true, component receives key release events (Kitty protocol). * Default is false - release events are filtered out. */ wantsKeyRelease?: boolean; /** * Invalidate any cached rendering state. * Called when theme changes or when component needs to re-render from scratch. */ invalidate(): void; } export type TuiInputListenerResult = { consume?: boolean;"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export type TuiInputListener = (data: string) => TuiInputListenerResult;"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export interface Focusable { /** Set by TUI when focus changes. Component should emit CURSOR_MARKER when true. */ focused: boolean; } /** Type guard to check if a component implements Focusable */ export declare function isFocusable(component: Component | null): component is Component & Focusable;"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export declare const CURSOR_MARKER = \"\\u001B_pi:c\\u0007\";"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export { visibleWidth };"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export type OverlayAnchor = \"center\" | \"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\" | \"top-center\" | \"bottom-center\" | \"left-center\" | \"right-center\";"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export interface OverlayMargin { top?: number; right?: number; bottom?: number; left?: number; } /** Value that can be absolute (number) or percentage (string like \"50%\") */ export type SizeValue = number | `${number}%`;"
+    },
+    {
+      "rel": "tui.d.ts",
+      "stmt": "export interface OverlayOptions { /** Width in columns, or percentage of terminal width (e.g., \"50%\") */ width?: SizeValue; /** Minimum width in columns */ minWidth?: number; /** Maximum height in rows, or percentage of terminal height (e.g., \"50%\") */ maxHeight?: SizeValue; /** Anchor point for positioning (default: 'center') */ anchor?: OverlayAnchor; /** Horizontal offset from anchor position (positive = right) */ offsetX?: number; /** Vertical offset from anchor position (positive = down) */ offsetY?: number; /** Row position: absolute number, or percentage (e.g., \"25%\" = 25% from top) */ row?: SizeValue; /** Column position: absolute number, or percentage (e.g., \"50%\" = centered horizontally) */ col?: SizeValue; /** Margin from terminal edges. Number applies to all sides. */ margin?: OverlayMargin | number; /** * Control overlay visibility based on terminal dimensions. * If provided, overlay is only rendered when this returns true. * Called each render cycle with current terminal dimensions. */ visible?: (termWidth: number, termHeight: number) => boolean; /** If true, don't capture keyboard focus when shown */ nonCapturing?: boolean; } /** Options for {@link OverlayHandle.unfocus}. */ export interface OverlayUnfocusOptions { /** Explicit target to focus after releasing this overlay. */ target: Component | null; } /** * Handle returned by showOverlay for controlling the overlay */ export interface OverlayHandle { /** Permanently remove the overlay (cannot be shown again) */ hide(): void; /** Temporarily hide or show the overlay */ setHidden(hidden: boolean): void; /** Check if overlay is temporarily hidden */ isHidden(): boolean; /** Focus this overlay and bring it to the visual front */ focus(): void; /** Release focus to the next visible capturing overlay or previous target, or to an explicit target when provided */ unfocus(options?: OverlayUnfocusOptions): void; /** Check if this overlay currently has focus */ isFocused(): boolean; } /** * Container - a component that contains other components */ export declare class Container implements Component { children: Component[]; addChild(component: Component): void; removeChild(component: Component): void; clear(): void; invalidate(): void; render(width: number): string[]; } /** Composite overlay content into a terminal line at a fixed column. */ export declare function compositeTuiLine(baseLine: string, overlayLine: string, startCol: number, overlayWidth: number, totalWidth: number): string; export type TuiMode = \"regular\" | \"fullscreen\"; export interface TuiStopOptions { /** Leave renderer output in place for another TUI taking over the same terminal. */ preserveScreen?: boolean; } export interface TUI extends Component { readonly mode: TuiMode; children: Component[]; terminal: Terminal; onDebug?: () => void; readonly fullRedraws: number; addChild(component: Component): void; removeChild(component: Component): void; clear(): void; getShowHardwareCursor(): boolean; setShowHardwareCursor(enabled: boolean): void; getClearOnShrink(): boolean; setClearOnShrink(enabled: boolean): void; setFocus(component: Component | null): void; showOverlay(component: Component, options?: OverlayOptions): OverlayHandle; hideOverlay(): void; hasOverlay(): boolean; start(): void; stop(options?: TuiStopOptions): void; renderNow(force?: boolean): void; requestRender(force?: boolean): void; addInputListener(listener: TuiInputListener): () => void; removeInputListener(listener: TuiInputListener): void; onTerminalColorSchemeChange(listener: (scheme: TerminalColorScheme) => void): () => void; setTerminalColorSchemeNotifications(enabled: boolean): void; queryTerminalBackgroundColor(options: { timeoutMs: number; }): Promise<RgbColor | undefined>; queryTerminalColorScheme(options: { timeoutMs: number; }): Promise<TerminalColorScheme | undefined>; } export declare const VIEWPORT_TUI: unique symbol; export interface ViewportTUI extends TUI { readonly [VIEWPORT_TUI]: true; setLayoutRoot(component: Component | undefined): void; } export declare function isViewportTUI(tui: TUI): tui is ViewportTUI; export declare abstract class TuiBase extends Container implements TUI { abstract readonly mode: TuiMode; terminal: Terminal; private focusedComponent; private inputListeners; /** Global callback for debug key (Shift+Ctrl+D). Called before input is forwarded to focused component. */ onDebug?: () => void; private renderRequested; private immediateRenderScheduled; private renderTimer; private lastRenderAt; private static readonly MIN_RENDER_INTERVAL_MS; private showHardwareCursor; private clearOnShrink; protected fullRedrawCount: number; protected stopped: boolean; private pendingOsc11BackgroundReplies; private pendingOsc11BackgroundQueries; private terminalColorSchemeListeners; private terminalColorSchemeNotificationsEnabled; protected readonly logDirectory: string; private focusOrderCounter; private overlayStack; get hasOverlayEntries(): boolean; private overlayFocusRestore; constructor(terminal: Terminal, showHardwareCursor?: boolean, logDirectory?: string); protected abstract doRender(): void; protected resetRenderState(): void; protected beforeTerminalStart(): void; protected afterTerminalStart(): void; protected beforeTerminalStop(_options: TuiStopOptions): void; protected afterTerminalStop(_options: TuiStopOptions): void; get fullRedraws(): number; getShowHardwareCursor(): boolean; setShowHardwareCursor(enabled: boolean): void; getClearOnShrink(): boolean; /** * Set whether to trigger full re-render when content shrinks. * When true (default), empty rows are cleared when content shrinks. * When false, empty rows remain (reduces redraws on slower terminals). */ setClearOnShrink(enabled: boolean): void; getFocusedComponent(): Component | null; setFocus(component: Component | null): void; private setFocusInternal; private clearOverlayFocusRestore; private clearOverlayFocusRestoreFor; private resolveBlockedOverlayFocusResume; private getVisibleOverlayFocusRestore; private isOverlayFocusAncestor; private retargetOverlayPreFocus; protected getMountedRoots(): readonly Component[]; private isComponentMounted; private containsComponent; /** * Show an overlay component with configurable positioning and sizing. * Returns a handle to control the overlay's visibility. */ showOverlay(component: Component, options?: OverlayOptions): OverlayHandle; /** Hide the topmost overlay and restore previous focus. */ hideOverlay(): void; /** Check if there are any visible overlays */ hasOverlay(): boolean; /** Check if the focused component is a visible overlay */ protected isOverlayFocused(): boolean; /** Check if an overlay entry is currently visible */ private isOverlayVisible; /** Find the visual-frontmost visible capturing overlay, if any */ private getTopmostVisibleOverlay; invalidate(): void; start(): void; addInputListener(listener: TuiInputListener): () => void; removeInputListener(listener: TuiInputListener): void; onTerminalColorSchemeChange(listener: (scheme: TerminalColorScheme) => void): () => void; setTerminalColorSchemeNotifications(enabled: boolean): void; private queryCellSize; stop(options?: TuiStopOptions): void; renderNow(force?: boolean): void; requestRender(force?: boolean): void; private requestImmediateRender; private cancelRenderTimer; private scheduleRender; private handleTerminalInput; private consumeOsc11BackgroundResponse; private consumeTerminalColorSchemeReport; private consumeCellSizeResponse; /** * Resolve overlay layout from options. * Returns { width, row, col, maxHeight } for rendering. */ private resolveOverlayLayout; private resolveAnchorRow; private resolveAnchorCol; /** Composite all overlays into content lines (sorted by focusOrder, higher = on top). */ protected compositeOverlays(lines: string[], termWidth: number, termHeight: number): string[]; protected applyLineResets(lines: string[]): string[]; private compositeLineAt; /** * Find and extract cursor position from rendered lines. * Searches for CURSOR_MARKER, calculates its position, and strips it from the output. * Only scans the bottom terminal height lines (visible viewport). * @param lines - Rendered lines to search * @param height - Terminal height (visible viewport size) * @returns Cursor position { row, col } or null if no marker found */ protected extractCursorPosition(lines: string[], height: number): { row: number; col: number; } | null; /** * Query the terminal's default background color with OSC 11 (`ESC ] 11 ; ? BEL`). * @param timeoutMs Query timeout in milliseconds. * @returns Promise containing the parsed RGB color, or undefined if it times out or fails to parse. */ queryTerminalBackgroundColor({ timeoutMs }: { timeoutMs: number; }): Promise<RgbColor | undefined>; /** * Query the terminal's color-scheme preference with DSR (`CSI ? 996 n`). * Terminals that support the color palette notification protocol reply with * `CSI ? 997 ; 1 n` for dark or `CSI ? 997 ; 2 n` for light. */ queryTerminalColorScheme({ timeoutMs }: { timeoutMs: number; }): Promise<TerminalColorScheme | undefined>; } //# sourceMappingURL=tui.d.ts.map"
+    },
+    {
+      "rel": "undo-stack.d.ts",
+      "stmt": "export declare class UndoStack<S> { private stack; /** Push a deep clone of the given state onto the stack. */ push(state: S): void; /** Pop and return the most recent snapshot, or undefined if empty. */ pop(): S | undefined; /** Remove all snapshots. */ clear(): void; get length(): number; } //# sourceMappingURL=undo-stack.d.ts.map"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function getGraphemeSegmenter(): Intl.Segmenter;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function getWordSegmenter(): Intl.Segmenter;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare const cjkBreakRegex: RegExp;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function visibleWidth(str: string): number;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function stripTerminalSequences(str: string): string;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function getGraphemeCellRange(line: string, column: number): GraphemeCellRange | undefined;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function getOsc8LinkAtColumn(line: string, column: number): string | undefined;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function normalizeTerminalOutput(str: string): string;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function extractAnsiCode(str: string, pos: number): { code: string; length: number; } | null;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function wrapTextWithAnsi(text: string, width: number): string[];"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare const PUNCTUATION_REGEX: RegExp;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function isWhitespaceChar(char: string): boolean;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function isPunctuationChar(char: string): boolean;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function applyBackgroundToLine(line: string, width: number, bgFn: (text: string) => string): string;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function truncateToWidth(text: string, maxWidth: number, ellipsis?: string, pad?: boolean): string;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function sliceByColumn(line: string, startCol: number, length: number, strict?: boolean): string;"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function sliceWithWidth(line: string, startCol: number, length: number, strict?: boolean): { text: string; width: number; };"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export declare function extractSegments(line: string, beforeEnd: number, afterStart: number, afterLen: number, strictAfter?: boolean): { before: string; beforeWidth: number; after: string; afterWidth: number; };"
+    },
+    {
+      "rel": "utils.d.ts",
+      "stmt": "export {};"
+    },
+    {
+      "rel": "word-navigation.d.ts",
+      "stmt": "export interface WordNavigationOptions { /** Custom segmenter returning word segments for the given text. */ segment?: (text: string) => Iterable<Intl.SegmentData>; /** Predicate identifying atomic segments that should be treated as single units (e.g. paste markers). */ isAtomicSegment?: (segment: string) => boolean; } /** * Find the cursor position after moving one word backward from `cursor` in `text`. * Skips trailing whitespace, then stops at the next word/punctuation boundary. * * Pure function - does not mutate any state. */ export declare function findWordBackward(text: string, cursor: number, options?: WordNavigationOptions): number;"
+    },
+    {
+      "rel": "word-navigation.d.ts",
+      "stmt": "export declare function findWordForward(text: string, cursor: number, options?: WordNavigationOptions): number;"
+    }
+  ]
+}

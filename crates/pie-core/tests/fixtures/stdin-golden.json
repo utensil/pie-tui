@@ -1,0 +1,264 @@
+{
+ "generator": "gen-golden-stdin.mjs",
+ "reference": "0.84.1",
+ "vectors": [
+  {
+   "id": "V1",
+   "chunks": [
+    "a",
+    "b"
+   ],
+   "events": [
+    [
+     "data",
+     "a"
+    ],
+    [
+     "data",
+     "b"
+    ]
+   ]
+  },
+  {
+   "id": "V2",
+   "chunks": [
+    "\u001b[<35",
+    ";20;5m"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b[<35;20;5m"
+    ]
+   ]
+  },
+  {
+   "id": "V3",
+   "chunks": [
+    "\u001b"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b"
+    ]
+   ]
+  },
+  {
+   "id": "V4",
+   "chunks": [
+    "\u001b\u001b[27;1u"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b"
+    ],
+    [
+     "data",
+     "\u001b[27;1u"
+    ]
+   ]
+  },
+  {
+   "id": "V5",
+   "chunks": [
+    "\u001b[200~hello world\u001b[201~"
+   ],
+   "events": [
+    [
+     "paste",
+     "hello world"
+    ]
+   ]
+  },
+  {
+   "id": "V6",
+   "chunks": [
+    "x\u001b[200~pasted\u001b[201~y"
+   ],
+   "events": [
+    [
+     "data",
+     "x"
+    ],
+    [
+     "paste",
+     "pasted"
+    ],
+    [
+     "data",
+     "y"
+    ]
+   ]
+  },
+  {
+   "id": "V7",
+   "chunks": [
+    "\u001b[200~ab",
+    "\u001b[201~"
+   ],
+   "events": [
+    [
+     "paste",
+     "ab"
+    ]
+   ]
+  },
+  {
+   "id": "V8",
+   "chunks": [
+    "\u001b[97u",
+    "a"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b[97u"
+    ]
+   ]
+  },
+  {
+   "id": "V9",
+   "chunks": [
+    "\u001b[97u",
+    "b"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b[97u"
+    ],
+    [
+     "data",
+     "b"
+    ]
+   ]
+  },
+  {
+   "id": "V10",
+   "chunks": [
+    "\u001b[200~a\u001b[201~b"
+   ],
+   "events": [
+    [
+     "paste",
+     "a"
+    ],
+    [
+     "data",
+     "b"
+    ]
+   ]
+  },
+  {
+   "id": "V11",
+   "chunks": [
+    "\u001bOA"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001bOA"
+    ]
+   ]
+  },
+  {
+   "id": "V12",
+   "chunks": [
+    "\u001bOP\u001bOQ"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001bOP"
+    ],
+    [
+     "data",
+     "\u001bOQ"
+    ]
+   ]
+  },
+  {
+   "id": "V13",
+   "chunks": [
+    "\u001b[M !!#"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b[M !!"
+    ],
+    [
+     "data",
+     "#"
+    ]
+   ]
+  },
+  {
+   "id": "V14",
+   "chunks": [
+    "\u001b]8;;url\u0007"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b]8;;url\u0007"
+    ]
+   ]
+  },
+  {
+   "id": "V15",
+   "chunks": [
+    "\u001bP>|xterm\u001b\\"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001bP>|xterm\u001b\\"
+    ]
+   ]
+  },
+  {
+   "id": "V16",
+   "chunks": [
+    "\u001bGx"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001bG"
+    ],
+    [
+     "data",
+     "x"
+    ]
+   ]
+  },
+  {
+   "id": "V17",
+   "chunks": [
+    "\u001b[200~",
+    "\u001b[201~"
+   ],
+   "events": [
+    [
+     "paste",
+     ""
+    ]
+   ]
+  },
+  {
+   "id": "V18",
+   "chunks": [
+    "\u001b[<1;2"
+   ],
+   "events": [
+    [
+     "data",
+     "\u001b[<1;2"
+    ]
+   ]
+  }
+ ]
+}

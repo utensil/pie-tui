@@ -1,0 +1,42 @@
+{
+  "upstream": "weijiafu14/pi2dsh",
+  "baseline": {
+    "tag": "v0.12.4",
+    "commit": "1de5a4a1c577e9ce87fd6082a6a6e143948ea2ea",
+    "archiveSha256": "1149ba139151fb14ded63338f24b0aaf2135d046c5dab4c9374d60731e4ea",
+    "shimPath": "src/compat/pi-tui.ts",
+    "shimSha256": "25842c37b6c32e4e00fd5571869e8b1f5eb89738cd554a7a6d5c0bde86e0007d",
+    "abiPath": "tests/abi-contract.spec.ts",
+    "abiSha256": "c2f84dcba6a03a45f63d1dbca5991b149a41d5fd54e781d0cd1c975e8ce91c6d"
+  },
+  "currentReceipt": {
+    "version": "0.23.0",
+    "commit": "2f3ced97d0d19d9ed1e8f8c5cba6d160b7aa7339",
+    "archiveSha256": "e2e272eb87737014001285870bee530dc2d00a9eea5d547d50603ce54002a333",
+    "shimSha256": "25842c37b6c32e4e00fd5571869e8b1f5eb89738cd554a7a6d5c0bde86e0007d",
+    "abiSha256": "c2f84dcba6a03a45f63d1dbca5991b149a41d5fd54e781d0cd1c975e8ce91c6d",
+    "piTuiShimByteIdentical": true,
+    "abiContractByteIdentical": true,
+    "note": "The pinned shim and ABI contract did not drift; current runtime adds two direct consumers enforced below."
+  },
+  "baselineImports": [
+    { "name": "Box", "kind": "runtime", "classification": "m3-enforced" },
+    { "name": "Component", "kind": "type", "classification": "m3-enforced" },
+    { "name": "Container", "kind": "runtime", "classification": "m3-enforced" },
+    { "name": "SettingsListTheme", "kind": "type", "classification": "m3-enforced" },
+    { "name": "SelectListTheme", "kind": "type", "classification": "m3-enforced" },
+    { "name": "Spacer", "kind": "runtime", "classification": "m3-enforced" },
+    { "name": "Text", "kind": "runtime", "classification": "m3-enforced" },
+    { "name": "getCapabilities", "kind": "runtime", "classification": "m5-enforced" },
+    { "name": "getImageDimensions", "kind": "runtime", "classification": "m5-enforced" },
+    { "name": "hyperlink", "kind": "runtime", "classification": "m5-enforced" },
+    { "name": "imageFallback", "kind": "runtime", "classification": "m5-enforced" },
+    { "name": "truncateToWidth", "kind": "runtime", "classification": "m3-enforced" }
+  ],
+  "currentAdditions": [
+    { "name": "getKeybindings", "kind": "runtime", "classification": "m3-enforced" },
+    { "name": "stripTerminalSequences", "kind": "runtime", "classification": "m3-enforced" }
+  ],
+  "m5DeferredAllowlist": [],
+  "policy": "Every imported name is classified exactly once. Enforced names require a compiled binding export; the M5 deferred allowlist is now empty."
+}

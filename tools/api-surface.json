@@ -1,0 +1,2301 @@
+{
+  "generator": "tools/extract-api-contract.mjs",
+  "reference": {
+    "package": "@earendil-works/pi-tui",
+    "version": "0.84.2",
+    "indexSha256": "2eb2c4d88617a344f5c8f51cc1e42e4770d0867dea67e6466263d4346c980d5c",
+    "statementCount": 30,
+    "symbolCount": 133
+  },
+  "note": "Canonical root index.d.ts statements and constituent name/kind/signature/default metadata.",
+  "statements": [
+    {
+      "id": "S01-marked",
+      "source": "marked",
+      "sourceSha256": null,
+      "barrelStatement": "export { Marked, type Token, type Tokens } from \"marked\";",
+      "barrelStatementSha256": "4be2e47066a1e6935af641adbcfeae1a7e5c8916e484020f5f31aa4b5b8f6318",
+      "symbols": [
+        {
+          "name": "Marked",
+          "importedName": "Marked",
+          "exportKind": "runtime",
+          "declarationKind": "external-runtime",
+          "declarationSource": "marked",
+          "declarationSourceSha256": null,
+          "signature": "export runtime Marked from marked",
+          "signatureSha256": "b11c7134633995df726263f0f801cba38e3eb14f28449340c482e1073c761b1c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Token",
+          "importedName": "Token",
+          "exportKind": "type",
+          "declarationKind": "external-type",
+          "declarationSource": "marked",
+          "declarationSourceSha256": null,
+          "signature": "export type Token from marked",
+          "signatureSha256": "03585640e8b61529324c4405d0f184289bb4641bda3c2cd4696abf40cbc5037f",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Tokens",
+          "importedName": "Tokens",
+          "exportKind": "type",
+          "declarationKind": "external-type",
+          "declarationSource": "marked",
+          "declarationSourceSha256": null,
+          "signature": "export type Tokens from marked",
+          "signatureSha256": "8c886b3808e90dc3ade66a72936e05c2d326f16ab82b82f225ef9b1b8ba2ad29",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S02-autocomplete",
+      "source": "autocomplete.ts",
+      "sourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+      "barrelStatement": "export { type AutocompleteItem, type AutocompleteProvider, type AutocompleteSuggestions, CombinedAutocompleteProvider, type SlashCommand, } from \"./autocomplete.ts\";",
+      "barrelStatementSha256": "f77a3f27a06471e2e728127d6c3e4f528738ab120dbfc3b62ffbcbbe17889ed5",
+      "symbols": [
+        {
+          "name": "AutocompleteItem",
+          "importedName": "AutocompleteItem",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "autocomplete.d.ts",
+          "declarationSourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+          "signature": "export interface AutocompleteItem { value: string; label: string; description?: string; }",
+          "signatureSha256": "872c4017840f4b4d77741a62ba5260a8e25cd8ab8348d369eb6b03012284ea76",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "AutocompleteProvider",
+          "importedName": "AutocompleteProvider",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "autocomplete.d.ts",
+          "declarationSourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+          "signature": "export interface AutocompleteProvider { /** Characters that should naturally trigger this provider at token boundaries. */ triggerCharacters?: string[]; getSuggestions(lines: string[], cursorLine: number, cursorCol: number, options: { signal: AbortSignal; force?: boolean; }): Promise<AutocompleteSuggestions | null>; applyCompletion(lines: string[], cursorLine: number, cursorCol: number, item: AutocompleteItem, prefix: string): { lines: string[]; cursorLine: number; cursorCol: number; }; shouldTriggerFileCompletion?(lines: string[], cursorLine: number, cursorCol: number): boolean; }",
+          "signatureSha256": "a23986b0e57a661ea56d776daa60426fdb71796e6498cc75ee6b17778cd69dd1",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "AutocompleteSuggestions",
+          "importedName": "AutocompleteSuggestions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "autocomplete.d.ts",
+          "declarationSourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+          "signature": "export interface AutocompleteSuggestions { items: AutocompleteItem[]; prefix: string; }",
+          "signatureSha256": "97755216166c7ed77954eafc670f950ef6c831f03a930113c5922d514f46e9a1",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "CombinedAutocompleteProvider",
+          "importedName": "CombinedAutocompleteProvider",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "autocomplete.d.ts",
+          "declarationSourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+          "signature": "export declare class CombinedAutocompleteProvider implements AutocompleteProvider { private commands; private basePath; private fdPath; constructor(commands: (AutocompleteItem | SlashCommand)[] | undefined, basePath: string, fdPath?: string | null); getSuggestions(lines: string[], cursorLine: number, cursorCol: number, options: { signal: AbortSignal; force?: boolean; }): Promise<AutocompleteSuggestions | null>; applyCompletion(lines: string[], cursorLine: number, cursorCol: number, item: AutocompleteItem, prefix: string): { lines: string[]; cursorLine: number; cursorCol: number; }; private extractAtPrefix; private extractPathPrefix; private expandHomePath; private resolveScopedFuzzyQuery; private scopedPathForDisplay; private getFileSuggestions; private scoreEntry; private getFuzzyFileSuggestions; shouldTriggerFileCompletion(lines: string[], cursorLine: number, cursorCol: number): boolean; }",
+          "signatureSha256": "c9ebb75b510b3cf63fd9b6b65c90a5b7fdd49be6f69d3dc4b2643e344d16c09a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SlashCommand",
+          "importedName": "SlashCommand",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "autocomplete.d.ts",
+          "declarationSourceSha256": "a815b90761216f349bfc77725b7c9e6925129aae65cdd5d5b3fd1d6d38cf4e66",
+          "signature": "export interface SlashCommand { name: string; description?: string; argumentHint?: string; getArgumentCompletions?(argumentPrefix: string): Awaitable<AutocompleteItem[] | null>; }",
+          "signatureSha256": "5286f3155d12acb1ed8afdb63244040fd179407341ff71df66579e7ea245c4f9",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S03-box",
+      "source": "components/box.ts",
+      "sourceSha256": "fa3c2e4d2a9ecccb464f7b7400901fd629eed5a055ed408653b031e193e3c4cb",
+      "barrelStatement": "export { Box } from \"./components/box.ts\";",
+      "barrelStatementSha256": "2ebe6c2720b9a8b8648f572aef355cd45ed535174613940135d1c89b1d4fcfcd",
+      "symbols": [
+        {
+          "name": "Box",
+          "importedName": "Box",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/box.d.ts",
+          "declarationSourceSha256": "fa3c2e4d2a9ecccb464f7b7400901fd629eed5a055ed408653b031e193e3c4cb",
+          "signature": "export declare class Box implements Component { children: Component[]; private paddingX; private paddingY; private bgFn?; private cache?; constructor(paddingX?: number, paddingY?: number, bgFn?: (text: string) => string); addChild(component: Component): void; removeChild(component: Component): void; clear(): void; setBgFn(bgFn?: (text: string) => string): void; private invalidateCache; private matchCache; invalidate(): void; render(width: number): string[]; private applyBg; }",
+          "signatureSha256": "155b3b255fcb7b7375e4cd097f146ef454620b055d29726e6b9f221cb7408f13",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S04-cancellable-loader",
+      "source": "components/cancellable-loader.ts",
+      "sourceSha256": "d2e79d87e3a5e41cb02b9b4d6ff82830563371cc7b825340aaedbf5d7f582772",
+      "barrelStatement": "export { CancellableLoader } from \"./components/cancellable-loader.ts\";",
+      "barrelStatementSha256": "6baa883fb50da7081f0883ba9885eecf1d465880ba4a38271069fed5786c294c",
+      "symbols": [
+        {
+          "name": "CancellableLoader",
+          "importedName": "CancellableLoader",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/cancellable-loader.d.ts",
+          "declarationSourceSha256": "d2e79d87e3a5e41cb02b9b4d6ff82830563371cc7b825340aaedbf5d7f582772",
+          "signature": "export declare class CancellableLoader extends Loader { private abortController; /** Called when user presses Escape */ onAbort?: () => void; /** AbortSignal that is aborted when user presses Escape */ get signal(): AbortSignal; /** Whether the loader was aborted */ get aborted(): boolean; handleInput(data: string): void; dispose(): void; }",
+          "signatureSha256": "168b210bda9a9645de0e2c73bccc5626bc266c24dce1036d7ad59b7987854fdc",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S05-editor",
+      "source": "components/editor.ts",
+      "sourceSha256": "fc3b400c5c965e4906971df836c1fae0a62c89524cda44d85b3cca86782332be",
+      "barrelStatement": "export { Editor, type EditorOptions, type EditorTheme } from \"./components/editor.ts\";",
+      "barrelStatementSha256": "4864531c4cdb3fb977612bd2a84f5de0ddce9f9241d53c6c3e907a46b1d33a75",
+      "symbols": [
+        {
+          "name": "Editor",
+          "importedName": "Editor",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/editor.d.ts",
+          "declarationSourceSha256": "fc3b400c5c965e4906971df836c1fae0a62c89524cda44d85b3cca86782332be",
+          "signature": "export declare class Editor implements Component, Focusable { private state; /** Focusable interface - set by TUI when focus changes */ focused: boolean; protected tui: TUI; private theme; private paddingX; private lastWidth; private scrollOffset; borderColor: (str: string) => string; private autocompleteProvider?; private autocompleteTriggerCharacters; private autocompleteTriggerPattern; private autocompleteDebouncePattern; private autocompleteList?; private autocompleteState; private autocompletePrefix; private autocompleteMaxVisible; private autocompleteAbort?; private autocompleteDebounceTimer?; private autocompleteRequestTask; private autocompleteStartToken; private autocompleteRequestId; private pastes; private pasteCounter; private pasteBuffer; private isInPaste; private history; private historyIndex; private historyDraft; private killRing; private lastAction; private jumpMode; private preferredVisualCol; private snappedFromCursorCol; private undoStack; onSubmit?: (text: string) => void; onChange?: (text: string) => void; disableSubmit: boolean; constructor(tui: TUI, theme: EditorTheme, options?: EditorOptions); /** Set of currently valid paste IDs, for marker-aware segmentation. */ private validPasteIds; /** Segment text with paste-marker awareness, only merging markers with valid IDs. */ private segment; getPaddingX(): number; setPaddingX(padding: number): void; getAutocompleteMaxVisible(): number; setAutocompleteMaxVisible(maxVisible: number): void; setAutocompleteProvider(provider: AutocompleteProvider): void; /** * Add a prompt to history for up/down arrow navigation. * Called after successful submission. */ addToHistory(text: string): void; private isEditorEmpty; private isOnFirstVisualLine; private isOnLastVisualLine; private navigateHistory; private exitHistoryBrowsing; /** Internal setText that doesn't reset history state - used by navigateHistory */ private setTextInternal; invalidate(): void; render(width: number): string[]; handleInput(data: string): void; private layoutText; getText(): string; private expandPasteMarkers; /** * Get text with paste markers expanded to their actual content. * Use this when you need the full content (e.g., for external editor). */ getExpandedText(): string; getLines(): string[]; getCursor(): { line: number; col: number; }; setText(text: string): void; /** * Insert text at the current cursor position. * Used for programmatic insertion (e.g., clipboard image markers). * This is atomic for undo - single undo restores entire pre-insert state. */ insertTextAtCursor(text: string): void; /** * Normalize text for editor storage: * - Normalize line endings (\\r\\n and \\r -> \\n) * - Expand tabs to 4 spaces */ private normalizeText; /** * Internal text insertion at cursor. Handles single and multi-line text. * Does not push undo snapshots or trigger autocomplete - caller is responsible. * Normalizes line endings and calls onChange once at the end. */ private insertTextAtCursorInternal; private insertCharacter; private handlePaste; private addNewLine; private shouldSubmitOnBackslashEnter; private submitValue; private handleBackspace; /** * Set cursor column and clear preferredVisualCol. * Use this for all non-vertical cursor movements to reset sticky column behavior. */ private setCursorCol; /** * Move cursor to a target visual line, applying sticky column logic. * Shared by moveCursor() and pageScroll(). */ private moveToVisualLine; /** * Compute the target visual column for vertical cursor movement. * Implements the sticky column decision table: * * | P | S | T | U | Scenario | Set Preferred | Move To | * |---|---|---|---| ---------------------------------------------------- |---------------|-------------| * | 0 | * | 0 | - | Start nav, target fits | null | current | * | 0 | * | 1 | - | Start nav, target shorter | current | target end | * | 1 | 0 | 0 | 0 | Clamped, target fits preferred | null | preferred | * | 1 | 0 | 0 | 1 | Clamped, target longer but still can't fit preferred | keep | target end | * | 1 | 0 | 1 | - | Clamped, target even shorter | keep | target end | * | 1 | 1 | 0 | - | Rewrapped, target fits current | null | current | * | 1 | 1 | 1 | - | Rewrapped, target shorter than current | current | target end | * * Where: * - P = preferred col is set * - S = cursor in middle of source line (not clamped to end) * - T = target line shorter than current visual col * - U = target line shorter than preferred col */ private computeVerticalMoveColumn; private moveToLineStart; private moveToLineEnd; private deleteToStartOfLine; private deleteToEndOfLine; private deleteWordBackwards; private deleteWordForward; private handleForwardDelete; /** * Build a mapping from visual lines to logical positions. * Returns an array where each element represents a visual line with: * - logicalLine: index into this.state.lines * - startCol: starting column in the logical line * - length: length of this visual line segment */ private buildVisualLineMap; /** * Find the visual line index that contains the given logical position. */ private findVisualLineAt; /** * Find the visual line index for the current cursor position. */ private findCurrentVisualLine; private moveCursor; /** * Scroll by a page (direction: -1 for up, 1 for down). * Moves cursor by the page size while keeping it in bounds. */ private pageScroll; private moveWordBackwards; /** * Yank (paste) the most recent kill ring entry at cursor position. */ private yank; /** * Cycle through kill ring (only works immediately after yank or yank-pop). * Replaces the last yanked text with the previous entry in the ring. */ private yankPop; /** * Insert text at cursor position (used by yank operations). */ private insertYankedText; /** * Delete the previously yanked text (used by yank-pop). * The yanked text is derived from killRing[end] since it hasn't been rotated yet. */ private deleteYankedText; private pushUndoSnapshot; private undo; /** * Jump to the first occurrence of a character in the specified direction. * Multi-line search. Case-sensitive. Skips the current cursor position. */ private jumpToChar; private moveWordForwards; private isSlashMenuAllowed; private isAtStartOfMessage; private isInSlashCommandContext; /** * Find the best autocomplete item index for the given prefix. * Returns -1 if no match is found. * * Match priority: * 1. Exact match (prefix === item.value) -> always selected * 2. Prefix match -> first item whose value starts with prefix * 3. No match -> -1 (keep default highlight) * * Matching is case-sensitive and checks item.value only. */ private getBestAutocompleteMatchIndex; private createAutocompleteList; private tryTriggerAutocomplete; private handleTabCompletion; private handleSlashCommandCompletion; private forceFileAutocomplete; private requestAutocomplete; private startAutocompleteRequest; private setAutocompleteTriggerCharacters; private getAutocompleteDebounceMs; private runAutocompleteRequest; private isAutocompleteRequestCurrent; private applyAutocompleteSuggestions; private cancelAutocompleteRequest; private clearAutocompleteUi; private cancelAutocomplete; isShowingAutocomplete(): boolean; private updateAutocomplete; }",
+          "signatureSha256": "6da99cbbb6a6d6810c91e62fec7fbdc115664314e766a7b3426f72f6bf0ce12e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 3,
+            "documented": [
+              "em whose value starts with prefix * 3. No match -> -1 (keep default highlight) * * Matching is case-sensitive and checks item.value only. */ privat"
+            ]
+          }
+        },
+        {
+          "name": "EditorOptions",
+          "importedName": "EditorOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/editor.d.ts",
+          "declarationSourceSha256": "fc3b400c5c965e4906971df836c1fae0a62c89524cda44d85b3cca86782332be",
+          "signature": "export interface EditorOptions { paddingX?: number; autocompleteMaxVisible?: number; }",
+          "signatureSha256": "6df4255ba0b6e0f4b69c8be0be4928ac7b5bf29b033e44dbf0ef8421084aaae4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "EditorTheme",
+          "importedName": "EditorTheme",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/editor.d.ts",
+          "declarationSourceSha256": "fc3b400c5c965e4906971df836c1fae0a62c89524cda44d85b3cca86782332be",
+          "signature": "export interface EditorTheme { borderColor: (str: string) => string; selectList: SelectListTheme; }",
+          "signatureSha256": "e419db127a8c124cb5239755adc3fac16c88ff72442016e5b73b5f439645c86e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S06-h-stack",
+      "source": "components/h-stack.ts",
+      "sourceSha256": "ad3796f7ee53e96f5e46d62f2409b6232da3f53364d4eaa8f741e5463ecf027d",
+      "barrelStatement": "export { HStack } from \"./components/h-stack.ts\";",
+      "barrelStatementSha256": "60f87d1601e161497d79f6b111437858e8d810e29990e6e315eca95159342fe0",
+      "symbols": [
+        {
+          "name": "HStack",
+          "importedName": "HStack",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/h-stack.d.ts",
+          "declarationSourceSha256": "ad3796f7ee53e96f5e46d62f2409b6232da3f53364d4eaa8f741e5463ecf027d",
+          "signature": "export declare class HStack extends Stack { protected readonly layoutType: \"hstack\"; constructor(children?: StackChild[], options?: StackOptions); render(width: number): string[]; }",
+          "signatureSha256": "197fd1051580a997ae39bb55c6f20fdad25b13203bd4854f521826282213392b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S07-image",
+      "source": "components/image.ts",
+      "sourceSha256": "45cfb14d766704c70017d7ec3a2d382f148fbf56b7f76c4c3155cc80bb5ff6cb",
+      "barrelStatement": "export { Image, type ImageOptions, type ImageTheme } from \"./components/image.ts\";",
+      "barrelStatementSha256": "3ceb04149d40ec02b3963ef03915e7979146cc0ff6b53b95aca62871fcfabaeb",
+      "symbols": [
+        {
+          "name": "Image",
+          "importedName": "Image",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/image.d.ts",
+          "declarationSourceSha256": "45cfb14d766704c70017d7ec3a2d382f148fbf56b7f76c4c3155cc80bb5ff6cb",
+          "signature": "export declare class Image implements Component { private base64Data; private mimeType; private dimensions; private theme; private options; private imageId?; private cachedLines?; private cachedWidth?; constructor(base64Data: string, mimeType: string, theme: ImageTheme, options?: ImageOptions, dimensions?: ImageDimensions); /** Get the Kitty image ID used by this image (if any). */ getImageId(): number | undefined; invalidate(): void; render(width: number): string[]; }",
+          "signatureSha256": "ec32bbbc1032a33034befeebd47f910aa13dd225d0f4e482a58873b3a2ed6f0e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ImageOptions",
+          "importedName": "ImageOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/image.d.ts",
+          "declarationSourceSha256": "45cfb14d766704c70017d7ec3a2d382f148fbf56b7f76c4c3155cc80bb5ff6cb",
+          "signature": "export interface ImageOptions { maxWidthCells?: number; maxHeightCells?: number; filename?: string; /** Kitty image ID. If provided, reuses this ID (for animations/updates). */ imageId?: number; }",
+          "signatureSha256": "e5f4693c972a4ea6c278126d7d481d44cbb35a167c5647902eaf7c04805e4f06",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ImageTheme",
+          "importedName": "ImageTheme",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/image.d.ts",
+          "declarationSourceSha256": "45cfb14d766704c70017d7ec3a2d382f148fbf56b7f76c4c3155cc80bb5ff6cb",
+          "signature": "export interface ImageTheme { fallbackColor: (str: string) => string; }",
+          "signatureSha256": "b0efe2fb1b83e940a85fdadfa6e32afa3dd99186a29eb6279caab06f7adedf21",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S08-input",
+      "source": "components/input.ts",
+      "sourceSha256": "f2a2bab62c83d6e4b2b69a243c96df26f81ac98963031a67c92a083c57309871",
+      "barrelStatement": "export { Input } from \"./components/input.ts\";",
+      "barrelStatementSha256": "cef3bab499de247e30f3c486c135460dba73d3cbbcb21f3755d37cd1932435a8",
+      "symbols": [
+        {
+          "name": "Input",
+          "importedName": "Input",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/input.d.ts",
+          "declarationSourceSha256": "f2a2bab62c83d6e4b2b69a243c96df26f81ac98963031a67c92a083c57309871",
+          "signature": "export declare class Input implements Component, Focusable { private value; private cursor; onSubmit?: (value: string) => void; onEscape?: () => void; /** Focusable interface - set by TUI when focus changes */ focused: boolean; private pasteBuffer; private isInPaste; private killRing; private lastAction; private undoStack; getValue(): string; setValue(value: string): void; handleInput(data: string): void; private insertCharacter; private handleBackspace; private handleForwardDelete; private deleteToLineStart; private deleteToLineEnd; private deleteWordBackwards; private deleteWordForward; private yank; private yankPop; private pushUndo; private undo; private moveWordBackwards; private moveWordForwards; private handlePaste; invalidate(): void; render(width: number): string[]; }",
+          "signatureSha256": "940027c381ba40024b370e051fbca6a630765bedb5a7010b4e4fc4a840ba4d8a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S09-loader",
+      "source": "components/loader.ts",
+      "sourceSha256": "bc143de7a72f27e9fb7f0d41a07a0a49347a5b68db5148eab004ed27fb579b07",
+      "barrelStatement": "export { Loader, type LoaderIndicatorOptions } from \"./components/loader.ts\";",
+      "barrelStatementSha256": "09f4fa937d6280fca0f9823811ba8b420e0bf851322c6aa425926de0c13ffaee",
+      "symbols": [
+        {
+          "name": "Loader",
+          "importedName": "Loader",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/loader.d.ts",
+          "declarationSourceSha256": "bc143de7a72f27e9fb7f0d41a07a0a49347a5b68db5148eab004ed27fb579b07",
+          "signature": "export declare class Loader extends Text { private frames; private intervalMs; private currentFrame; private intervalId; private ui; private renderIndicatorVerbatim; private spinnerColorFn; private messageColorFn; private message; constructor(ui: TUI, spinnerColorFn: (str: string) => string, messageColorFn: (str: string) => string, message?: string, indicator?: LoaderIndicatorOptions); render(width: number): string[]; start(): void; stop(): void; setMessage(message: string): void; setIndicator(indicator?: LoaderIndicatorOptions): void; private restartAnimation; private updateDisplay; }",
+          "signatureSha256": "62c00ced4b720603aae7bd56dca3e2aca4b27e3a7c98048f2dfb1e7bd8e2e11a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "LoaderIndicatorOptions",
+          "importedName": "LoaderIndicatorOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/loader.d.ts",
+          "declarationSourceSha256": "bc143de7a72f27e9fb7f0d41a07a0a49347a5b68db5148eab004ed27fb579b07",
+          "signature": "export interface LoaderIndicatorOptions { /** Animation frames. Use an empty array to hide the indicator. */ frames?: string[]; /** Frame interval in milliseconds for animated indicators. */ intervalMs?: number; }",
+          "signatureSha256": "1fea44f430a52139de8d050492354f2994f41c0d9f44f83931c7836678b6c015",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S10-markdown",
+      "source": "components/markdown.ts",
+      "sourceSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+      "barrelStatement": "export { type DefaultTextStyle, Markdown, type MarkdownOptions, type MarkdownTheme } from \"./components/markdown.ts\";",
+      "barrelStatementSha256": "0142755b4b607a19b2b60f82083d08542b7cdf61a5ede485f98251b9a6ed5618",
+      "symbols": [
+        {
+          "name": "DefaultTextStyle",
+          "importedName": "DefaultTextStyle",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/markdown.d.ts",
+          "declarationSourceSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+          "signature": "export interface DefaultTextStyle { /** Foreground color function */ color?: (text: string) => string; /** Background color function */ bgColor?: (text: string) => string; /** Bold text */ bold?: boolean; /** Italic text */ italic?: boolean; /** Strikethrough text */ strikethrough?: boolean; /** Underline text */ underline?: boolean; }",
+          "signatureSha256": "8a22f667bc81f56bfca7076766d5265f53a06545df3a7bfb54776e4d78d24c7f",
+          "defaultMetadata": {
+            "optionalMarkerCount": 6,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Markdown",
+          "importedName": "Markdown",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/markdown.d.ts",
+          "declarationSourceSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+          "signature": "export declare class Markdown implements Component { private text; private paddingX; private paddingY; private defaultTextStyle?; private theme; private options; private defaultStylePrefix?; private cachedText?; private cachedWidth?; private cachedLines?; constructor(text: string, paddingX: number, paddingY: number, theme: MarkdownTheme, defaultTextStyle?: DefaultTextStyle, options?: MarkdownOptions); setText(text: string): void; invalidate(): void; render(width: number): string[]; /** * Apply default text style to a string. * This is the base styling applied to all text content. * NOTE: Background color is NOT applied here - it's applied at the padding stage * to ensure it extends to the full line width. */ private applyDefaultStyle; private getDefaultStylePrefix; private getStylePrefix; private getDefaultInlineStyleContext; private renderToken; private renderInlineTokens; private getOrderedListMarker; private getUnorderedListMarker; /** * Render a list with proper nesting support */ private renderList; /** * Get the visible width of the longest word in a string. */ private getLongestWordWidth; /** * Wrap a table cell to fit into a column. * * Delegates to wrapTextWithAnsi() so ANSI codes + long tokens are handled * consistently with the rest of the renderer. */ private wrapCellText; /** * Render a table with width-aware cell wrapping. * Cells that don't fit are wrapped to multiple lines. */ private renderTable; }",
+          "signatureSha256": "be6cb88f6afeb0b5e838507a6988b828806973babf1bf0a55ea14ed73e453203",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": [
+              "idate(): void; render(width: number): string[]; /** * Apply default text style to a string. * This is the base styling applied to all text content."
+            ]
+          }
+        },
+        {
+          "name": "MarkdownOptions",
+          "importedName": "MarkdownOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/markdown.d.ts",
+          "declarationSourceSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+          "signature": "export interface MarkdownOptions { /** Preserve source list markers instead of normalizing them. */ preserveOrderedListMarkers?: boolean; /** Preserve source backslash escapes instead of normalizing escaped punctuation. */ preserveBackslashEscapes?: boolean; /** Transform source Markdown before parsing, with the exact width available for content. */ transform?: (markdown: string, availableWidth: number) => string; /** Render supported LaTeX math expressions as Unicode text (default: true). */ renderLatex?: boolean; }",
+          "signatureSha256": "eb902fae2ceb89c6c9133079d88e4c9f31555c39dd67a080abdb4fc46c55f3a2",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": [
+              "** Render supported LaTeX math expressions as Unicode text (default: true). */ renderLatex?: boolean; }"
+            ]
+          }
+        },
+        {
+          "name": "MarkdownTheme",
+          "importedName": "MarkdownTheme",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/markdown.d.ts",
+          "declarationSourceSha256": "9c21b4bcb0b0b047438616cb2302b6b6df7630e73e0ee8da3f9f6bae7e565f66",
+          "signature": "export interface MarkdownTheme { heading: (text: string) => string; link: (text: string) => string; linkUrl: (text: string) => string; code: (text: string) => string; codeBlock: (text: string) => string; codeBlockBorder: (text: string) => string; quote: (text: string) => string; quoteBorder: (text: string) => string; hr: (text: string) => string; listBullet: (text: string) => string; bold: (text: string) => string; italic: (text: string) => string; strikethrough: (text: string) => string; underline: (text: string) => string; highlightCode?: (code: string, lang?: string) => string[]; /** Prefix applied to each rendered code block line (default: \" \") */ codeBlockIndent?: string; }",
+          "signatureSha256": "80287578f6bacc0e9c083ae2f31cf24a54f5b9793e78d2952024a89acb16674d",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 0,
+            "documented": [
+              "ing[]; /** Prefix applied to each rendered code block line (default: \" \") */ codeBlockIndent?: string; }"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S11-scroll-view",
+      "source": "components/scroll-view.ts",
+      "sourceSha256": "08526ce405b219291785137892b087a8600eb60d9b80d61132df9ca7cc15d10d",
+      "barrelStatement": "export { ScrollView, type ScrollViewOptions, type ScrollViewScrollbar, type ScrollViewScrollToOptions, } from \"./components/scroll-view.ts\";",
+      "barrelStatementSha256": "c03d99c21d5a1a83d77756c212b7a8ba10f2bc40236f7e50b05e0853f3da8f86",
+      "symbols": [
+        {
+          "name": "ScrollView",
+          "importedName": "ScrollView",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/scroll-view.d.ts",
+          "declarationSourceSha256": "08526ce405b219291785137892b087a8600eb60d9b80d61132df9ca7cc15d10d",
+          "signature": "export declare class ScrollView extends Container { private readonly child; private readonly followEnd; readonly primary: boolean; readonly overscroll: \"chain\" | \"contain\"; readonly scrollbarStyle: (text: string) => string; private currentScrollbar; private readonly scrollbarHideDelayMs; private currentScrollTop; private contentHeight; private currentViewportHeight; private followingEnd; private followSuppressedAtEnd; private requestRenderCallback; private transientScrollbarVisible; private scrollbarActive; private scrollbarHideTimer; constructor(component: Component, options?: ScrollViewOptions); get scrollTop(): number; get isFollowingEnd(): boolean; get viewportHeight(): number; get scrollbar(): ScrollViewScrollbar; get isScrollbarVisible(): boolean; setScrollbar(scrollbar: ScrollViewScrollbar): void; getContentWidth(width: number): number; private markScrollbarActivity; private hideTransientScrollbar; setScrollbarActive(active: boolean): void; scrollTo(scrollTop: number, options?: ScrollViewScrollToOptions): void; scrollBy(lines: number): number; scrollToStart(): void; scrollToEnd(): void; updateLayout(contentHeight: number, viewportHeight: number, requestRender: () => void): void; addChild(_component: Component): void; removeChild(_component: Component): void; clear(): void; render(width: number): string[]; [LAYOUT_NODE](): ScrollLayoutNode; }",
+          "signatureSha256": "b9d03a6779e2307a5c4e6dd0a9082201226ed1570827e319bfe1ecdae5a52ec3",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ScrollViewOptions",
+          "importedName": "ScrollViewOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/scroll-view.d.ts",
+          "declarationSourceSha256": "08526ce405b219291785137892b087a8600eb60d9b80d61132df9ca7cc15d10d",
+          "signature": "export interface ScrollViewOptions { axis?: \"vertical\"; follow?: \"none\" | \"end\"; primary?: boolean; overscroll?: \"chain\" | \"contain\"; scrollbar?: ScrollViewScrollbar; scrollbarStyle?: (text: string) => string; scrollbarHideDelayMs?: number; }",
+          "signatureSha256": "bab623426f64987bfec14a0d5ca8ad7921a739e1ca7a4fa94cd6843fbf0e943b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 7,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ScrollViewScrollbar",
+          "importedName": "ScrollViewScrollbar",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "components/scroll-view.d.ts",
+          "declarationSourceSha256": "08526ce405b219291785137892b087a8600eb60d9b80d61132df9ca7cc15d10d",
+          "signature": "export type ScrollViewScrollbar = \"hidden\" | \"auto\" | \"always\";",
+          "signatureSha256": "8fa8fa7bfe5259d7bdc99fa61ed520018b037f826cb6b13001fa84d2f1838786",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "ScrollViewScrollToOptions",
+          "importedName": "ScrollViewScrollToOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/scroll-view.d.ts",
+          "declarationSourceSha256": "08526ce405b219291785137892b087a8600eb60d9b80d61132df9ca7cc15d10d",
+          "signature": "export interface ScrollViewScrollToOptions { /** Keep follow-end disabled even when the target is the current content end. */ disableFollow?: boolean; }",
+          "signatureSha256": "7ba79d587d3d4499d585de364054b5154afedb5d76505639551c5a91be0e75e2",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S12-select-list",
+      "source": "components/select-list.ts",
+      "sourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+      "barrelStatement": "export { type SelectItem, SelectList, type SelectListLayoutOptions, type SelectListTheme, type SelectListTruncatePrimaryContext, } from \"./components/select-list.ts\";",
+      "barrelStatementSha256": "51f7cb2a90f5d62849addeca30e0b2d658e4afd17802227cc4c322099a2bdf71",
+      "symbols": [
+        {
+          "name": "SelectItem",
+          "importedName": "SelectItem",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/select-list.d.ts",
+          "declarationSourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+          "signature": "export interface SelectItem { value: string; label: string; description?: string; }",
+          "signatureSha256": "a3555b1afcc2f6a266c8d145d6ab14fbfee639b932bd6e6a50da6323abe2fc19",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SelectList",
+          "importedName": "SelectList",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/select-list.d.ts",
+          "declarationSourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+          "signature": "export declare class SelectList implements Component { private items; private filteredItems; private selectedIndex; private maxVisible; private theme; private layout; onSelect?: (item: SelectItem) => void; onCancel?: () => void; onSelectionChange?: (item: SelectItem) => void; constructor(items: SelectItem[], maxVisible: number, theme: SelectListTheme, layout?: SelectListLayoutOptions); setFilter(filter: string): void; setSelectedIndex(index: number): void; invalidate(): void; render(width: number): string[]; handleInput(keyData: string): void; private renderItem; private getPrimaryColumnWidth; private getPrimaryColumnBounds; private truncatePrimary; private getDisplayValue; private notifySelectionChange; getSelectedItem(): SelectItem | null; }",
+          "signatureSha256": "48cba7ed3794944c3355f07ab981aa66b42e617cb40952096199145af5c5ae0b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SelectListLayoutOptions",
+          "importedName": "SelectListLayoutOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/select-list.d.ts",
+          "declarationSourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+          "signature": "export interface SelectListLayoutOptions { minPrimaryColumnWidth?: number; maxPrimaryColumnWidth?: number; truncatePrimary?: (context: SelectListTruncatePrimaryContext) => string; }",
+          "signatureSha256": "8ec765c9e4cf1103ca891f80908d20d8b65d5c8382f64fd45dd65ebefdf814fe",
+          "defaultMetadata": {
+            "optionalMarkerCount": 3,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SelectListTheme",
+          "importedName": "SelectListTheme",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/select-list.d.ts",
+          "declarationSourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+          "signature": "export interface SelectListTheme { selectedPrefix: (text: string) => string; selectedText: (text: string) => string; description: (text: string) => string; scrollInfo: (text: string) => string; noMatch: (text: string) => string; }",
+          "signatureSha256": "06c8143d81c57c02f8536c1e90ffc6d7d09fa46e1dde999a97ab6ca6d61ed6e5",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SelectListTruncatePrimaryContext",
+          "importedName": "SelectListTruncatePrimaryContext",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/select-list.d.ts",
+          "declarationSourceSha256": "885ce3c876841d9c3dbf3c7d7a1e01c7fd42e7c3a0a8045791955de64d34272a",
+          "signature": "export interface SelectListTruncatePrimaryContext { text: string; maxWidth: number; columnWidth: number; item: SelectItem; isSelected: boolean; }",
+          "signatureSha256": "25e6c50c8d341ce882913e48aa46310158ca06c41efa8b4f2cf33508f10c8b1a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S13-settings-list",
+      "source": "components/settings-list.ts",
+      "sourceSha256": "69607c4f8bb3f825afe94c7332f245876339a3df2741c38b83bd4ab377e67b65",
+      "barrelStatement": "export { type SettingItem, SettingsList, type SettingsListTheme } from \"./components/settings-list.ts\";",
+      "barrelStatementSha256": "e2f4441c96be0a2896d9405342684c91107de62aeab67b1e136aac7ecc85dc18",
+      "symbols": [
+        {
+          "name": "SettingItem",
+          "importedName": "SettingItem",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/settings-list.d.ts",
+          "declarationSourceSha256": "69607c4f8bb3f825afe94c7332f245876339a3df2741c38b83bd4ab377e67b65",
+          "signature": "export interface SettingItem { /** Unique identifier for this setting */ id: string; /** Display label (left side) */ label: string; /** Optional description shown when selected */ description?: string; /** Current value to display (right side) */ currentValue: string; /** If provided, Enter/Space cycles through these values */ values?: string[]; /** If provided, Enter opens this submenu. Receives current value and done callback. */ submenu?: (currentValue: string, done: (selectedValue?: string) => void) => Component; }",
+          "signatureSha256": "9d76ed6a3823d6f4936579096b4884c6dbea4d411a732342cc1656b3fcfac707",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SettingsList",
+          "importedName": "SettingsList",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/settings-list.d.ts",
+          "declarationSourceSha256": "69607c4f8bb3f825afe94c7332f245876339a3df2741c38b83bd4ab377e67b65",
+          "signature": "export declare class SettingsList implements Component { private items; private filteredItems; private theme; private selectedIndex; private maxVisible; private onChange; private onCancel; private searchInput?; private searchEnabled; private submenuComponent; private submenuItemIndex; constructor(items: SettingItem[], maxVisible: number, theme: SettingsListTheme, onChange: (id: string, newValue: string) => void, onCancel: () => void, options?: SettingsListOptions); /** Update an item's currentValue */ updateValue(id: string, newValue: string): void; invalidate(): void; render(width: number): string[]; private renderMainList; handleInput(data: string): void; private activateItem; private closeSubmenu; private applyFilter; private addHintLine; }",
+          "signatureSha256": "bcd306e120546aecce176b5dfc335c6db0995dd70381a28a174b0250701ea8b7",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SettingsListTheme",
+          "importedName": "SettingsListTheme",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/settings-list.d.ts",
+          "declarationSourceSha256": "69607c4f8bb3f825afe94c7332f245876339a3df2741c38b83bd4ab377e67b65",
+          "signature": "export interface SettingsListTheme { label: (text: string, selected: boolean) => string; value: (text: string, selected: boolean) => string; description: (text: string) => string; cursor: string; hint: (text: string) => string; }",
+          "signatureSha256": "2ce4b05a87553d877e7dfbab4a2918e5e9c15bd0c2a58e2b25899a3047f08305",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S14-spacer",
+      "source": "components/spacer.ts",
+      "sourceSha256": "9c2a620b58e9e11fddd9d814c9de149c2ee2e1d2062645da7f87ce3d2718c140",
+      "barrelStatement": "export { Spacer } from \"./components/spacer.ts\";",
+      "barrelStatementSha256": "ed5d7dca77793e0e51bd7b9d455a2aebbdfb8ae643af2c630dc1ac1b16fa1baa",
+      "symbols": [
+        {
+          "name": "Spacer",
+          "importedName": "Spacer",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/spacer.d.ts",
+          "declarationSourceSha256": "9c2a620b58e9e11fddd9d814c9de149c2ee2e1d2062645da7f87ce3d2718c140",
+          "signature": "export declare class Spacer implements Component { private lines; constructor(lines?: number); setLines(lines: number): void; invalidate(): void; render(_width: number): string[]; }",
+          "signatureSha256": "f4da5befc73d33073373e2206cfd5fbaa99fbc121103b4e08452cf7d52789d69",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S15-text",
+      "source": "components/text.ts",
+      "sourceSha256": "fc0566f2753fd99417dd0eab72d7b4cde8d51b9c3430c709e5864dd60f0d2238",
+      "barrelStatement": "export { Text } from \"./components/text.ts\";",
+      "barrelStatementSha256": "3e5f694bda6db48b81636cb3b95ea7228f270bd9043bbad4a1ce191efce987fa",
+      "symbols": [
+        {
+          "name": "Text",
+          "importedName": "Text",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/text.d.ts",
+          "declarationSourceSha256": "fc0566f2753fd99417dd0eab72d7b4cde8d51b9c3430c709e5864dd60f0d2238",
+          "signature": "export declare class Text implements Component { private text; private paddingX; private paddingY; private customBgFn?; private cachedText?; private cachedWidth?; private cachedLines?; constructor(text?: string, paddingX?: number, paddingY?: number, customBgFn?: (text: string) => string); setText(text: string): void; setCustomBgFn(customBgFn?: (text: string) => string): void; invalidate(): void; render(width: number): string[]; }",
+          "signatureSha256": "256bdefed48634626a832802b714cf6c35670d2c29eb0fb536f9eb79bd014eb4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 5,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S16-truncated-text",
+      "source": "components/truncated-text.ts",
+      "sourceSha256": "855a5861e39c27c5b2f4de64fe7b4b5701b74156c5ab53870214aa233583533c",
+      "barrelStatement": "export { TruncatedText } from \"./components/truncated-text.ts\";",
+      "barrelStatementSha256": "092c3fcdc10ae2040b1425f54934d9d8daafd4fb25b02f472f1776e9c6b1e729",
+      "symbols": [
+        {
+          "name": "TruncatedText",
+          "importedName": "TruncatedText",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/truncated-text.d.ts",
+          "declarationSourceSha256": "855a5861e39c27c5b2f4de64fe7b4b5701b74156c5ab53870214aa233583533c",
+          "signature": "export declare class TruncatedText implements Component { private text; private paddingX; private paddingY; constructor(text: string, paddingX?: number, paddingY?: number); invalidate(): void; render(width: number): string[]; }",
+          "signatureSha256": "1d489a4f09f69b4c81b37b637f203dea48db7817597c219be918c331331b34ef",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S17-v-stack",
+      "source": "components/v-stack.ts",
+      "sourceSha256": "7b695980cc75b8cafe67ee61108769550fa4effc851a83054776f32ba1bc42cb",
+      "barrelStatement": "export { type StackChild, type StackEntry, type StackEntryOptions, type StackOptions, VStack, } from \"./components/v-stack.ts\";",
+      "barrelStatementSha256": "1d88e822f79c4f283ed692e05ae015a6de35ec729131014e1e7032b6aace0313",
+      "symbols": [
+        {
+          "name": "StackChild",
+          "importedName": "StackChild",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "components/stack.d.ts",
+          "declarationSourceSha256": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+          "signature": "export type StackChild = Component | StackEntry;",
+          "signatureSha256": "dc12783413f2587eef232a2ce02c777cb5096c26e616b4eff2ece3ea1c66682a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "StackEntry",
+          "importedName": "StackEntry",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/stack.d.ts",
+          "declarationSourceSha256": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+          "signature": "export interface StackEntry extends StackEntryOptions { component: Component; }",
+          "signatureSha256": "56e16d87244383ed4fc955efa3f9ee081e93299bf7de4aa85d436d5f8ba0dd55",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "StackEntryOptions",
+          "importedName": "StackEntryOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/stack.d.ts",
+          "declarationSourceSha256": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+          "signature": "export interface StackEntryOptions { basis?: number | \"auto\"; grow?: number; shrink?: number; minSize?: number; maxSize?: number; visible?: (viewport: LayoutViewport) => boolean; }",
+          "signatureSha256": "b9b593f8d78a7452b21e74a20ff098a176b93305d8e5bb67d4c4b996b35e396d",
+          "defaultMetadata": {
+            "optionalMarkerCount": 6,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "StackOptions",
+          "importedName": "StackOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "components/stack.d.ts",
+          "declarationSourceSha256": "4a263287262dd550b75213d4234e84e9060ad4536d78d42bcb052e8012a7c212",
+          "signature": "export interface StackOptions { gap?: number; align?: \"stretch\" | \"start\" | \"center\" | \"end\"; }",
+          "signatureSha256": "a5a3c045277c29a578cebc56b9cb1281f30c4d4d072c59010f916d075bc6aab0",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "VStack",
+          "importedName": "VStack",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "components/v-stack.d.ts",
+          "declarationSourceSha256": "7b695980cc75b8cafe67ee61108769550fa4effc851a83054776f32ba1bc42cb",
+          "signature": "export declare class VStack extends Stack { protected readonly layoutType: \"vstack\"; constructor(children?: StackChild[], options?: StackOptions); render(width: number): string[]; }",
+          "signatureSha256": "2a7f5f9e1aba70f1c2052cb7104a5b090ff8a90a08d0611bd92de7d73090929c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S18-editor-component",
+      "source": "editor-component.ts",
+      "sourceSha256": "5de081a8879f096e0bb0f7efb1f4751bab259b1a77663be041938758d22e50c6",
+      "barrelStatement": "export type { EditorComponent } from \"./editor-component.ts\";",
+      "barrelStatementSha256": "ee9b582b8862a6754a07e0f843623eaa702da3b327bd713a764e00d7c80a0c2d",
+      "symbols": [
+        {
+          "name": "EditorComponent",
+          "importedName": "EditorComponent",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "editor-component.d.ts",
+          "declarationSourceSha256": "5de081a8879f096e0bb0f7efb1f4751bab259b1a77663be041938758d22e50c6",
+          "signature": "export interface EditorComponent extends Component { /** Get the current text content */ getText(): string; /** Set the text content */ setText(text: string): void; /** Handle raw terminal input (key presses, paste sequences, etc.) */ handleInput(data: string): void; /** Called when user submits (e.g., Enter key) */ onSubmit?: (text: string) => void; /** Called when text changes */ onChange?: (text: string) => void; /** Add text to history for up/down navigation */ addToHistory?(text: string): void; /** Insert text at current cursor position */ insertTextAtCursor?(text: string): void; /** * Get text with any markers expanded (e.g., paste markers). * Falls back to getText() if not implemented. */ getExpandedText?(): string; /** Set the autocomplete provider */ setAutocompleteProvider?(provider: AutocompleteProvider): void; /** Border color function */ borderColor?: (str: string) => string; /** Set horizontal padding */ setPaddingX?(padding: number): void; /** Set max visible items in autocomplete dropdown */ setAutocompleteMaxVisible?(maxVisible: number): void; }",
+          "signatureSha256": "d891f5dae01f07159070dc83eea7852db427736727491dd99e9439072a721837",
+          "defaultMetadata": {
+            "optionalMarkerCount": 9,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S19-fuzzy",
+      "source": "fuzzy.ts",
+      "sourceSha256": "07adbe256c88b62d597b527d9f659a6b346a6a3ac7bfaea1a8e04c1d985581b2",
+      "barrelStatement": "export { type FuzzyMatch, fuzzyFilter, fuzzyMatch } from \"./fuzzy.ts\";",
+      "barrelStatementSha256": "32720373fa1003325efb102cd1d6af861616d3a7fa2e3811808c3d6a99d31304",
+      "symbols": [
+        {
+          "name": "FuzzyMatch",
+          "importedName": "FuzzyMatch",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "fuzzy.d.ts",
+          "declarationSourceSha256": "07adbe256c88b62d597b527d9f659a6b346a6a3ac7bfaea1a8e04c1d985581b2",
+          "signature": "export interface FuzzyMatch { matches: boolean; score: number; }",
+          "signatureSha256": "7b0108e2757d9c2b74483d0efa194d9f4dbe5c6e20ec9de61bd82c44bb171220",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "fuzzyFilter",
+          "importedName": "fuzzyFilter",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "fuzzy.d.ts",
+          "declarationSourceSha256": "07adbe256c88b62d597b527d9f659a6b346a6a3ac7bfaea1a8e04c1d985581b2",
+          "signature": "export declare function fuzzyFilter<T>(items: T[], query: string, getText: (item: T) => string): T[];",
+          "signatureSha256": "2c370c44434c0cecb387fb2da676e63c2731ab2580a603d6f2b8f9020b2150fc",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "fuzzyMatch",
+          "importedName": "fuzzyMatch",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "fuzzy.d.ts",
+          "declarationSourceSha256": "07adbe256c88b62d597b527d9f659a6b346a6a3ac7bfaea1a8e04c1d985581b2",
+          "signature": "export declare function fuzzyMatch(query: string, text: string): FuzzyMatch;",
+          "signatureSha256": "593b077a5c1ca9e3c832bf1040edb08e51f2a71ff02427a86b9ed9ca4936b694",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S20-keybindings",
+      "source": "keybindings.ts",
+      "sourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+      "barrelStatement": "export { getKeybindings, type Keybinding, type KeybindingConflict, type KeybindingDefinition, type KeybindingDefinitions, type Keybindings, type KeybindingsConfig, KeybindingsManager, setKeybindings, TUI_KEYBINDINGS, } from \"./keybindings.ts\";",
+      "barrelStatementSha256": "6b485f5c24648507c68c3171b63b343f593097b5ae67bdcdb86fccb065712e1f",
+      "symbols": [
+        {
+          "name": "getKeybindings",
+          "importedName": "getKeybindings",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export declare function getKeybindings(): KeybindingsManager;",
+          "signatureSha256": "0f98403d2c6a96329ba879315081e07f1a0f87d4aefab71b870526095b82b23f",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Keybinding",
+          "importedName": "Keybinding",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export type Keybinding = keyof Keybindings;",
+          "signatureSha256": "02643b74be00528d127277a8f0e10d35ed69acdc60d77a3556aa147238903a6c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeybindingConflict",
+          "importedName": "KeybindingConflict",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export interface KeybindingConflict { key: KeyId; keybindings: string[]; }",
+          "signatureSha256": "b4f4c6810a288418e1adcbcc9ccc4af791f7b5fd12aa1aac163dd22cd8daffae",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeybindingDefinition",
+          "importedName": "KeybindingDefinition",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export interface KeybindingDefinition { defaultKeys: KeyId | KeyId[]; description?: string; }",
+          "signatureSha256": "ad18ecc35e3382ef0b11b20facd6c7390af4ccf3065e3e90bc6f5f193bf0c9d0",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeybindingDefinitions",
+          "importedName": "KeybindingDefinitions",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export type KeybindingDefinitions = Record<string, KeybindingDefinition>;",
+          "signatureSha256": "ca07ae5dc83d622bf5582e465d6a48ebabc7bde38d65d063195372c459e459c7",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "Keybindings",
+          "importedName": "Keybindings",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export interface Keybindings { \"tui.editor.cursorUp\": true; \"tui.editor.cursorDown\": true; \"tui.editor.historyPrevious\": true; \"tui.editor.historyNext\": true; \"tui.editor.cursorLeft\": true; \"tui.editor.cursorRight\": true; \"tui.editor.cursorWordLeft\": true; \"tui.editor.cursorWordRight\": true; \"tui.editor.cursorLineStart\": true; \"tui.editor.cursorLineEnd\": true; \"tui.editor.jumpForward\": true; \"tui.editor.jumpBackward\": true; \"tui.editor.pageUp\": true; \"tui.editor.pageDown\": true; \"tui.editor.deleteCharBackward\": true; \"tui.editor.deleteCharForward\": true; \"tui.editor.deleteWordBackward\": true; \"tui.editor.deleteWordForward\": true; \"tui.editor.deleteToLineStart\": true; \"tui.editor.deleteToLineEnd\": true; \"tui.editor.yank\": true; \"tui.editor.yankPop\": true; \"tui.editor.undo\": true; \"tui.input.newLine\": true; \"tui.input.submit\": true; \"tui.input.tab\": true; \"tui.input.copy\": true; \"tui.select.up\": true; \"tui.select.down\": true; \"tui.select.pageUp\": true; \"tui.select.pageDown\": true; \"tui.select.confirm\": true; \"tui.select.cancel\": true; \"tui.altScreen.pageUp\": true; \"tui.altScreen.pageDown\": true; \"tui.altScreen.halfPageUp\": true; \"tui.altScreen.halfPageDown\": true; \"tui.altScreen.lineUp\": true; \"tui.altScreen.lineDown\": true; \"tui.altScreen.previousPrompt\": true; \"tui.altScreen.nextPrompt\": true; \"tui.altScreen.search\": true; \"tui.altScreen.searchNext\": true; \"tui.altScreen.searchPrevious\": true; \"tui.altScreen.searchClose\": true; \"tui.altScreen.top\": true; \"tui.altScreen.bottom\": true; }",
+          "signatureSha256": "d0386fd9c7e030bbc5d9dccd588c0f2678d37e54702d0e6482c25c5d4a21f777",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeybindingsConfig",
+          "importedName": "KeybindingsConfig",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export type KeybindingsConfig = Record<string, KeyId | KeyId[] | undefined>;",
+          "signatureSha256": "172b842c86a11a1f11628e0f6b9006b9edc658edadfae95c7300960a913dc100",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeybindingsManager",
+          "importedName": "KeybindingsManager",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export declare class KeybindingsManager { private definitions; private userBindings; private keysById; private conflicts; constructor(definitions: KeybindingDefinitions, userBindings?: KeybindingsConfig); private rebuild; matches(data: string, keybinding: Keybinding): boolean; getKeys(keybinding: Keybinding): KeyId[]; getDefinition(keybinding: Keybinding): KeybindingDefinition; getConflicts(): KeybindingConflict[]; setUserBindings(userBindings: KeybindingsConfig): void; getUserBindings(): KeybindingsConfig; getResolvedBindings(): KeybindingsConfig; }",
+          "signatureSha256": "1361a16a161406cf6674d4476956e7f47a918917d8f1b480cca632cd5dce07d4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "setKeybindings",
+          "importedName": "setKeybindings",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export declare function setKeybindings(keybindings: KeybindingsManager): void;",
+          "signatureSha256": "c92dde39880f816eb9106f767d43f060e9c3bc984f2a71bd30c12026121811e4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TUI_KEYBINDINGS",
+          "importedName": "TUI_KEYBINDINGS",
+          "exportKind": "runtime",
+          "declarationKind": "const",
+          "declarationSource": "keybindings.d.ts",
+          "declarationSourceSha256": "6be5c01c90429a11e05b2ec12b63f7a8a34b2fd1503d02baba67df173e540c14",
+          "signature": "export declare const TUI_KEYBINDINGS: { readonly \"tui.editor.cursorUp\": { readonly defaultKeys: \"up\"; readonly description: \"Move cursor up\"; }; readonly \"tui.editor.cursorDown\": { readonly defaultKeys: \"down\"; readonly description: \"Move cursor down\"; }; readonly \"tui.editor.historyPrevious\": { readonly defaultKeys: []; readonly description: \"Select previous prompt history entry\"; }; readonly \"tui.editor.historyNext\": { readonly defaultKeys: []; readonly description: \"Select next prompt history entry\"; }; readonly \"tui.editor.cursorLeft\": { readonly defaultKeys: [\"left\", \"ctrl+b\"]; readonly description: \"Move cursor left\"; }; readonly \"tui.editor.cursorRight\": { readonly defaultKeys: [\"right\", \"ctrl+f\"]; readonly description: \"Move cursor right\"; }; readonly \"tui.editor.cursorWordLeft\": { readonly defaultKeys: [\"alt+left\", \"ctrl+left\", \"alt+b\"]; readonly description: \"Move cursor word left\"; }; readonly \"tui.editor.cursorWordRight\": { readonly defaultKeys: [\"alt+right\", \"ctrl+right\", \"alt+f\"]; readonly description: \"Move cursor word right\"; }; readonly \"tui.editor.cursorLineStart\": { readonly defaultKeys: [\"home\", \"ctrl+home\", \"ctrl+a\"]; readonly description: \"Move to line start\"; }; readonly \"tui.editor.cursorLineEnd\": { readonly defaultKeys: [\"end\", \"ctrl+end\", \"ctrl+e\"]; readonly description: \"Move to line end\"; }; readonly \"tui.editor.jumpForward\": { readonly defaultKeys: \"ctrl+]\"; readonly description: \"Jump forward to character\"; }; readonly \"tui.editor.jumpBackward\": { readonly defaultKeys: \"ctrl+alt+]\"; readonly description: \"Jump backward to character\"; }; readonly \"tui.editor.pageUp\": { readonly defaultKeys: [\"pageUp\", \"ctrl+pageUp\"]; readonly description: \"Page up\"; }; readonly \"tui.editor.pageDown\": { readonly defaultKeys: [\"pageDown\", \"ctrl+pageDown\"]; readonly description: \"Page down\"; }; readonly \"tui.editor.deleteCharBackward\": { readonly defaultKeys: \"backspace\"; readonly description: \"Delete character backward\"; }; readonly \"tui.editor.deleteCharForward\": { readonly defaultKeys: [\"delete\", \"ctrl+d\"]; readonly description: \"Delete character forward\"; }; readonly \"tui.editor.deleteWordBackward\": { readonly defaultKeys: [\"ctrl+w\", \"alt+backspace\"]; readonly description: \"Delete word backward\"; }; readonly \"tui.editor.deleteWordForward\": { readonly defaultKeys: [\"alt+d\", \"alt+delete\"]; readonly description: \"Delete word forward\"; }; readonly \"tui.editor.deleteToLineStart\": { readonly defaultKeys: \"ctrl+u\"; readonly description: \"Delete to line start\"; }; readonly \"tui.editor.deleteToLineEnd\": { readonly defaultKeys: \"ctrl+k\"; readonly description: \"Delete to line end\"; }; readonly \"tui.editor.yank\": { readonly defaultKeys: \"ctrl+y\"; readonly description: \"Yank\"; }; readonly \"tui.editor.yankPop\": { readonly defaultKeys: \"alt+y\"; readonly description: \"Yank pop\"; }; readonly \"tui.editor.undo\": { readonly defaultKeys: \"ctrl+-\"; readonly description: \"Undo\"; }; readonly \"tui.input.newLine\": { readonly defaultKeys: [\"shift+enter\", \"ctrl+j\"]; readonly description: \"Insert newline\"; }; readonly \"tui.input.submit\": { readonly defaultKeys: \"enter\"; readonly description: \"Submit input\"; }; readonly \"tui.input.tab\": { readonly defaultKeys: \"tab\"; readonly description: \"Tab / autocomplete\"; }; readonly \"tui.input.copy\": { readonly defaultKeys: \"ctrl+c\"; readonly description: \"Copy selection\"; }; readonly \"tui.select.up\": { readonly defaultKeys: \"up\"; readonly description: \"Move selection up\"; }; readonly \"tui.select.down\": { readonly defaultKeys: \"down\"; readonly description: \"Move selection down\"; }; readonly \"tui.select.pageUp\": { readonly defaultKeys: \"pageUp\"; readonly description: \"Selection page up\"; }; readonly \"tui.select.pageDown\": { readonly defaultKeys: \"pageDown\"; readonly description: \"Selection page down\"; }; readonly \"tui.select.confirm\": { readonly defaultKeys: \"enter\"; readonly description: \"Confirm selection\"; }; readonly \"tui.select.cancel\": { readonly defaultKeys: [\"escape\", \"ctrl+c\"]; readonly description: \"Cancel selection\"; }; readonly \"tui.altScreen.pageUp\": { readonly defaultKeys: \"pageUp\"; readonly description: \"Scroll viewport up one page\"; }; readonly \"tui.altScreen.pageDown\": { readonly defaultKeys: \"pageDown\"; readonly description: \"Scroll viewport down one page\"; }; readonly \"tui.altScreen.halfPageUp\": { readonly defaultKeys: []; readonly description: \"Scroll viewport up half a page\"; }; readonly \"tui.altScreen.halfPageDown\": { readonly defaultKeys: []; readonly description: \"Scroll viewport down half a page\"; }; readonly \"tui.altScreen.lineUp\": { readonly defaultKeys: []; readonly description: \"Scroll viewport up one line\"; }; readonly \"tui.altScreen.lineDown\": { readonly defaultKeys: []; readonly description: \"Scroll viewport down one line\"; }; readonly \"tui.altScreen.previousPrompt\": { readonly defaultKeys: \"ctrl+shift+up\"; readonly description: \"Jump to previous semantic prompt\"; }; readonly \"tui.altScreen.nextPrompt\": { readonly defaultKeys: \"ctrl+shift+down\"; readonly description: \"Jump to next semantic prompt\"; }; readonly \"tui.altScreen.search\": { readonly defaultKeys: \"ctrl+shift+f\"; readonly description: \"Search the primary scroll view\"; }; readonly \"tui.altScreen.searchNext\": { readonly defaultKeys: [\"enter\", \"ctrl+g\"]; readonly description: \"Select the next search match\"; }; readonly \"tui.altScreen.searchPrevious\": { readonly defaultKeys: [\"shift+enter\", \"ctrl+shift+g\"]; readonly description: \"Select the previous search match\"; }; readonly \"tui.altScreen.searchClose\": { readonly defaultKeys: \"escape\"; readonly description: \"Close transcript search\"; }; readonly \"tui.altScreen.top\": { readonly defaultKeys: \"home\"; readonly description: \"Scroll viewport to top\"; }; readonly \"tui.altScreen.bottom\": { readonly defaultKeys: \"end\"; readonly description: \"Scroll viewport to bottom\"; }; };",
+          "signatureSha256": "399d02c3301e6fb80447232da8ae2d2fb3ce0bff040617f2a2b4b2e08d2815a0",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S21-keys",
+      "source": "keys.ts",
+      "sourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+      "barrelStatement": "export { decodeKittyPrintable, isKeyRelease, isKeyRepeat, isKittyProtocolActive, Key, type KeyEventType, type KeyId, matchesKey, parseKey, setKittyProtocolActive, } from \"./keys.ts\";",
+      "barrelStatementSha256": "1c2ef66eb6accb6c8ea82467b96f15ab12649c1f3f42930da12df34181c3bf99",
+      "symbols": [
+        {
+          "name": "decodeKittyPrintable",
+          "importedName": "decodeKittyPrintable",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function decodeKittyPrintable(data: string): string | undefined;",
+          "signatureSha256": "2b4e94e85c03df2c6356bec9513ecbcaa15770df89286dbdb17a09e186fc94c3",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "isKeyRelease",
+          "importedName": "isKeyRelease",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function isKeyRelease(data: string): boolean;",
+          "signatureSha256": "4223c08b950806703f00f833e670ee0df23f9d83d7fd11358db1ca24b8a48007",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "isKeyRepeat",
+          "importedName": "isKeyRepeat",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function isKeyRepeat(data: string): boolean;",
+          "signatureSha256": "3fcb26839fccc618a004376044e17a1d234e0a8b1e99484d8d26eb289bfb3529",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "isKittyProtocolActive",
+          "importedName": "isKittyProtocolActive",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function isKittyProtocolActive(): boolean;",
+          "signatureSha256": "c1b017a97f4abcbd72eb9c8cf2d0b9e4c939afb36c90bb75eb7d54f15974a68d",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Key",
+          "importedName": "Key",
+          "exportKind": "runtime",
+          "declarationKind": "const",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare const Key: { readonly escape: \"escape\"; readonly esc: \"esc\"; readonly enter: \"enter\"; readonly return: \"return\"; readonly tab: \"tab\"; readonly space: \"space\"; readonly backspace: \"backspace\"; readonly delete: \"delete\"; readonly insert: \"insert\"; readonly clear: \"clear\"; readonly home: \"home\"; readonly end: \"end\"; readonly pageUp: \"pageUp\"; readonly pageDown: \"pageDown\"; readonly up: \"up\"; readonly down: \"down\"; readonly left: \"left\"; readonly right: \"right\"; readonly f1: \"f1\"; readonly f2: \"f2\"; readonly f3: \"f3\"; readonly f4: \"f4\"; readonly f5: \"f5\"; readonly f6: \"f6\"; readonly f7: \"f7\"; readonly f8: \"f8\"; readonly f9: \"f9\"; readonly f10: \"f10\"; readonly f11: \"f11\"; readonly f12: \"f12\"; readonly backtick: \"`\"; readonly hyphen: \"-\"; readonly equals: \"=\"; readonly leftbracket: \"[\"; readonly rightbracket: \"]\"; readonly backslash: \"\\\\\"; readonly semicolon: \";\"; readonly quote: \"'\"; readonly comma: \",\"; readonly period: \".\"; readonly slash: \"/\"; readonly exclamation: \"!\"; readonly at: \"@\"; readonly hash: \"#\"; readonly dollar: \"$\"; readonly percent: \"%\"; readonly caret: \"^\"; readonly ampersand: \"&\"; readonly asterisk: \"*\"; readonly leftparen: \"(\"; readonly rightparen: \")\"; readonly underscore: \"_\"; readonly plus: \"+\"; readonly pipe: \"|\"; readonly tilde: \"~\"; readonly leftbrace: \"{\"; readonly rightbrace: \"}\"; readonly colon: \":\"; readonly lessthan: \"<\"; readonly greaterthan: \">\"; readonly question: \"?\"; readonly ctrl: <K extends BaseKey>(key: K) => `ctrl+${K}`; readonly shift: <K extends BaseKey>(key: K) => `shift+${K}`; readonly alt: <K extends BaseKey>(key: K) => `alt+${K}`; readonly super: <K extends BaseKey>(key: K) => `super+${K}`; readonly ctrlShift: <K extends BaseKey>(key: K) => `ctrl+shift+${K}`; readonly shiftCtrl: <K extends BaseKey>(key: K) => `shift+ctrl+${K}`; readonly ctrlAlt: <K extends BaseKey>(key: K) => `ctrl+alt+${K}`; readonly altCtrl: <K extends BaseKey>(key: K) => `alt+ctrl+${K}`; readonly shiftAlt: <K extends BaseKey>(key: K) => `shift+alt+${K}`; readonly altShift: <K extends BaseKey>(key: K) => `alt+shift+${K}`; readonly ctrlSuper: <K extends BaseKey>(key: K) => `ctrl+super+${K}`; readonly superCtrl: <K extends BaseKey>(key: K) => `super+ctrl+${K}`; readonly shiftSuper: <K extends BaseKey>(key: K) => `shift+super+${K}`; readonly superShift: <K extends BaseKey>(key: K) => `super+shift+${K}`; readonly altSuper: <K extends BaseKey>(key: K) => `alt+super+${K}`; readonly superAlt: <K extends BaseKey>(key: K) => `super+alt+${K}`; readonly ctrlShiftAlt: <K extends BaseKey>(key: K) => `ctrl+shift+alt+${K}`; readonly ctrlShiftSuper: <K extends BaseKey>(key: K) => `ctrl+shift+super+${K}`; };",
+          "signatureSha256": "f4a5f8e0192c51e1912760fa776dcd39ffcf6a26b610668511ea89d47007f008",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeyEventType",
+          "importedName": "KeyEventType",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export type KeyEventType = \"press\" | \"repeat\" | \"release\";",
+          "signatureSha256": "78df49487223310a845abcb8c03c11c9832535d26a42e6a43244f57ededc7af9",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "KeyId",
+          "importedName": "KeyId",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export type KeyId = BaseKey | ModifiedKeyId<BaseKey>;",
+          "signatureSha256": "bb8985c53d0fe2484e30205687790d803be7922f38e2b0abe1922705b6ae2e78",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "matchesKey",
+          "importedName": "matchesKey",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function matchesKey(data: string, keyId: KeyId): boolean;",
+          "signatureSha256": "4b168ec2f0fff9b340885597d4676c628c97fc4162067473c32facc1b2107a16",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "parseKey",
+          "importedName": "parseKey",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function parseKey(data: string): string | undefined;",
+          "signatureSha256": "864418405cfea81a719e95a35d1761e1fad5a9d56b42e32eb885ac9d6b46ef5b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "setKittyProtocolActive",
+          "importedName": "setKittyProtocolActive",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "keys.d.ts",
+          "declarationSourceSha256": "58d05b6227c8657e2109931eb2875de3a675e7bccc7f5eafde5467d539636344",
+          "signature": "export declare function setKittyProtocolActive(active: boolean): void;",
+          "signatureSha256": "5923ac3035360afc8e17419799ac18c850a9c3f7644ca82a44790eb569ed070b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S22-latex",
+      "source": "latex.ts",
+      "sourceSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+      "barrelStatement": "export { type RenderLatexOptions, renderLatex } from \"./latex.ts\";",
+      "barrelStatementSha256": "15a75589db9c9ea38737e07908cc248d10d8a3aad6e93005fb035edb8c7d79a3",
+      "symbols": [
+        {
+          "name": "RenderLatexOptions",
+          "importedName": "RenderLatexOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "latex.d.ts",
+          "declarationSourceSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+          "signature": "export interface RenderLatexOptions { /** Stack fractions and operator limits vertically for display math (default: false). */ display?: boolean; }",
+          "signatureSha256": "d740aef838f13edcfe43c7602ad44456f9e5b9264b705fc7320320cc3639b75b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": [
+              "fractions and operator limits vertically for display math (default: false). */ display?: boolean; }"
+            ]
+          }
+        },
+        {
+          "name": "renderLatex",
+          "importedName": "renderLatex",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "latex.d.ts",
+          "declarationSourceSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+          "signature": "export declare function renderLatex(source: string, options?: RenderLatexOptions): string | undefined;",
+          "signatureSha256": "02ad28b4966a091ca74a6eb945da691b12bf5c7ae2ad232f0893f33460e98ed0",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S23-stdin-buffer",
+      "source": "stdin-buffer.ts",
+      "sourceSha256": "2882e49213be790542686d8a389e9fe1f6f5774866b675d71f6ea24fc527c406",
+      "barrelStatement": "export { StdinBuffer, type StdinBufferEventMap, type StdinBufferOptions } from \"./stdin-buffer.ts\";",
+      "barrelStatementSha256": "c7bf0fcf96cbcd0d7633409085449b5ba3e3e570135c8b1772f00b252786c28c",
+      "symbols": [
+        {
+          "name": "StdinBuffer",
+          "importedName": "StdinBuffer",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "stdin-buffer.d.ts",
+          "declarationSourceSha256": "2882e49213be790542686d8a389e9fe1f6f5774866b675d71f6ea24fc527c406",
+          "signature": "export declare class StdinBuffer extends EventEmitter<StdinBufferEventMap> { private buffer; private timeout; private readonly timeoutMs; private readonly escapeTimeoutMs; private pasteMode; private pasteBuffer; private pendingKittyPrintableCodepoint; constructor(options?: StdinBufferOptions); process(data: string | Buffer): void; private emitDataSequence; flush(): string[]; clear(): void; getBuffer(): string; destroy(): void; }",
+          "signatureSha256": "8609d94c5162a65c8fc0d8ae59f670a4a30af21eafa46aca4e34045c5c2a3284",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "StdinBufferEventMap",
+          "importedName": "StdinBufferEventMap",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "stdin-buffer.d.ts",
+          "declarationSourceSha256": "2882e49213be790542686d8a389e9fe1f6f5774866b675d71f6ea24fc527c406",
+          "signature": "export type StdinBufferEventMap = { data: [string]; paste: [string]; };",
+          "signatureSha256": "7bedcf424e653c761ccbe4253e2d17bd4703939a693001145b36f6ee912d8084",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "StdinBufferOptions",
+          "importedName": "StdinBufferOptions",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "stdin-buffer.d.ts",
+          "declarationSourceSha256": "2882e49213be790542686d8a389e9fe1f6f5774866b675d71f6ea24fc527c406",
+          "signature": "export type StdinBufferOptions = { /** * Maximum time to wait for an incomplete sequence such as CSI or mouse * (default: 50ms). */ timeout?: number; /** * Maximum time to wait after a lone ESC before treating it as Escape * (default: 10ms). Increase for high-latency Alt+key input (SSH). */ escapeTimeout?: number; };",
+          "signatureSha256": "11ebecc2ac5af3a76b2a231d78833b1cf1864f3f9840682ad2ddc83a9890ba7f",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 1,
+            "documented": [
+              "to wait for an incomplete sequence such as CSI or mouse * (default: 50ms). */ timeout?: number; /** * Maximum time to wait after a lone ESC before",
+              "treating it as Escape * (default: 10ms). Increase for high-latency Alt+key input (SSH). */ escapeTimeout?: numbe"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S24-terminal",
+      "source": "terminal.ts",
+      "sourceSha256": "c7a5df5ac97c8bdf096efe609d51c04449466065709feabc90933ec6c0c8fece",
+      "barrelStatement": "export { ProcessTerminal, type Terminal } from \"./terminal.ts\";",
+      "barrelStatementSha256": "d39158b14ddcf7a5745498dd695f8570e98ec286c0acd8f3a028f9865127d809",
+      "symbols": [
+        {
+          "name": "ProcessTerminal",
+          "importedName": "ProcessTerminal",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "terminal.d.ts",
+          "declarationSourceSha256": "c7a5df5ac97c8bdf096efe609d51c04449466065709feabc90933ec6c0c8fece",
+          "signature": "export declare class ProcessTerminal implements Terminal { private wasRaw; private inputHandler?; private resizeHandler?; private _kittyProtocolActive; private _modifyOtherKeysActive; private keyboardProtocolPushed; private keyboardProtocolNegotiationBuffer; private keyboardProtocolBufferFlushTimer?; private stdinBuffer?; private stdinDataHandler?; private progressInterval?; private writeLogPath; get kittyProtocolActive(): boolean; get modifyOtherKeysActive(): boolean; start(onInput: (data: string) => void, onResize: () => void): void; /** * Set up StdinBuffer to split batched input into individual sequences. * This ensures components receive single events, making matchesKey/isKeyRelease work correctly. * * Also watches for Kitty protocol response and enables it when detected. * This is done here (after stdinBuffer parsing) rather than on raw stdin * to handle the case where the response arrives split across multiple events. */ private setupStdinBuffer; /** * Query terminal for Kitty keyboard protocol support and enable it if available. * * Kitty's progressive enhancement detection requires requesting the desired * flags before querying them. The trailing DA query is a sentinel supported by * terminals that do not know Kitty keyboard protocol; receiving DA before a * Kitty response enables modifyOtherKeys fallback without a startup timeout. * * The requested flags are: * - 1 = disambiguate escape codes * - 2 = report event types (press/repeat/release) * - 4 = report alternate keys (shifted key, base layout key) */ private queryAndEnableKittyProtocol; private handleKeyboardProtocolNegotiationSequence; private readKeyboardProtocolNegotiationSequence; private setKeyboardProtocolNegotiationBuffer; private clearKeyboardProtocolNegotiationBuffer; private flushKeyboardProtocolNegotiationBufferAsInput; private scheduleKeyboardProtocolNegotiationBufferFlush; private clearKeyboardProtocolNegotiationBufferFlushTimer; private forwardInputSequence; private enableModifyOtherKeys; private disableModifyOtherKeys; /** * On Windows, add ENABLE_VIRTUAL_TERMINAL_INPUT (0x0200) to the stdin * console handle so the terminal sends VT sequences for modified keys * (e.g. \\x1b[Z for Shift+Tab). Without this, libuv's ReadConsoleInputW * discards modifier state and Shift+Tab arrives as plain \\t. */ private enableWindowsVTInput; drainInput(maxMs?: number, idleMs?: number): Promise<void>; stop(): void; write(data: string): void; get columns(): number; get rows(): number; moveBy(lines: number): void; hideCursor(): void; showCursor(): void; clearLine(): void; clearFromCursor(): void; clearScreen(): void; setTitle(title: string): void; setProgress(active: boolean): void; private clearProgressInterval; }",
+          "signatureSha256": "777f341fccd8aff5f7b5ee0d2fe121e6b6afb853ffedafcc6fd736333a6cb249",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Terminal",
+          "importedName": "Terminal",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal.d.ts",
+          "declarationSourceSha256": "c7a5df5ac97c8bdf096efe609d51c04449466065709feabc90933ec6c0c8fece",
+          "signature": "export interface Terminal { start(onInput: (data: string) => void, onResize: () => void): void; stop(): void; /** * Drain stdin before exiting to prevent Kitty key release events from * leaking to the parent shell over slow SSH connections. * @param maxMs - Maximum time to drain (default: 1000ms) * @param idleMs - Exit early if no input arrives within this time (default: 50ms) */ drainInput(maxMs?: number, idleMs?: number): Promise<void>; write(data: string): void; get columns(): number; get rows(): number; get kittyProtocolActive(): boolean; moveBy(lines: number): void; hideCursor(): void; showCursor(): void; clearLine(): void; clearFromCursor(): void; clearScreen(): void; setTitle(title: string): void; setProgress(active: boolean): void; }",
+          "signatureSha256": "50d9cce74a4ad4392e3ba77a9658c494ba3b97797d3d3d50eb8b20fd14eadde0",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": [
+              "ow SSH connections. * @param maxMs - Maximum time to drain (default: 1000ms) * @param idleMs - Exit early if no input arrives within this time (def"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "S25-terminal-colors",
+      "source": "terminal-colors.ts",
+      "sourceSha256": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+      "barrelStatement": "export { parseOsc11BackgroundColor, parseTerminalColorSchemeReport, type RgbColor, type TerminalColorScheme, } from \"./terminal-colors.ts\";",
+      "barrelStatementSha256": "2cd7fdfc5ace05bb9a34378515f73f27d2a5e6f2b24ad222535cc8c65292abd8",
+      "symbols": [
+        {
+          "name": "parseOsc11BackgroundColor",
+          "importedName": "parseOsc11BackgroundColor",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-colors.d.ts",
+          "declarationSourceSha256": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+          "signature": "export declare function parseOsc11BackgroundColor(data: string): RgbColor | undefined;",
+          "signatureSha256": "e2a0389b166fc0d26418cd4eceb2c7a0fe43e29679a343a8fa07e38bb09b1765",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "parseTerminalColorSchemeReport",
+          "importedName": "parseTerminalColorSchemeReport",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-colors.d.ts",
+          "declarationSourceSha256": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+          "signature": "export declare function parseTerminalColorSchemeReport(data: string): TerminalColorScheme | undefined;",
+          "signatureSha256": "a4b3a6ab3666465cabb1d5e3a095aa337ae8f9592c73bebd13c394b3a07e0163",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "RgbColor",
+          "importedName": "RgbColor",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal-colors.d.ts",
+          "declarationSourceSha256": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+          "signature": "export interface RgbColor { r: number; g: number; b: number; }",
+          "signatureSha256": "76806809a1cbd49faabbfa2bcae9d75cca16771b9d7b82297747776cf4086b79",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TerminalColorScheme",
+          "importedName": "TerminalColorScheme",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "terminal-colors.d.ts",
+          "declarationSourceSha256": "8f24828eefa8b3a6f0290bc2c8f3d6d03c9cf69c70558f008576991a77168e45",
+          "signature": "export type TerminalColorScheme = \"dark\" | \"light\";",
+          "signatureSha256": "a067b19cd18921da34fd60fd02bb0de78e209b3181d1e474f173583dcc39190e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S26-terminal-image",
+      "source": "terminal-image.ts",
+      "sourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+      "barrelStatement": "export { allocateImageId, type CellDimensions, calculateImageRows, deleteAllKittyImages, deleteKittyImage, detectCapabilities, encodeITerm2, encodeKitty, getCapabilities, getCellDimensions, getGifDimensions, getImageDimensions, getJpegDimensions, getPngDimensions, getWebpDimensions, hyperlink, type ImageDimensions, type ImageProtocol, type ImageRenderOptions, imageFallback, renderImage, resetCapabilitiesCache, setCapabilities, setCellDimensions, type TerminalCapabilities, } from \"./terminal-image.ts\";",
+      "barrelStatementSha256": "b68c6130656a247ed7e76c8acefeb3daf89341d52468b2c8cf75f311f1a55e9e",
+      "symbols": [
+        {
+          "name": "allocateImageId",
+          "importedName": "allocateImageId",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function allocateImageId(): number;",
+          "signatureSha256": "928a648898ad3411c861723c8cad3e3ee5d28ee9b09e912583de826784548dc8",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "CellDimensions",
+          "importedName": "CellDimensions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export interface CellDimensions { widthPx: number; heightPx: number; }",
+          "signatureSha256": "18bd21c2df69cc188dcf414d0e95e8ce352b0c756106eb2dbb62bfd96df262fc",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "calculateImageRows",
+          "importedName": "calculateImageRows",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function calculateImageRows(imageDimensions: ImageDimensions, targetWidthCells: number, cellDimensions?: CellDimensions): number;",
+          "signatureSha256": "7af5337bee9158fa4b2820ead54572685fc08436b9451c15830096fba5bed033",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "deleteAllKittyImages",
+          "importedName": "deleteAllKittyImages",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function deleteAllKittyImages(): string;",
+          "signatureSha256": "29936a60b4ba3b9d1eed0c4fd305526d66d3d129a6e1169dc9e2dbfdf366e683",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "deleteKittyImage",
+          "importedName": "deleteKittyImage",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function deleteKittyImage(imageId: number): string;",
+          "signatureSha256": "c5dfe5e0f296a848acd6cff1bb261fd8da77fc64c0ace69615da51eef2889ed4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "detectCapabilities",
+          "importedName": "detectCapabilities",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function detectCapabilities(tmuxForwardsHyperlink?: () => boolean): TerminalCapabilities;",
+          "signatureSha256": "13ecff6ea32aa66c5a6fe1f7db9dfb108854c69b8757f6a747d6564819a65dd6",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "encodeITerm2",
+          "importedName": "encodeITerm2",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function encodeITerm2(base64Data: string, options?: { width?: number | string; height?: number | string; name?: string; preserveAspectRatio?: boolean; inline?: boolean; }): string;",
+          "signatureSha256": "e4eefff9b6295455594f580448c95259c70b7e14dea4534e3842b9937bae1253",
+          "defaultMetadata": {
+            "optionalMarkerCount": 6,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "encodeKitty",
+          "importedName": "encodeKitty",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function encodeKitty(base64Data: string, options?: { columns?: number; rows?: number; imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. Default: true. */ moveCursor?: boolean; }): string;",
+          "signatureSha256": "37cb9297faad841f119fecc210900a85b9fcbc92e40de5dd27b686221817260a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 5,
+            "initializerCount": 0,
+            "documented": [
+              "umber; imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. Default: true. */ moveCursor?: boolean; }): st"
+            ]
+          }
+        },
+        {
+          "name": "getCapabilities",
+          "importedName": "getCapabilities",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getCapabilities(): TerminalCapabilities;",
+          "signatureSha256": "1f29a1dae7775f9d051bbb458b1a2b0d147275b80948ad028afed6299bb1308c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getCellDimensions",
+          "importedName": "getCellDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getCellDimensions(): CellDimensions;",
+          "signatureSha256": "95ebe2c8d91b1aa951e46b9953316263387f31fd3a9e4e1108aa10373b7b6883",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getGifDimensions",
+          "importedName": "getGifDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getGifDimensions(base64Data: string): ImageDimensions | null;",
+          "signatureSha256": "6e05e60298b0f5286dd4ba5ae24248ae2a3374c22a612340ff617be067fc5a2c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getImageDimensions",
+          "importedName": "getImageDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getImageDimensions(base64Data: string, mimeType: string): ImageDimensions | null;",
+          "signatureSha256": "c11605ec4b8b0955a92a7081bab53a2df434e995ee678e1da45a02b45b8bd947",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getJpegDimensions",
+          "importedName": "getJpegDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getJpegDimensions(base64Data: string): ImageDimensions | null;",
+          "signatureSha256": "0ab0bdb0977ffeb52fde62b5941d8db462dfe57f1e105b53088789d03a583400",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getPngDimensions",
+          "importedName": "getPngDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getPngDimensions(base64Data: string): ImageDimensions | null;",
+          "signatureSha256": "d7b8baa91d039709783dfa70c39179e62cc96a403e97ce269b47dd2244593ace",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "getWebpDimensions",
+          "importedName": "getWebpDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function getWebpDimensions(base64Data: string): ImageDimensions | null;",
+          "signatureSha256": "5e9acc90876f33a6357a406e4d2400c5cfa02bf3d186358d47d80b1a4c6b38de",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "hyperlink",
+          "importedName": "hyperlink",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function hyperlink(text: string, url: string): string;",
+          "signatureSha256": "9730bac132a52ab615493cbfc14ba9bf158b9f5e4402851fb9305e8711bc438b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ImageDimensions",
+          "importedName": "ImageDimensions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export interface ImageDimensions { widthPx: number; heightPx: number; }",
+          "signatureSha256": "8f3e16a78626649aa9c31d6eb0faddfc3db9c7212deea1eee804fcbf0f8e3498",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ImageProtocol",
+          "importedName": "ImageProtocol",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export type ImageProtocol = \"kitty\" | \"iterm2\" | null;",
+          "signatureSha256": "1b56bc8dfbcf5f0a00033ebba0388fb1f982a9a31c7e1b9ded1c49e22c33195e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "ImageRenderOptions",
+          "importedName": "ImageRenderOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export interface ImageRenderOptions { maxWidthCells?: number; maxHeightCells?: number; preserveAspectRatio?: boolean; /** Kitty image ID. If provided, reuses/replaces existing image with this ID. */ imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. */ moveCursor?: boolean; }",
+          "signatureSha256": "c014cd9bc930cff95f0c8df0c5c1051149810a8e1ec6158792837983d4852e2e",
+          "defaultMetadata": {
+            "optionalMarkerCount": 5,
+            "initializerCount": 0,
+            "documented": [
+              "ID. */ imageId?: number; /** Whether Kitty should apply its default cursor movement after placement. */ moveCursor?: boolean; }"
+            ]
+          }
+        },
+        {
+          "name": "imageFallback",
+          "importedName": "imageFallback",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function imageFallback(mimeType: string, dimensions?: ImageDimensions, filename?: string): string;",
+          "signatureSha256": "b0076d86318145ede8c633e088becf6a3dcec69925a27309f8d941e64f2e3239",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "renderImage",
+          "importedName": "renderImage",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function renderImage(base64Data: string, imageDimensions: ImageDimensions, options?: ImageRenderOptions): { sequence: string; columns: number; rows: number; imageId?: number; } | null;",
+          "signatureSha256": "80d714fbcc2fc314be78161943803b7e61a9c72b2f0e380908b7e2e83e9feec1",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "resetCapabilitiesCache",
+          "importedName": "resetCapabilitiesCache",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function resetCapabilitiesCache(): void;",
+          "signatureSha256": "633cb9c6c3b56a8817b621b0430dc9a535141656df9e4c17f53f8148a0035da7",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "setCapabilities",
+          "importedName": "setCapabilities",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function setCapabilities(caps: TerminalCapabilities): void;",
+          "signatureSha256": "ddee0d867e3ee06a1533b57aef0491c44176da96249c750eb9f81526c13c0238",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "setCellDimensions",
+          "importedName": "setCellDimensions",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export declare function setCellDimensions(dims: CellDimensions): void;",
+          "signatureSha256": "43159eba39ce068c6dff7fa6ea9fd8b7e8990cd6edbc706d7d6ed1c4d7b37f03",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TerminalCapabilities",
+          "importedName": "TerminalCapabilities",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "terminal-image.d.ts",
+          "declarationSourceSha256": "ba498675c6f16339fe04c329dcd95757743f0f6d22a18879b2fda6e9e8b4d8ec",
+          "signature": "export interface TerminalCapabilities { images: ImageProtocol; trueColor: boolean; hyperlinks: boolean; }",
+          "signatureSha256": "a3cf608e5632425b82e27d2141a6496cc0ed598677a7062500d188b0fd2678c5",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S27-tui",
+      "source": "tui.ts",
+      "sourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+      "barrelStatement": "export { type Component, Container, CURSOR_MARKER, compositeTuiLine, type Focusable, isFocusable, isViewportTUI, type OverlayAnchor, type OverlayHandle, type OverlayMargin, type OverlayOptions, type OverlayUnfocusOptions, type SizeValue, type TUI, type TuiInputListener, type TuiInputListenerResult, type TuiMode, type TuiStopOptions, type ViewportTUI, } from \"./tui.ts\";",
+      "barrelStatementSha256": "04e5463f83a6fd906903c66de76581f87d4e42a77d330deb0160e18fafa0730d",
+      "symbols": [
+        {
+          "name": "Component",
+          "importedName": "Component",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface Component { /** * Render the component to lines for the given viewport width * @param width - Current viewport width * @returns Array of strings, each representing a line */ render(width: number): string[]; /** * Optional handler for keyboard input when component has focus */ handleInput?(data: string): void; /** * If true, component receives key release events (Kitty protocol). * Default is false - release events are filtered out. */ wantsKeyRelease?: boolean; /** * Invalidate any cached rendering state. * Called when theme changes or when component needs to re-render from scratch. */ invalidate(): void; }",
+          "signatureSha256": "c2cb433da445ce99b0ac71721650427a1ac4a4ff3597f9fc8f59828ac71a2fee",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": [
+              ", component receives key release events (Kitty protocol). * Default is false - release events are filtered out. */ wantsKeyRelease?: boolean; /** *"
+            ]
+          }
+        },
+        {
+          "name": "Container",
+          "importedName": "Container",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export declare class Container implements Component { children: Component[]; addChild(component: Component): void; removeChild(component: Component): void; clear(): void; invalidate(): void; render(width: number): string[]; }",
+          "signatureSha256": "34cb101b0745889db1021166d37563538bff743896845b73820f5e6a1cb02358",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "CURSOR_MARKER",
+          "importedName": "CURSOR_MARKER",
+          "exportKind": "runtime",
+          "declarationKind": "const",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export declare const CURSOR_MARKER = \"\\u001B_pi:c\\u0007\";",
+          "signatureSha256": "a8249cf0a27fe4c6032c2c8d79977c0d7db65e3df3dc273752e5ed5abb37873a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "compositeTuiLine",
+          "importedName": "compositeTuiLine",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export declare function compositeTuiLine(baseLine: string, overlayLine: string, startCol: number, overlayWidth: number, totalWidth: number): string;",
+          "signatureSha256": "039524111a8bb4c34d6bfea2af58d61597626dbfdbdc3636697a584adf9a8345",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "Focusable",
+          "importedName": "Focusable",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface Focusable { /** Set by TUI when focus changes. Component should emit CURSOR_MARKER when true. */ focused: boolean; }",
+          "signatureSha256": "16a3219903209d2142e238d818ba4a58e8e232a54f8748fef618fc6a48d99b74",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "isFocusable",
+          "importedName": "isFocusable",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export declare function isFocusable(component: Component | null): component is Component & Focusable;",
+          "signatureSha256": "b750aca8d9286ca53bf61141aca746e6adc69a41f4d50e0e9f1f49d5e5a5d93a",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "isViewportTUI",
+          "importedName": "isViewportTUI",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export declare function isViewportTUI(tui: TUI): tui is ViewportTUI;",
+          "signatureSha256": "eec0675c3b97cb36a59a64e212c952047fa43842590fe80d99964649df51dc41",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "OverlayAnchor",
+          "importedName": "OverlayAnchor",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export type OverlayAnchor = \"center\" | \"top-left\" | \"top-right\" | \"bottom-left\" | \"bottom-right\" | \"top-center\" | \"bottom-center\" | \"left-center\" | \"right-center\";",
+          "signatureSha256": "7c49fdbfa92c3bd3063156793b2af31755e8db57088564c6e05d2e819cec3bff",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "OverlayHandle",
+          "importedName": "OverlayHandle",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface OverlayHandle { /** Permanently remove the overlay (cannot be shown again) */ hide(): void; /** Temporarily hide or show the overlay */ setHidden(hidden: boolean): void; /** Check if overlay is temporarily hidden */ isHidden(): boolean; /** Focus this overlay and bring it to the visual front */ focus(): void; /** Release focus to the next visible capturing overlay or previous target, or to an explicit target when provided */ unfocus(options?: OverlayUnfocusOptions): void; /** Check if this overlay currently has focus */ isFocused(): boolean; }",
+          "signatureSha256": "b0626c0bf33186420317794357d8da4aa0ef6b627ebad8db32cf4367b9de879d",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "OverlayMargin",
+          "importedName": "OverlayMargin",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface OverlayMargin { top?: number; right?: number; bottom?: number; left?: number; }",
+          "signatureSha256": "07d1323ca1e6f08c8fd8bafe35968d331b46e932ee5d8516abd6ce82c8a6cb1c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "OverlayOptions",
+          "importedName": "OverlayOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface OverlayOptions { /** Width in columns, or percentage of terminal width (e.g., \"50%\") */ width?: SizeValue; /** Minimum width in columns */ minWidth?: number; /** Maximum height in rows, or percentage of terminal height (e.g., \"50%\") */ maxHeight?: SizeValue; /** Anchor point for positioning (default: 'center') */ anchor?: OverlayAnchor; /** Horizontal offset from anchor position (positive = right) */ offsetX?: number; /** Vertical offset from anchor position (positive = down) */ offsetY?: number; /** Row position: absolute number, or percentage (e.g., \"25%\" = 25% from top) */ row?: SizeValue; /** Column position: absolute number, or percentage (e.g., \"50%\" = centered horizontally) */ col?: SizeValue; /** Margin from terminal edges. Number applies to all sides. */ margin?: OverlayMargin | number; /** * Control overlay visibility based on terminal dimensions. * If provided, overlay is only rendered when this returns true. * Called each render cycle with current terminal dimensions. */ visible?: (termWidth: number, termHeight: number) => boolean; /** If true, don't capture keyboard focus when shown */ nonCapturing?: boolean; }",
+          "signatureSha256": "b395e653e9ae60f37c2e048efcaa70de4c13783527f14e03101bcfae268734b1",
+          "defaultMetadata": {
+            "optionalMarkerCount": 11,
+            "initializerCount": 2,
+            "documented": [
+              "*/ maxHeight?: SizeValue; /** Anchor point for positioning (default: 'center') */ anchor?: OverlayAnchor; /** Horizontal offset from anchor positio"
+            ]
+          }
+        },
+        {
+          "name": "OverlayUnfocusOptions",
+          "importedName": "OverlayUnfocusOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface OverlayUnfocusOptions { /** Explicit target to focus after releasing this overlay. */ target: Component | null; }",
+          "signatureSha256": "e337916e223ca6cf8659d9671c7dfca34c6dd7ee672d177232414b39de0aea36",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "SizeValue",
+          "importedName": "SizeValue",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export type SizeValue = number | `${number}%`;",
+          "signatureSha256": "9cf9adf578ea301a622d7e0433d756f7007818c4a6a080ace9c5ff8f78aaacb1",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "TUI",
+          "importedName": "TUI",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface TUI extends Component { readonly mode: TuiMode; children: Component[]; terminal: Terminal; onDebug?: () => void; readonly fullRedraws: number; addChild(component: Component): void; removeChild(component: Component): void; clear(): void; getShowHardwareCursor(): boolean; setShowHardwareCursor(enabled: boolean): void; getClearOnShrink(): boolean; setClearOnShrink(enabled: boolean): void; setFocus(component: Component | null): void; showOverlay(component: Component, options?: OverlayOptions): OverlayHandle; hideOverlay(): void; hasOverlay(): boolean; start(): void; stop(options?: TuiStopOptions): void; renderNow(force?: boolean): void; requestRender(force?: boolean): void; addInputListener(listener: TuiInputListener): () => void; removeInputListener(listener: TuiInputListener): void; onTerminalColorSchemeChange(listener: (scheme: TerminalColorScheme) => void): () => void; setTerminalColorSchemeNotifications(enabled: boolean): void; queryTerminalBackgroundColor(options: { timeoutMs: number; }): Promise<RgbColor | undefined>; queryTerminalColorScheme(options: { timeoutMs: number; }): Promise<TerminalColorScheme | undefined>; }",
+          "signatureSha256": "1280ca87862adb0c07ccf02c6488c35c82dcfbedae7f5018c94531e3b0a3b9fa",
+          "defaultMetadata": {
+            "optionalMarkerCount": 5,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiInputListener",
+          "importedName": "TuiInputListener",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export type TuiInputListener = (data: string) => TuiInputListenerResult;",
+          "signatureSha256": "76fd3859aa70e7315de863eaa8314edf85efe4e089e17e5f4b40f0e908e6e83c",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiInputListenerResult",
+          "importedName": "TuiInputListenerResult",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export type TuiInputListenerResult = { consume?: boolean; data?: string; } | undefined;",
+          "signatureSha256": "5cc9680eb061a07eeff4dbadc205abe90a5d660fda0e13fdadb8db6dd388df2b",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiMode",
+          "importedName": "TuiMode",
+          "exportKind": "type",
+          "declarationKind": "type",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export type TuiMode = \"regular\" | \"fullscreen\";",
+          "signatureSha256": "ca201631d79a382e2caf7dea4a6e6a88b3f995b11ff378abf7ec164ad3ff3b02",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 1,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiStopOptions",
+          "importedName": "TuiStopOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface TuiStopOptions { /** Leave renderer output in place for another TUI taking over the same terminal. */ preserveScreen?: boolean; }",
+          "signatureSha256": "2cc465461b4e6b144879ccff168485ca2de0831a27b31535ead47acd931fdb53",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "ViewportTUI",
+          "importedName": "ViewportTUI",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui.d.ts",
+          "declarationSourceSha256": "a4048cbec6ac99db21040c62bc100bd9381579cec42c2d15698d041674e399b4",
+          "signature": "export interface ViewportTUI extends TUI { readonly [VIEWPORT_TUI]: true; setLayoutRoot(component: Component | undefined): void; }",
+          "signatureSha256": "0a31d0b6939e6207cd8cd14757b2c8d10c5fb1f274e498d5b8c497a005777769",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S28-tui-alt-screen",
+      "source": "tui-alt-screen.ts",
+      "sourceSha256": "935464ff1cc748e9490ee75ce33ebf67aadf28bc34281e6d6769dbc94a107520",
+      "barrelStatement": "export { TuiAltScreen, type TuiAltScreenOptions } from \"./tui-alt-screen.ts\";",
+      "barrelStatementSha256": "5d4b19aba75a9b51f352ad4b57ba21bc54d9ae41d77278947b1a0d5b7b1a30d3",
+      "symbols": [
+        {
+          "name": "TuiAltScreen",
+          "importedName": "TuiAltScreen",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "tui-alt-screen.d.ts",
+          "declarationSourceSha256": "935464ff1cc748e9490ee75ce33ebf67aadf28bc34281e6d6769dbc94a107520",
+          "signature": "export declare class TuiAltScreen extends TuiBase implements ViewportTUI { readonly mode: \"fullscreen\"; readonly [VIEWPORT_TUI]: true; private previousScreen; private lastDocument; private previousScreenWidth; private previousScreenHeight; private layoutRoot; private currentLayout; private readonly implicitDocument; private readonly implicitScrollView; private readonly flashes; private altScreenActive; private imageProtocol; private savedCapabilities?; private readonly uploadedKittyImages; private selectionAnchor?; private selectionFocus?; private selectionGranularity; private selectionInitialRange?; private lastClick?; private selectionDragPointer?; private selectionAutoScrollDirection; private selectionAutoScrollTimer?; private selectionPressActive; private scrollbarDrag?; private scrollbarHover?; private activeSearch?; private pressedUrl?; private selectionDragged; private readonly wheelScrollLines; private readonly mouseEnabled; private readonly searchMatchStyle; private readonly searchCurrentMatchStyle; private readonly openUrl?; private readonly onRightClickPaste?; private readonly copySelection?; constructor(terminal: Terminal, showHardwareCursor?: boolean, logDirectory?: string, options?: TuiAltScreenOptions); get viewportTop(): number; get isFollowingOutput(): boolean; setLayoutRoot(component: Component | undefined): void; render(width: number): string[]; protected getMountedRoots(): readonly Component[]; private getPrimaryScrollView; protected beforeTerminalStart(): void; protected beforeTerminalStop(_options: TuiStopOptions): void; protected afterTerminalStop(options: TuiStopOptions): void; private deleteKittyImages; private prepareKittyScreen; protected resetRenderState(): void; scrollBy(lines: number): void; scrollToTop(): void; scrollToBottom(): void; private scrollToPrompt; private openSearch; private closeSearch; private updateSearchQuery; private navigateSearch; private refreshSearch; /** Show a transient message in the alternate-screen flash stack. */ flash(message: string, durationMs?: number): void; private shouldDeferViewportInputToOverlay; private handleViewportInput; private parseWheelEvent; private routeWheel; private parseSgrMouseEvent; private handleRightClickPaste; private getScrollbarTargetAt; private setScrollbarHover; private updateScrollbarHover; private stopScrollbarHover; private handleScrollbarMouseEvent; private stopScrollbarDrag; private getScrollSelectionPoint; private getSelectionPoint; private getSelectionSourceLine; private getWordSelection; private getLineSelection; private updateSelectionFocus; private getClickCount; private updateSelectionAutoScroll; private autoScrollSelection; private stopSelectionAutoScroll; private handleSelectionMouseEvent; private getSelectionBounds; private getSelectionColumns; private copySelectionToClipboard; private applySearchTextHighlight; private applySearchHighlights; private applySelectionHighlight; private applySelection; private isMouseSequence; private compositeFlashes; protected doRender(): void; }",
+          "signatureSha256": "65c69a62bc8421d04b9bfb2246dce2b52edfe190c109e385b8825abee3ce7c98",
+          "defaultMetadata": {
+            "optionalMarkerCount": 4,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiAltScreenOptions",
+          "importedName": "TuiAltScreenOptions",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui-alt-screen.d.ts",
+          "declarationSourceSha256": "935464ff1cc748e9490ee75ce33ebf67aadf28bc34281e6d6769dbc94a107520",
+          "signature": "export interface TuiAltScreenOptions { /** Number of logical lines moved for each mouse-wheel event. */ wheelScrollLines?: number; /** Capture mouse events for viewport scrolling and application-owned text selection. */ mouse?: boolean; /** Style a non-current transcript search match. */ searchMatchStyle?: (text: string) => string; /** Style the current transcript search match. */ searchCurrentMatchStyle?: (text: string) => string; /** Open an OSC 8 hyperlink activated with a primary-button click. */ openUrl?: (url: string) => void; /** Handle an unmodified secondary-button press for clipboard paste. Currently enabled on Windows only. */ onRightClickPaste?: () => void; /** * Copy selected text to the system clipboard. Return `true` on success; the caller flashes * an error otherwise. When omitted, the selection is copied via an OSC 52 write. */ copySelection?: (text: string) => Promise<boolean>; }",
+          "signatureSha256": "53f7f25673d92d792caa05b4a1e2a91a6fc6588993df8d95aa5f9546e2d6d0a4",
+          "defaultMetadata": {
+            "optionalMarkerCount": 7,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S29-tui-main-screen",
+      "source": "tui-main-screen.ts",
+      "sourceSha256": "f2441514370d3f5726347aa5c58a2215f3da70f708a33e4784545ef96224b73f",
+      "barrelStatement": "export { TuiMainScreen, type TuiMainScreenRenderState } from \"./tui-main-screen.ts\";",
+      "barrelStatementSha256": "66f9113ee1cdfb95990425c864cca4c7099bec2bcc97957fbd9d71760a37b80a",
+      "symbols": [
+        {
+          "name": "TuiMainScreen",
+          "importedName": "TuiMainScreen",
+          "exportKind": "runtime",
+          "declarationKind": "class",
+          "declarationSource": "tui-main-screen.d.ts",
+          "declarationSourceSha256": "f2441514370d3f5726347aa5c58a2215f3da70f708a33e4784545ef96224b73f",
+          "signature": "export declare class TuiMainScreen extends TuiBase implements TUI { readonly mode: \"regular\"; private previousLines; private previousKittyImageIds; private previousWidth; private previousHeight; private cursorRow; private hardwareCursorRow; private maxLinesRendered; private previousViewportTop; captureRenderState(): TuiMainScreenRenderState; restoreRenderState(state: TuiMainScreenRenderState): void; protected resetRenderState(): void; protected beforeTerminalStop(options: TuiStopOptions): void; private collectKittyImageIds; private deleteKittyImages; private getKittyImageReservedRows; private expandChangedRangeForKittyImages; private deleteChangedKittyImages; protected doRender(): void; /** * Position the hardware cursor for IME candidate window. * @param cursorPos The cursor position extracted from rendered output, or null * @param totalLines Total number of rendered lines */ private positionHardwareCursor; }",
+          "signatureSha256": "0388a5e4a78864f842288d9c70ffef43f91432f17fd7ddc48dc62df668ee94ed",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "TuiMainScreenRenderState",
+          "importedName": "TuiMainScreenRenderState",
+          "exportKind": "type",
+          "declarationKind": "interface",
+          "declarationSource": "tui-main-screen.d.ts",
+          "declarationSourceSha256": "f2441514370d3f5726347aa5c58a2215f3da70f708a33e4784545ef96224b73f",
+          "signature": "export interface TuiMainScreenRenderState { previousLines: string[]; previousWidth: number; previousHeight: number; cursorRow: number; hardwareCursorRow: number; maxLinesRendered: number; previousViewportTop: number; }",
+          "signatureSha256": "f19bdfbdc4bdb401df85154ee22a10ebe21cd8798caa03a1754921888838aea8",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    },
+    {
+      "id": "S30-utils",
+      "source": "utils.ts",
+      "sourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+      "barrelStatement": "export { getOsc8LinkAtColumn, sliceByColumn, stripTerminalSequences, truncateToWidth, visibleWidth, wrapTextWithAnsi, } from \"./utils.ts\";",
+      "barrelStatementSha256": "493dcd4e0ea328133d7c8ad21ff945cf043abe512bfb1503f6ba0166946fc075",
+      "symbols": [
+        {
+          "name": "getOsc8LinkAtColumn",
+          "importedName": "getOsc8LinkAtColumn",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function getOsc8LinkAtColumn(line: string, column: number): string | undefined;",
+          "signatureSha256": "f2a7acd86b641516b435c0d633d075b738ed52369b92beb46bc8a10e3a1032db",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "sliceByColumn",
+          "importedName": "sliceByColumn",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function sliceByColumn(line: string, startCol: number, length: number, strict?: boolean): string;",
+          "signatureSha256": "f81e15732dc355a21592f6377fa88189b46003b8837fd275705671c0ea9484e2",
+          "defaultMetadata": {
+            "optionalMarkerCount": 1,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "stripTerminalSequences",
+          "importedName": "stripTerminalSequences",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function stripTerminalSequences(str: string): string;",
+          "signatureSha256": "89b4812bb095249f5021630133c2a1a896e6499583a4ec871b8b44d426f5e908",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "truncateToWidth",
+          "importedName": "truncateToWidth",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function truncateToWidth(text: string, maxWidth: number, ellipsis?: string, pad?: boolean): string;",
+          "signatureSha256": "ac6c365fc166deafebb35bc7b2aba128865652bd20d137e341dc18c7f6338c8d",
+          "defaultMetadata": {
+            "optionalMarkerCount": 2,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "visibleWidth",
+          "importedName": "visibleWidth",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function visibleWidth(str: string): number;",
+          "signatureSha256": "ff5227d927901971eb77bb5d5ce67d87420d9090a4e05ff230fd6d685348d457",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        },
+        {
+          "name": "wrapTextWithAnsi",
+          "importedName": "wrapTextWithAnsi",
+          "exportKind": "runtime",
+          "declarationKind": "function",
+          "declarationSource": "utils.d.ts",
+          "declarationSourceSha256": "1c68478346b8451cc61c7dd6cb35f226ae8011117be85a6b3f3cffbb898242d2",
+          "signature": "export declare function wrapTextWithAnsi(text: string, width: number): string[];",
+          "signatureSha256": "d85d72acc2d9c426c47bd488c837206c26c2318024f7ba871dd1cd2dd7a1b8be",
+          "defaultMetadata": {
+            "optionalMarkerCount": 0,
+            "initializerCount": 0,
+            "documented": []
+          }
+        }
+      ]
+    }
+  ]
+}

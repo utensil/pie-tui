@@ -1,0 +1,36 @@
+{
+  "schema": "pie-tui-m4-markdown-math-style-mutation-receipt-v1",
+  "date": "2026-08-30",
+  "oracleCommit": "a6af758",
+  "productCommit": "6b88ffe",
+  "oraclePhase": "committed intentional-red before product repair",
+  "mutations": [
+    {
+      "id": "drop-default-style-from-math-routes",
+      "family": "math-default-style",
+      "change": "make the shared math-style helper return its input unchanged",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_math_style -- --exact markdown_math_routes_apply_default_style_with_exact_lazy_prefix_order",
+      "exitCode": 101,
+      "mismatchCount": 8,
+      "killedRows": [
+        "inline-math-supported-default-style",
+        "inline-math-failed-default-style",
+        "display-math-supported-default-style",
+        "display-math-failed-default-style"
+      ]
+    },
+    {
+      "id": "eagerly-initialize-restoration-prefix",
+      "family": "lazy-restoration-prefix",
+      "change": "initialize the cached NUL prefix after transform but before parsing",
+      "command": "cargo test -p pie-components --test golden_m4_markdown_math_style -- --exact markdown_math_routes_apply_default_style_with_exact_lazy_prefix_order",
+      "exitCode": 101,
+      "mismatchCount": 2,
+      "killedRows": [
+        "display-math-supported-default-style",
+        "display-math-failed-default-style"
+      ]
+    }
+  ],
+  "restoration": "Both mutations were reverted with inverse patches; the four-row oracle and unchanged 231-event lifecycle passed afterward."
+}

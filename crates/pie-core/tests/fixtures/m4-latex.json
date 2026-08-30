@@ -1,0 +1,124 @@
+{
+ "generator": "gen-golden-m4-latex.mjs",
+ "reference": {
+  "package": "@earendil-works/pi-tui",
+  "version": "0.84.1",
+  "indexDtsSha256": "f86836256fea4329d5618a87ae503c89f73efa74523a11c0a84294b17b12bea3",
+  "latexDtsSha256": "76a3bda961e678e859bf8749d68b40a4ce20a08a701329e92758dedda79812f8",
+  "latexJsSha256": "d8778b4166001faf09fa555d550c06a8d63b84b86244e04b45fa1b3fc68b1716"
+ },
+ "cases": [
+  {
+   "name": "empty",
+   "source": "",
+   "output": ""
+  },
+  {
+   "name": "whitespace",
+   "source": "  \t\n ",
+   "output": ""
+  },
+  {
+   "name": "plain-inline",
+   "source": "x + y = z",
+   "output": "x + y = z"
+  },
+  {
+   "name": "greek-symbols",
+   "source": "\\alpha + \\beta \\to \\Gamma",
+   "output": "α + β → Γ"
+  },
+  {
+   "name": "relations-and-sets",
+   "source": "x \\in \\mathbb{R},\\quad x \\leq y \\neq z",
+   "output": "x ∈ ℝ, x ≤ y ≠ z"
+  },
+  {
+   "name": "scripts",
+   "source": "x_{i+1}^2 + y^{n-1}",
+   "output": "xᵢ₊₁² + yⁿ⁻¹"
+  },
+  {
+   "name": "fraction-inline",
+   "source": "\\frac{a+b}{c-d}",
+   "output": "(a+b)/(c-d)"
+  },
+  {
+   "name": "fraction-display",
+   "source": "\\frac{a+b}{c-d}",
+   "options": {
+    "display": true
+   },
+   "output": "a+b\n───\nc-d"
+  },
+  {
+   "name": "nested-fraction-display",
+   "source": "\\frac{1}{1+\\frac{1}{x}}",
+   "options": {
+    "display": true
+   },
+   "output": "  1\n─────\n1+1/x"
+  },
+  {
+   "name": "sqrt-and-absolute",
+   "source": "\\sqrt{x^2 + y^2} + \\left|z\\right|",
+   "output": "√(x² + y²) + |z|"
+  },
+  {
+   "name": "matrix-inline",
+   "source": "\\begin{pmatrix}a & b \\\\ c & d\\end{pmatrix}",
+   "output": "⎛ a │ b ⎞\n⎝ c │ d ⎠"
+  },
+  {
+   "name": "matrix-display",
+   "source": "\\begin{bmatrix}1 & 22 \\\\ 333 & 4\\end{bmatrix}",
+   "options": {
+    "display": true
+   },
+   "output": "⎡ 1   │ 22 ⎤\n⎣ 333 │ 4  ⎦"
+  },
+  {
+   "name": "operators-inline",
+   "source": "\\sum_{i=1}^{n} i + \\int_0^\\infty e^{-x} \\, dx",
+   "output": "∑ᵢ₌₁ⁿ i + ∫₀^∞ e⁻ˣ dx"
+  },
+  {
+   "name": "operators-display",
+   "source": "\\sum_{i=1}^{n} i + \\prod_{k=1}^{m} k",
+   "options": {
+    "display": true
+   },
+   "output": " n      m\n ∑  i + ∏  k\ni=1    k=1"
+  },
+  {
+   "name": "named-functions",
+   "source": "\\sin(\\theta) + \\log_{2}(x)",
+   "output": "sin(θ) + log₂(x)"
+  },
+  {
+   "name": "text-and-style",
+   "source": "\\text{speed} = \\mathbf{v} / \\mathrm{t}",
+   "output": "speed = v / t"
+  },
+  {
+   "name": "malformed-unclosed-group",
+   "source": "x + {y",
+   "output": null
+  },
+  {
+   "name": "malformed-fraction",
+   "source": "\\frac{a}",
+   "output": null
+  },
+  {
+   "name": "malformed-matrix",
+   "source": "\\begin{matrix}a & b \\\\ c\\end{matrix}",
+   "output": "a │ b\nc │  "
+  },
+  {
+   "name": "unsupported-command",
+   "source": "\\definitelyUnsupported{x}",
+   "output": null
+  }
+ ]
+}

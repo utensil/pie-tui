@@ -1,0 +1,188 @@
+{
+ "generator": "gen-golden-components.mjs",
+ "reference": "0.84.1",
+ "cases": [
+  {
+   "name": "text-default-plain",
+   "outputs": [
+    [
+     "                    ",
+     " hello world        ",
+     " second line        ",
+     "                    "
+    ],
+    [
+     "                                        ",
+     " hello world                            ",
+     " second line                            ",
+     "                                        "
+    ]
+   ]
+  },
+  {
+   "name": "text-ansi-cjk",
+   "outputs": [
+    [
+     "            ",
+     " mix \u001b[4munder\u001b[24m  ",
+     " \u001b[4m漢字\u001b[24m tail  ",
+     "    tabbed  ",
+     "            "
+    ],
+    [
+     "                              ",
+     " mix \u001b[4munder漢字\u001b[24m tail           ",
+     "    tabbed                    ",
+     "                              "
+    ]
+   ]
+  },
+  {
+   "name": "text-bgfn",
+   "outputs": [
+    [
+     "\u001b[42m                \u001b[0m",
+     "\u001b[42m bg text here   \u001b[0m",
+     "\u001b[42m                \u001b[0m"
+    ]
+   ]
+  },
+  {
+   "name": "text-settext-cache",
+   "outputs": [
+    [
+     "before              "
+    ],
+    [
+     "after with longer   ",
+     "content wrapping    "
+    ]
+   ]
+  },
+  {
+   "name": "text-empty-whitespace",
+   "outputs": [
+    []
+   ]
+  },
+  {
+   "name": "truncated-default",
+   "outputs": [
+    [
+     "a very long line \u001b[0m...\u001b[0m"
+    ],
+    [
+     "a very long line that will definitely need truncation                           "
+    ]
+   ]
+  },
+  {
+   "name": "truncated-ansi-newline-cjk",
+   "outputs": [
+    [
+     "                  ",
+     "  \u001b[31mred漢字 sty\u001b[0m...\u001b[0m  ",
+     "                  "
+    ]
+   ]
+  },
+  {
+   "name": "spacer-1-3",
+   "outputs": [
+    [
+     ""
+    ],
+    [
+     "",
+     "",
+     ""
+    ]
+   ]
+  },
+  {
+   "name": "box-children",
+   "outputs": [
+    [
+     "              ",
+     " one          ",
+     " two          ",
+     "              "
+    ]
+   ]
+  },
+  {
+   "name": "box-bgfn",
+   "outputs": [
+    [
+     "\u001b[42m                \u001b[0m",
+     "\u001b[42m  boxed         \u001b[0m",
+     "\u001b[42m                \u001b[0m"
+    ]
+   ]
+  },
+  {
+   "name": "box-empty",
+   "outputs": [
+    []
+   ]
+  },
+  {
+   "name": "vstack-gap0",
+   "outputs": [
+    [
+     "top         ",
+     "",
+     "bottom      "
+    ]
+   ]
+  },
+  {
+   "name": "vstack-gap2-grow",
+   "outputs": [
+    [
+     "fixed     ",
+     "",
+     "",
+     "grows     "
+    ]
+   ]
+  },
+  {
+   "name": "hstack-align-default",
+   "outputs": [
+    [
+     "\u001b[0m\u001b]8;;\u0007L1    \u001b[0m\u001b]8;;\u0007  \u001b[0m\u001b]8;;\u0007R1          \u001b[0m\u001b]8;;\u0007",
+     "\u001b[0m\u001b]8;;\u0007L2    \u001b[0m\u001b]8;;\u0007  \u001b[0m\u001b]8;;\u0007R2          \u001b[0m\u001b]8;;\u0007",
+     "\u001b[0m\u001b]8;;\u0007L3    \u001b[0m\u001b]8;;\u0007              "
+    ]
+   ]
+  },
+  {
+   "name": "hstack-align-center-end",
+   "outputs": [
+    [
+     "\u001b[0m\u001b]8;;\u0007a    \u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007X       \u001b[0m\u001b]8;;\u0007",
+     "\u001b[0m\u001b]8;;\u0007bb   \u001b[0m\u001b]8;;\u0007 \u001b[0m\u001b]8;;\u0007Y       \u001b[0m\u001b]8;;\u0007",
+     "\u001b[0m\u001b]8;;\u0007ccc  \u001b[0m\u001b]8;;\u0007         "
+    ]
+   ]
+  },
+  {
+   "name": "loader-frames",
+   "outputs": [
+    [
+     "",
+     " \u001b[36m⠋\u001b[0m \u001b[2mLoading stuff...\u001b[0m     "
+    ],
+    [
+     "",
+     " \u001b[36m⠙\u001b[0m \u001b[2mLoading stuff...\u001b[0m     "
+    ],
+    [
+     "",
+     " \u001b[36m⠴\u001b[0m \u001b[2mLoading stuff...\u001b[0m     "
+    ]
+   ]
+  }
+ ]
+}

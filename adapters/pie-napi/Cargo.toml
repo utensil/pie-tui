@@ -1,0 +1,23 @@
+[package]
+name = "pie-napi"
+description = "Private NAPI-RS core for the reviewed pie-tui compatibility facade."
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+napi = "=3.12.2"
+napi-derive = "=3.6.3"
+pie-core = { path = "../../crates/pie-core" }
+pie-components = { path = "../../crates/pie-components" }
+pie-term = { path = "../../crates/pie-term" }
+unicode-segmentation = "=1.12.0"
+
+[build-dependencies]
+napi-build = "=2.4.1"
+
+[dev-dependencies]
+serde_json = "1"
