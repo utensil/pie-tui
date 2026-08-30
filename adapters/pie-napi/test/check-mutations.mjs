@@ -39,6 +39,8 @@ const testFiles = [
   'pack-consumer.mjs',
   'postm6-randomized.test.mjs',
   'runtime.test.mjs',
+  'tier1-scroll.test.mjs',
+  'tier1-scroll-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -345,6 +347,112 @@ const postM6RandomizedMutations = [
   },
 ]
 
+const tier1ScrollMutations = [
+  {
+    name: 'tier1-scroll-hit-order-reversed',
+    from: '  matches.sort((left, right) => right.depth - left.depth)',
+    to: '  matches.sort((left, right) => left.depth - right.depth)',
+    pattern: 'wheel hit-testing does not collapse',
+  },
+  {
+    name: 'tier1-scroll-primary-only-routing',
+    from:
+      '    for (const scrollView of this.currentLayout\n' +
+      '      ? getScrollViewsAt(this.currentLayout, event.x, event.y)\n' +
+      '      : []) {',
+    to: '    for (const scrollView of [this.getPrimaryScrollView()]) {',
+    pattern: 'wheel hit-testing does not collapse',
+  },
+  {
+    name: 'tier1-scroll-contain-ignored',
+    from:
+      "      if (remaining === 0 || scrollView.overscroll === 'contain') break",
+    to: '      if (remaining === 0) break',
+    pattern: 'contain overscroll consumes',
+  },
+  {
+    name: 'tier1-scroll-remainder-discarded',
+    from: '      remaining = scrollView.scrollBy(remaining)',
+    to: '      scrollView.scrollBy(remaining)\n      remaining = 0',
+    pattern: 'chains the exact remainder',
+  },
+  {
+    name: 'tier1-scroll-thumb-height-drift',
+    from: '      Math.round((trackHeight * trackHeight) / contentHeight),',
+    to: '      trackHeight,',
+    pattern: 'always scrollbar paints',
+  },
+  {
+    name: 'tier1-scrollbar-column-drift',
+    from:
+      '  const column = box.rect.x + box.rect.width - 1\n' +
+      '  if (column < box.clip.x || column >= box.clip.x + box.clip.width) {',
+    to:
+      '  const column = box.rect.x + box.rect.width - 2\n' +
+      '  if (column < box.clip.x || column >= box.clip.x + box.clip.width) {',
+    pattern: 'always scrollbar paints',
+  },
+  {
+    name: 'tier1-scrollbar-drag-mapping-loss',
+    from:
+      '          : Math.round(\n' +
+      '              (thumbOffset / maxThumbOffset) * geometry.maxScrollTop,\n' +
+      '            )',
+    to: '          : 0',
+    pattern: 'always scrollbar paints',
+  },
+  {
+    name: 'tier1-scrollbar-paint-omission',
+    from: '    paintScrollbar(box, lines, safeWidth)',
+    to: '    // mutation: omit scrollbar painting',
+    pattern: 'always scrollbar paints',
+  },
+  {
+    name: 'tier1-scrollbar-hover-activation-loss',
+    from: '    this.scrollbarHover?.setScrollbarActive(true)',
+    to: '    this.scrollbarHover?.setScrollbarActive(false)',
+    pattern: 'auto scrollbar paints',
+  },
+  {
+    name: 'tier1-scroll-overlay-deferral-loss',
+    from:
+      '      if (this.shouldDeferViewportInputToOverlay()) return undefined\n' +
+      '      if (direction !== 0) this.routeWheel({ direction, x: mouse.x, y: mouse.y })',
+    to:
+      '      if (false && this.shouldDeferViewportInputToOverlay()) return undefined\n' +
+      '      if (direction !== 0) this.routeWheel({ direction, x: mouse.x, y: mouse.y })',
+    pattern: 'capturing overlays defer wheel',
+  },
+  {
+    name: 'tier1-scrollbar-stop-cleanup-loss',
+    from:
+      '  beforeTerminalStop() {\n' +
+      '    this.closeSearch()\n' +
+      '    this.selectionPressActive = false\n' +
+      '    this.stopScrollbarHover()\n' +
+      '    this.stopScrollbarDrag()',
+    to:
+      '  beforeTerminalStop() {\n' +
+      '    this.closeSearch()\n' +
+      '    this.selectionPressActive = false',
+    pattern: 'stop clears scrollbar hover activation',
+  },
+  {
+    name: 'tier1-scrollbar-focus-out-cleanup-loss',
+    from:
+      '      this.lastClick = undefined\n' +
+      '      this.pressedUrl = undefined\n' +
+      '      this.stopScrollbarHover()\n' +
+      '      this.stopScrollbarDrag()\n' +
+      '      if (hadSelection) this.requestRender()',
+    to:
+      '      this.lastClick = undefined\n' +
+      '      this.pressedUrl = undefined\n' +
+      '      if (hadSelection) this.requestRender()',
+    pattern: 'focus-out clears scrollbar hover activation',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -468,6 +576,21 @@ try {
       directory,
       ['--test', 'test/postm6-randomized.test.mjs'],
       'post-M6 deterministic fullscreen ScrollView state machine stays bounded',
+    )
+  }
+
+  for (const mutation of tier1ScrollMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      [
+        '--test',
+        `--test-name-pattern=${mutation.pattern}`,
+        'test/tier1-scroll.test.mjs',
+      ],
+      mutation.pattern,
     )
   }
 
@@ -688,6 +811,22 @@ try {
     overlayWiringDirectory,
     ['test/pack-consumer.mjs'],
     'verify command includes the authenticated 0.84.4 overlay gate',
+  )
+
+  const tier1WiringDirectory = await prepareCase(
+    'verify-tier1-scroll-oracle-wiring',
+  )
+  await replaceOnce(
+    tier1WiringDirectory,
+    'package.json',
+    ' && npm run test:tier1oracle',
+    '',
+  )
+  await expectKilled(
+    'verify-tier1-scroll-oracle-wiring',
+    tier1WiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated 0.84.2 Tier-1 scroll gate',
   )
 
   const licenseOmissionDirectory = await prepareCase('license-omission')

@@ -127,6 +127,11 @@ try {
   )
   assert.match(
     installedManifest.scripts.verify,
+    /npm run test:tier1oracle/,
+    'verify command includes the authenticated 0.84.2 Tier-1 scroll gate',
+  )
+  assert.match(
+    installedManifest.scripts.verify,
     /npm run oracle:overlay/,
     'verify command includes the authenticated 0.84.4 overlay gate',
   )

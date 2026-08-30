@@ -118,6 +118,7 @@ installed `dist`, then run `npm run verify` here. Verification checks provenance
 before importing the oracle, checks the actual ordered selected-export object,
 builds the real addon, differentially checks the full namespace plus the
 behavior-bearing component matrix against the pinned package on Node 24.4.1,
+runs the authenticated 0.84.2 fullscreen ScrollView pane oracle,
 runs declaration tests plus causal mutations, installs the tarball into a clean
 consumer, and runs the real-PTY NAPI screen smoke through
 `tools/tmux-napi-smoke.sh`.

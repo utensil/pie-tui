@@ -1581,6 +1581,179 @@ function intersectLayoutRect(a, b) {
   return { x, y, width: Math.max(0, right - x), height: Math.max(0, bottom - y) }
 }
 
+function extractLayoutAnsiCode(value, position) {
+  if (position >= value.length || value[position] !== '\x1b') return undefined
+  const next = value[position + 1]
+  if (next === '[') {
+    let end = position + 2
+    while (end < value.length && !/[mGKHJ]/.test(value[end])) end += 1
+    return end < value.length
+      ? { code: value.slice(position, end + 1), length: end + 1 - position }
+      : undefined
+  }
+  if (next === ']' || next === '_') {
+    let end = position + 2
+    while (end < value.length) {
+      if (value[end] === '\x07') {
+        return { code: value.slice(position, end + 1), length: end + 1 - position }
+      }
+      if (value[end] === '\x1b' && value[end + 1] === '\\') {
+        return { code: value.slice(position, end + 2), length: end + 2 - position }
+      }
+      end += 1
+    }
+  }
+  return undefined
+}
+
+const layoutGraphemeSegmenter = new Intl.Segmenter(undefined, {
+  granularity: 'grapheme',
+})
+
+function getLayoutGraphemeCellRange(line, column) {
+  let currentColumn = 0
+  let index = 0
+  while (index < line.length) {
+    const ansi = extractLayoutAnsiCode(line, index)
+    if (ansi) {
+      index += ansi.length
+      continue
+    }
+    let textEnd = index
+    while (textEnd < line.length && !extractLayoutAnsiCode(line, textEnd)) {
+      textEnd += 1
+    }
+    for (const { segment } of layoutGraphemeSegmenter.segment(
+      line.slice(index, textEnd),
+    )) {
+      const width = visibleWidth(segment)
+      if (
+        width > 0 &&
+        column >= currentColumn &&
+        column < currentColumn + width
+      ) {
+        return { start: currentColumn, end: currentColumn + width }
+      }
+      currentColumn += width
+    }
+    index = textEnd
+  }
+  return undefined
+}
+
+function styleScrollbarCell(line, column, totalWidth, style) {
+  if (isImageLine(line)) return line
+  const graphemeRange = getLayoutGraphemeCellRange(line, column)
+  const start = graphemeRange?.start ?? column
+  const end = graphemeRange?.end ?? column + 1
+  const before = sliceByColumn(line, 0, start, true)
+  const target = sliceByColumn(line, start, end - start, true)
+  const after = sliceByColumn(
+    line,
+    end,
+    Math.max(0, totalWidth - end),
+    true,
+  )
+  let targetPrefix = ''
+  let targetIndex = 0
+  while (targetIndex < target.length) {
+    const ansi = extractLayoutAnsiCode(target, targetIndex)
+    if (!ansi) break
+    targetPrefix += ansi.code
+    targetIndex += ansi.length
+  }
+  const targetText = target.slice(targetIndex) || ' '.repeat(end - start)
+  const beforePadding = ' '.repeat(Math.max(0, start - visibleWidth(before)))
+  return `${before}${beforePadding}${targetPrefix}${style(targetText)}${after}`
+}
+
+function getScrollbarGeometry(box) {
+  if (
+    !box.scrollView?.isScrollbarVisible ||
+    box.rect.width <= 0 ||
+    box.rect.height <= 0
+  ) return undefined
+  const contentHeight =
+    box.children[0]?.rect.height ?? box.scrollContentLines?.length ?? 0
+  const trackHeight = box.rect.height
+  const minThumbHeight = Math.min(2, trackHeight)
+  const thumbHeight = Math.max(
+    minThumbHeight,
+    Math.min(
+      trackHeight,
+      Math.round((trackHeight * trackHeight) / contentHeight),
+    ),
+  )
+  const maxScrollTop = Math.max(0, contentHeight - trackHeight)
+  const maxThumbTop = trackHeight - thumbHeight
+  const thumbOffset = maxScrollTop === 0
+    ? 0
+    : Math.round((box.scrollView.scrollTop / maxScrollTop) * maxThumbTop)
+  const column = box.rect.x + box.rect.width - 1
+  if (column < box.clip.x || column >= box.clip.x + box.clip.width) {
+    return undefined
+  }
+  return {
+    column,
+    trackTop: box.rect.y,
+    trackHeight,
+    thumbTop: box.rect.y + thumbOffset,
+    thumbHeight,
+    maxScrollTop,
+  }
+}
+
+function paintScrollbar(box, screen, totalWidth) {
+  const geometry = getScrollbarGeometry(box)
+  if (!geometry || !box.scrollView) return
+  for (let offset = 0; offset < geometry.thumbHeight; offset += 1) {
+    const row = geometry.thumbTop + offset
+    if (
+      row < box.clip.y ||
+      row >= box.clip.y + box.clip.height ||
+      row < 0 ||
+      row >= screen.length
+    ) continue
+    screen[row] = styleScrollbarCell(
+      screen[row] ?? '',
+      geometry.column,
+      totalWidth,
+      box.scrollView.scrollbarStyle,
+    )
+  }
+}
+
+function getScrollViewBox(frame, scrollView) {
+  const visit = (box) => {
+    if (box.scrollView === scrollView) return box
+    for (const child of box.children) {
+      const match = visit(child)
+      if (match) return match
+    }
+    return undefined
+  }
+  return visit(frame.root)
+}
+
+function getScrollViewsAt(frame, x, y) {
+  const containsPoint = (rect) =>
+    x >= rect.x &&
+    x < rect.x + rect.width &&
+    y >= rect.y &&
+    y < rect.y + rect.height
+  const matches = []
+  const visit = (box, depth) => {
+    if (!containsPoint(box.clip)) return
+    if (box.scrollView && containsPoint(box.rect)) {
+      matches.push({ scrollView: box.scrollView, depth })
+    }
+    for (const child of box.children) visit(child, depth + 1)
+  }
+  visit(frame.root, 0)
+  matches.sort((left, right) => right.depth - left.depth)
+  return matches.map(({ scrollView }) => scrollView)
+}
+
 function renderLayoutFrame(root, width, height, requestRender) {
   const safeWidth = Math.max(1, Math.floor(width))
   const safeHeight = Math.max(1, Math.floor(height))
@@ -1632,6 +1805,7 @@ function renderLayoutFrame(root, width, height, requestRender) {
         clip: intersectLayoutRect(clip, rect),
         children: [child],
         scrollView: component,
+        scrollContentLines: renderCached(component.child, contentWidth),
       }
       updateClips(child, box.clip)
       return box
@@ -1750,6 +1924,7 @@ function renderLayoutFrame(root, width, height, requestRender) {
       }
     }
     for (const child of box.children) paint(child)
+    paintScrollbar(box, lines, safeWidth)
   }
   paint(rootBox)
   return {
@@ -1794,6 +1969,8 @@ class TuiAltScreen extends TuiBase {
     this.lastClick = undefined
     this.selectionPressActive = false
     this.selectionDragged = false
+    this.scrollbarDrag = undefined
+    this.scrollbarHover = undefined
     this.pressedUrl = undefined
     this.activeSearch = undefined
     altScreenPlannerRegistry.set(this, new native.NativeAltScreenPlanner())
@@ -1811,6 +1988,8 @@ class TuiAltScreen extends TuiBase {
     this.requestRender()
   }
   beforeTerminalStart() {
+    this.stopScrollbarHover()
+    this.stopScrollbarDrag()
     this.altScreenActive = true
     this.previousScreen = []
     this.lastDocument = []
@@ -1841,6 +2020,8 @@ class TuiAltScreen extends TuiBase {
   beforeTerminalStop() {
     this.closeSearch()
     this.selectionPressActive = false
+    this.stopScrollbarHover()
+    this.stopScrollbarDrag()
     if (!this.altScreenActive) return
     const disableMouse = '\x1b[?1006l\x1b[?1004l\x1b[?1003l\x1b[?1002l\x1b[?1000l'
     const images = this.imageProtocol === 'kitty' ? deleteAllKittyImages() : ''
@@ -1974,6 +2155,100 @@ class TuiAltScreen extends TuiBase {
     }, durationMs)
     timer.unref?.()
   }
+  shouldDeferViewportInputToOverlay() {
+    return this.getTopmostVisibleOverlay()?.component === this.focusedComponent &&
+      this.activeSearch?.overlay?.isFocused() !== true
+  }
+  routeWheel(event) {
+    let remaining = event.direction * this.wheelScrollLines
+    const seen = new Set()
+    for (const scrollView of this.currentLayout
+      ? getScrollViewsAt(this.currentLayout, event.x, event.y)
+      : []) {
+      seen.add(scrollView)
+      remaining = scrollView.scrollBy(remaining)
+      if (remaining === 0 || scrollView.overscroll === 'contain') break
+    }
+    const primary = this.getPrimaryScrollView()
+    if (remaining !== 0 && !seen.has(primary)) primary.scrollBy(remaining)
+    this.updateScrollbarHover(event.x, event.y)
+    this.requestRender()
+  }
+  getScrollbarTargetAt(x, y) {
+    if (this.hasOverlay() || !this.currentLayout) return undefined
+    for (const scrollView of getScrollViewsAt(this.currentLayout, x, y)) {
+      const box = getScrollViewBox(this.currentLayout, scrollView)
+      const geometry = box ? getScrollbarGeometry(box) : undefined
+      if (
+        geometry &&
+        x === geometry.column &&
+        y >= geometry.thumbTop &&
+        y < geometry.thumbTop + geometry.thumbHeight
+      ) return { scrollView, geometry }
+    }
+    return undefined
+  }
+  setScrollbarHover(scrollView) {
+    if (scrollView === this.scrollbarHover) return
+    this.scrollbarHover?.setScrollbarActive(false)
+    this.scrollbarHover = scrollView
+    this.scrollbarHover?.setScrollbarActive(true)
+  }
+  updateScrollbarHover(x, y) {
+    this.setScrollbarHover(this.getScrollbarTargetAt(x, y)?.scrollView)
+  }
+  stopScrollbarHover() { this.setScrollbarHover(undefined) }
+  handleScrollbarMouseEvent(event) {
+    if (this.scrollbarDrag) {
+      if (event.release) {
+        this.stopScrollbarDrag()
+        return true
+      }
+      const box = this.currentLayout
+        ? getScrollViewBox(this.currentLayout, this.scrollbarDrag.scrollView)
+        : undefined
+      const geometry = box ? getScrollbarGeometry(box) : undefined
+      if (geometry) {
+        const maxThumbOffset = geometry.trackHeight - geometry.thumbHeight
+        const thumbOffset = Math.max(
+          0,
+          Math.min(
+            maxThumbOffset,
+            event.y - geometry.trackTop - this.scrollbarDrag.grabOffset,
+          ),
+        )
+        const scrollTop = maxThumbOffset === 0
+          ? 0
+          : Math.round(
+              (thumbOffset / maxThumbOffset) * geometry.maxScrollTop,
+            )
+        this.scrollbarDrag.scrollView.scrollTo(scrollTop)
+      }
+      return true
+    }
+    if (
+      event.release ||
+      (event.button & 32) !== 0 ||
+      (event.button & 3) !== 0
+    ) return false
+    const target = this.getScrollbarTargetAt(event.x, event.y)
+    if (!target) return false
+    this.selectionPressActive = false
+    this.selectionAnchor = undefined
+    this.selectionFocus = undefined
+    this.selectionGranularity = 'character'
+    this.selectionInitialRange = undefined
+    this.lastClick = undefined
+    this.pressedUrl = undefined
+    this.selectionDragged = false
+    this.setScrollbarHover(target.scrollView)
+    this.scrollbarDrag = {
+      scrollView: target.scrollView,
+      grabOffset: event.y - target.geometry.thumbTop,
+    }
+    return true
+  }
+  stopScrollbarDrag() { this.scrollbarDrag = undefined }
   handleViewportInput(data) {
     if (data === ALT_FOCUS_OUT) {
       const hadSelection = this.getSelectionBounds() !== undefined
@@ -1982,6 +2257,8 @@ class TuiAltScreen extends TuiBase {
       this.selectionFocus = undefined
       this.lastClick = undefined
       this.pressedUrl = undefined
+      this.stopScrollbarHover()
+      this.stopScrollbarDrag()
       if (hadSelection) this.requestRender()
       return { consume: true }
     }
@@ -1989,12 +2266,15 @@ class TuiAltScreen extends TuiBase {
     const mouse = this.parseMouseEvent(data)
     if (mouse && (mouse.button & 64) !== 0) {
       const direction = (mouse.button & 3) === 0 ? -1 : (mouse.button & 3) === 1 ? 1 : 0
-      if (direction !== 0) this.scrollBy(direction * this.wheelScrollLines)
+      if (this.shouldDeferViewportInputToOverlay()) return undefined
+      if (direction !== 0) this.routeWheel({ direction, x: mouse.x, y: mouse.y })
       return { consume: true }
     }
     if (mouse) {
       if (this.handleRightClickPaste(mouse)) return { consume: true }
-      this.handleSelectionMouseEvent(mouse)
+      const handled = this.handleScrollbarMouseEvent(mouse)
+      if (!this.scrollbarDrag) this.updateScrollbarHover(mouse.x, mouse.y)
+      if (!handled) this.handleSelectionMouseEvent(mouse)
       return { consume: true }
     }
     if (this.isMouseSequence(data)) return { consume: true }
@@ -2018,8 +2298,7 @@ class TuiAltScreen extends TuiBase {
         return { consume: true }
       }
     }
-    const focusedOverlay = this.getTopmostVisibleOverlay()
-    if (focusedOverlay && this.activeSearch?.overlay?.isFocused() !== true) return undefined
+    if (this.shouldDeferViewportInputToOverlay()) return undefined
     const height = this.getPrimaryScrollView().viewportHeight
     for (const [id, action] of [
       ['tui.altScreen.pageUp', () => this.scrollBy(-Math.max(1, height - ALT_PAGE_OVERLAP))],
