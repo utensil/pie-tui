@@ -62,6 +62,7 @@ export const {
   renderLatex,
   resetCapabilitiesCache,
   setCapabilities,
+  setCapabilityOverrides,
   setCellDimensions,
   setKeybindings,
   setKittyProtocolActive,

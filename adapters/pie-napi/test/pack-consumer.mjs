@@ -125,11 +125,21 @@ try {
     /npm run test:m6oracle/,
     'verify command includes the authenticated 0.84.2 M6 semantic gate',
   )
+  assert.match(
+    installedManifest.scripts.verify,
+    /npm run oracle:overlay/,
+    'verify command includes the authenticated 0.84.4 overlay gate',
+  )
   const installedReadme = await readFile(join(installedRoot, 'README.md'), 'utf8')
   assert.match(
     installedReadme,
-    /complete 69-export runtime namespace and exact 133-name declaration\nnamespace of the authenticated pi-tui 0\.84\.2 baseline/,
-    'README pins the complete 69-export baseline',
+    /complete 69-export runtime namespace and exact 133-name baseline\nof the authenticated pi-tui 0\.84\.2 package/,
+    'README pins the complete 69/133 baseline',
+  )
+  assert.match(
+    installedReadme,
+    /actual 70-export \/ 134-name facade/,
+    'README pins the one-export adopted overlay',
   )
   assert.match(
     installedReadme,
@@ -189,6 +199,11 @@ try {
       esm.setCapabilities({ images: 'kitty', trueColor: true, hyperlinks: true })
       assert.match(esm.renderImage('QQ==', { widthPx: 1, heightPx: 1 }).sequence, /^\\u001b_G/)
       assert.match(esm.imageFallback('image/png', { widthPx: 1, heightPx: 1 }), /1x1/)
+      esm.setCapabilityOverrides({ images: 'iterm2' })
+      esm.resetCapabilitiesCache()
+      assert.equal(esm.getCapabilities().images, 'iterm2')
+      esm.setCapabilityOverrides({})
+      esm.resetCapabilitiesCache()
       assert.deepEqual(
         Array.from(esm.renderLatex(String.fromCharCode(92, 98, 97, 114, 32, 0xd83d)), (unit) => unit.charCodeAt(0)),
         [0xd83d, 773],

@@ -31,6 +31,8 @@ adapters/pie-napi/index.d.ts
 adapters/pie-napi/README.md
 adapters/pie-napi/package.json
 adapters/pie-napi/test/oracle-contract.json
+adapters/pie-napi/test/capability-overrides.test.mjs
+adapters/pie-napi/test/check-capability-overrides-reference.mjs
 adapters/pie-napi/test/check-type-surface.mjs
 adapters/pie-napi/test/check-upstream-drift.mjs
 adapters/pie-napi/test/m5-runtime.test.mjs
@@ -168,13 +170,13 @@ const mutations = {
   ),
   "napi-package-readme-regresses-count": () => replaceOnce(
     "adapters/pie-napi/README.md",
-    "complete 69-export runtime namespace shared by pi-tui 0.84.1 and",
-    "complete 68-export runtime namespace shared by pi-tui 0.84.1 and",
+    "complete 69-export runtime namespace and exact 133-name baseline",
+    "complete 68-export runtime namespace and exact 133-name baseline",
   ),
   "readme-status-drops-deterministic-host": () => replaceOnce(
     "README.md",
-    "declaration namespace; production ProcessTerminal",
-    "declaration namespace; production terminal",
+    "facade; production ProcessTerminal",
+    "facade; production terminal",
   ),
   "readme-m5-drops-main-alt-boundary": () => replaceOnce(
     "README.md",
@@ -188,13 +190,13 @@ const mutations = {
   ),
   "readme-status-regresses-napi-count": () => replaceOnce(
     "README.md",
-    "private package exposes all 69 canonical runtime",
-    "private package exposes all 68 canonical runtime",
+    "private package keeps all 69 canonical 0.84.2 runtime",
+    "private package keeps all 68 canonical 0.84.2 runtime",
   ),
   "readme-limit-regresses-napi-residual": () => replaceOnce(
     "README.md",
-    "exposes exactly 69/69 canonical runtime",
-    "exposes exactly 68/69 canonical runtime",
+    "authenticated 0.84.2 baseline 69/133",
+    "authenticated 0.84.2 baseline 68/133",
   ),
   "readme-oracle-command-suffix": () => replaceOnce(
     "README.md",
@@ -233,8 +235,8 @@ const mutations = {
   ),
   "roadmap-regresses-napi-residual": () => replaceOnce(
     "docs/roadmap.md",
-    "explicit 0.84.4 drift",
-    "explicit 0.84.5 drift",
+    "0.84.4 drift",
+    "0.84.5 drift",
   ),
   "parity-duplicates-controller-row": duplicateParityRow,
   "parity-removes-structural-evidence": () => replaceOnce(
@@ -250,13 +252,13 @@ const mutations = {
   "parity-duplicates-main-alt-row": duplicateMainAltParityRow,
   "parity-removes-main-alt-test-evidence": () => replaceOnce(
     "docs/parity.md",
-    "`tools/tmux-napi-smoke.sh` adds production ProcessTerminal",
-    "`tools/tmux-napi-smok.sh` adds production ProcessTerminal",
+    "`tools/tmux-napi-smoke.sh` exercises the canonical JavaScript classes",
+    "`tools/tmux-napi-smok.sh` exercises the canonical JavaScript classes",
   ),
   "parity-regresses-napi-residual": () => replaceOnce(
     "docs/parity.md",
-    "unchanged 0.84.2 runtime surface",
-    "changed 0.84.2 runtime surface",
+    "authenticated 0.84.2 baseline behavior",
+    "authenticated 0.84.3 baseline behavior",
   ),
 };
 

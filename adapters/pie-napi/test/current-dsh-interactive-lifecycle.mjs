@@ -24,7 +24,8 @@ const agentModule = await import(pathToFileURL(join(agentRoot, "dist/index.js"))
 const { createRuntimeHost } = await import(bridgeUrl);
 
 assert.equal(manifest.name, "pie-tui-native", "packed facade override is active");
-assert.equal(Object.keys(tui).length, 69, "runtime namespace remains exact");
+assert.equal(Object.keys(tui).length, 70, "runtime namespace remains exact");
+assert.equal(typeof tui.setCapabilityOverrides, "function", "adopted overlay links");
 assert.equal(typeof agentModule.InteractiveMode, "function", "InteractiveMode loaded through facade");
 
 const scratch = mkdtempSync(join(tmpdir(), "pie-tui-dsh-live-"));
@@ -154,6 +155,8 @@ try {
   try {
     runtimeHost?.dispose();
   } catch {}
+  tui.setCapabilityOverrides({});
+  tui.resetCapabilitiesCache();
   process.stdout.write = originalWrite;
   Object.defineProperty(process.stdout, "columns", { configurable: true, value: originalColumns });
   Object.defineProperty(process.stdout, "rows", { configurable: true, value: originalRows });

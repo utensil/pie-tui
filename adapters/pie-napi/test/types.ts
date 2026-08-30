@@ -20,6 +20,7 @@ import {
   renderImage,
   renderLatex,
   setCapabilities,
+  setCapabilityOverrides,
   type CellDimensions,
   type Component,
   type ImageRenderOptions,
@@ -75,6 +76,7 @@ editor.setAutocompleteProvider(autocomplete)
 mainScreen.addChild(new Text('M5'))
 altScreen.setLayoutRoot(mainScreen)
 setCapabilities(capabilities)
+setCapabilityOverrides({ images: 'kitty' })
 
 void key
 void cell

@@ -134,6 +134,7 @@ function probeTmuxHyperlinks() {
 
 let cellDimensions = { widthPx: 9, heightPx: 18 }
 let cachedCapabilities = null
+let capabilityOverrides = {}
 
 const CURSOR_MARKER = native.nativeCursorMarker()
 const TUI_KEYBINDINGS = {}
@@ -2776,7 +2777,13 @@ function detectCapabilities(tmuxForwardsHyperlink = probeTmuxHyperlinks) {
 
 function getCapabilities() {
   if (!cachedCapabilities) {
-    cachedCapabilities = detectCapabilities()
+    const hyperlinks = capabilityOverrides.hyperlinks
+    cachedCapabilities = {
+      ...detectCapabilities(
+        hyperlinks === undefined ? undefined : () => hyperlinks,
+      ),
+      ...capabilityOverrides,
+    }
   }
   return cachedCapabilities
 }
@@ -2787,6 +2794,18 @@ function resetCapabilitiesCache() {
 
 function setCapabilities(capabilities) {
   cachedCapabilities = capabilities
+}
+
+function setCapabilityOverrides(overrides) {
+  if (
+    capabilityOverrides.images === overrides.images &&
+    capabilityOverrides.trueColor === overrides.trueColor &&
+    capabilityOverrides.hyperlinks === overrides.hyperlinks
+  ) {
+    return
+  }
+  capabilityOverrides = { ...overrides }
+  cachedCapabilities = null
 }
 
 function renderLatex(source, options = {}) {
@@ -3493,6 +3512,7 @@ const selectedExports = {
   renderLatex,
   resetCapabilitiesCache,
   setCapabilities,
+  setCapabilityOverrides,
   setCellDimensions,
   setKeybindings,
   setKittyProtocolActive,

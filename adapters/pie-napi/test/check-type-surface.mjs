@@ -10,6 +10,7 @@ const declaration = await readFile(join(packageRoot, 'index.d.ts'), 'utf8')
 const expected = api.statements.flatMap((statement) =>
   statement.symbols.map((symbol) => symbol.name),
 )
+const adoptedOverlays = ['setCapabilityOverrides']
 const actual = new Set()
 
 for (const match of declaration.matchAll(
@@ -24,6 +25,8 @@ for (const match of declaration.matchAll(/export\s+(?:type\s+)?\{([^}]+)\}/g)) {
   }
 }
 
-assert.deepEqual([...actual].sort(), [...expected].sort())
-assert.equal(actual.size, 133)
-console.log('type surface OK: exact 133-symbol canonical 0.84.2 namespace')
+assert.deepEqual([...actual].sort(), [...expected, ...adoptedOverlays].sort())
+assert.equal(actual.size, 134)
+console.log(
+  'type surface OK: exact 133-symbol canonical 0.84.2 namespace + 1 adopted 0.84.4 overlay',
+)

@@ -56,6 +56,18 @@ try {
     }
     assert.equal(names.length, expected.runtimeExportCount, `${expected.version} export count`)
     assert.equal(new Set(names).size, names.length, `${expected.version} duplicate export`)
+    if (expected.terminalImageJsSha256) {
+      assert.equal(
+        sha256(await readFile(join(root, 'dist', 'terminal-image.js'))),
+        expected.terminalImageJsSha256,
+        `${expected.version} terminal-image.js`,
+      )
+      assert.equal(
+        sha256(await readFile(join(root, 'dist', 'terminal-image.d.ts'))),
+        expected.terminalImageDtsSha256,
+        `${expected.version} terminal-image.d.ts`,
+      )
+    }
     exportsByVersion.set(expected.version, names)
   }
 

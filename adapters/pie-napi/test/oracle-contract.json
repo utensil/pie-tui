@@ -193,6 +193,15 @@
     "wrapTextWithAnsi": "function"
   },
   "packageLicenseSha256": "d1269faa5cf1cf1e8586ba6e89ccb1ad5050a8a828401320bfc021c9710d779c",
+  "adoptedRuntimeOverlays": {
+    "setCapabilityOverrides": {
+      "referenceVersion": "0.84.4",
+      "runtimeType": "function",
+      "name": "setCapabilityOverrides",
+      "length": 1,
+      "declaration": "export declare function setCapabilityOverrides(overrides: Partial<TerminalCapabilities>): void;"
+    }
+  },
   "runtimeTypes": {
     "Box": "function",
     "CURSOR_MARKER": "string",
@@ -255,6 +264,7 @@
     "renderLatex": "function",
     "resetCapabilitiesCache": "function",
     "setCapabilities": "function",
+    "setCapabilityOverrides": "function",
     "setCellDimensions": "function",
     "setKeybindings": "function",
     "setKittyProtocolActive": "function",

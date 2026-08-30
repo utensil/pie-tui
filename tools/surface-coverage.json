@@ -74,6 +74,7 @@
         "renderLatex",
         "resetCapabilitiesCache",
         "setCapabilities",
+        "setCapabilityOverrides",
         "setCellDimensions",
         "setKeybindings",
         "setKittyProtocolActive",
@@ -83,13 +84,15 @@
         "visibleWidth",
         "wrapTextWithAnsi"
       ],
-      "selectedRuntimeExportCount": 69,
+      "selectedRuntimeExportCount": 70,
       "canonicalRuntimeExportCount": 69,
       "evidence": [
         "adapters/pie-napi/test/check-reference.mjs",
         "adapters/pie-napi/test/check-surface.mjs",
         "adapters/pie-napi/test/check-type-surface.mjs",
         "adapters/pie-napi/test/check-upstream-drift.mjs",
+        "adapters/pie-napi/test/check-capability-overrides-reference.mjs",
+        "adapters/pie-napi/test/capability-overrides.test.mjs",
         "adapters/pie-napi/test/runtime.test.mjs",
         "adapters/pie-napi/test/m5-runtime.test.mjs",
         "adapters/pie-napi/test/m6-runtime.test.mjs",
@@ -100,7 +103,18 @@
         "adapters/pie-napi/test/check-mutations.mjs",
         "tools/tmux-napi-smoke.sh",
         "tools/check-current-dsh-consumer.sh"
-      ]
+      ],
+      "canonicalBaselineRuntimeExportCount": 69,
+      "canonicalBaselineTypeNameCount": 133,
+      "adoptedRuntimeOverlays": {
+        "setCapabilityOverrides": {
+          "referenceVersion": "0.84.4",
+          "runtimeType": "function",
+          "name": "setCapabilityOverrides",
+          "length": 1,
+          "declaration": "export declare function setCapabilityOverrides(overrides: Partial<TerminalCapabilities>): void;"
+        }
+      }
     }
   },
   "policy": {

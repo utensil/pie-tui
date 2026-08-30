@@ -755,6 +755,10 @@ export function detectCapabilities(
 export function getCapabilities(): TerminalCapabilities
 export function resetCapabilitiesCache(): void
 export function setCapabilities(capabilities: TerminalCapabilities): void
+/** Override selected auto-detected capabilities. */
+export function setCapabilityOverrides(
+  overrides: Partial<TerminalCapabilities>,
+): void
 
 /** Returns the reference's actual random range: 1 through 0xfffffffe. */
 export function allocateImageId(): number

@@ -52,11 +52,15 @@ const M3_TARGET = 80;
 const RUST_CONTROLLER_ORACLE_VERSION = "0.84.1";
 const EXPECTED_NAPI_PACKAGE = "pie-tui-native";
 const EXPECTED_NAPI_RUNTIME_EXPORTS = Object.freeze(Object.keys(napiOracle.runtimeTypes ?? {}));
+const EXPECTED_ADOPTED_RUNTIME_OVERLAYS = Object.freeze(Object.keys(napiOracle.adoptedRuntimeOverlays ?? {}));
+const EXPECTED_NAPI_TYPE_NAMES = CANONICAL.symbolCount + EXPECTED_ADOPTED_RUNTIME_OVERLAYS.length;
 const EXPECTED_NAPI_EVIDENCE = Object.freeze([
   "adapters/pie-napi/test/check-reference.mjs",
   "adapters/pie-napi/test/check-surface.mjs",
   "adapters/pie-napi/test/check-type-surface.mjs",
   "adapters/pie-napi/test/check-upstream-drift.mjs",
+  "adapters/pie-napi/test/check-capability-overrides-reference.mjs",
+  "adapters/pie-napi/test/capability-overrides.test.mjs",
   "adapters/pie-napi/test/runtime.test.mjs",
   "adapters/pie-napi/test/m5-runtime.test.mjs",
   "adapters/pie-napi/test/m6-runtime.test.mjs",
@@ -71,7 +75,7 @@ const EXPECTED_NAPI_EVIDENCE = Object.freeze([
 const CALCULATE_IMAGE_ROWS_GAP = "Five oracle rows match, including the canonical omitted third-argument literal { widthPx: 9, heightPx: 18 } default; the remaining gap is that Rust's typed numeric boundary does not yet cover every JavaScript number coercion.";
 const CALCULATE_IMAGE_ROWS_README = "`calculateImageRows` defaults omitted cell dimensions to the canonical literal\n  9x18 values. Mutable global cell-dimension access is still needed by\n  `renderImage`;";
 const CALCULATE_IMAGE_ROWS_PARITY = "`calculateImageRows` matches the canonical omitted-argument literal 9x18 default but retains a JavaScript numeric/coercion gap; `imageFallback` still receives home/capability facts explicitly, and `renderImage` still receives cached capabilities and mutable global cell dimensions explicitly.";
-const NAPI_README_STATUS = "The private package exposes all 69 canonical runtime\n> exports and the 133-name declaration namespace";
+const NAPI_README_STATUS = "The private package keeps all 69 canonical 0.84.2 runtime exports and\n> 133 baseline type names, then adopts the single authenticated 0.84.4\n> `setCapabilityOverrides` overlay for an actual 70-export / 134-name facade";
 const TUI_CONTROLLER_TEST = "crates/pie-app/tests/tui_controller.rs";
 const TUI_CONTRACT_TEST = "crates/pie-components/tests/tui_contracts.rs";
 const MAIN_ALT_FIXTURE = "crates/pie-app/tests/fixtures/main-alt-controller.json";
@@ -247,9 +251,14 @@ if (new Set(selectedNapiRuntimeExports).size !== selectedNapiRuntimeExports.leng
   errors.push("N4 private package runtime subset contains duplicate exports");
 }
 for (const name of selectedNapiRuntimeExports) {
-  if (!canonicalRuntimeNames.includes(name)) {
-    errors.push(`N5 private package selected export is not canonical runtime: ${name}`);
+  if (!canonicalRuntimeNames.includes(name) && !EXPECTED_ADOPTED_RUNTIME_OVERLAYS.includes(name)) {
+    errors.push(`N5 private package selected export is neither baseline nor adopted overlay: ${name}`);
   }
+}
+if (!same(EXPECTED_ADOPTED_RUNTIME_OVERLAYS, ["setCapabilityOverrides"])
+  || napiOracle.adoptedRuntimeOverlays?.setCapabilityOverrides?.referenceVersion !== "0.84.4"
+  || napiOracle.adoptedRuntimeOverlays?.setCapabilityOverrides?.runtimeType !== "function") {
+  errors.push("N5 adopted runtime overlay receipt drift");
 }
 
 if (!same(ledger.reference, api.reference)) errors.push("L0 ledger reference does not equal canonical reference");
@@ -260,6 +269,9 @@ if (!napiBinding
   || napiBinding.dropIn !== true
   || napiBinding.selectedRuntimeExportCount !== EXPECTED_NAPI_RUNTIME_EXPORTS.length
   || napiBinding.canonicalRuntimeExportCount !== canonicalRuntimeNames.length
+  || napiBinding.canonicalBaselineRuntimeExportCount !== canonicalRuntimeNames.length
+  || napiBinding.canonicalBaselineTypeNameCount !== CANONICAL.symbolCount
+  || !same(napiBinding.adoptedRuntimeOverlays, napiOracle.adoptedRuntimeOverlays)
   || !same(napiBinding.selectedRuntimeExports, EXPECTED_NAPI_RUNTIME_EXPORTS)
   || !same(napiBinding.evidence, EXPECTED_NAPI_EVIDENCE)) {
   errors.push("N6 generated private Node-API binding receipt drift");
@@ -591,10 +603,13 @@ const roadmapMilestones = new Map(roadmapRows.map((row) => [row[0], row[2]]));
 
 function checkNapiDocReceipt(label, text) {
   const normalized = text.replace(/\s+/g, " ");
-  if (!new RegExp(`(?:${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${canonicalRuntimeNames.length}|${EXPECTED_NAPI_RUNTIME_EXPORTS.length}-export|all ${EXPECTED_NAPI_RUNTIME_EXPORTS.length} canonical runtime)`, "i").test(normalized)) {
+  if (!normalized.includes(`baseline ${canonicalRuntimeNames.length}/${CANONICAL.symbolCount}`)
+    || !normalized.includes(`actual ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${EXPECTED_NAPI_TYPE_NAMES}`)
+    || !normalized.includes("one adopted overlay")) {
     errors.push(`N8 ${label} omits the complete runtime-surface receipt`);
   }
-  if (!/133-name/i.test(normalized)) {
+  if (!normalized.includes(`baseline ${canonicalRuntimeNames.length}/${CANONICAL.symbolCount}`)
+    || !normalized.includes(`actual ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${EXPECTED_NAPI_TYPE_NAMES}`)) {
     errors.push(`N9 ${label} omits the exact declaration-namespace receipt`);
   }
 }
@@ -651,7 +666,7 @@ if (compactDoc(tuiLimitBlock) !== "- The integrated TuiBaseController remains a 
   errors.push("T13 README TuiBase current-limit receipt drift");
 }
 const napiLimitBlock = readme.match(/^- The private `pie-tui-native` package[\s\S]*?(?=\n- |\n\n)/m)?.[0];
-if (compactDoc(napiLimitBlock) !== `- The private pie-tui-native package exposes exactly ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${canonicalRuntimeNames.length} canonical runtime exports and the exact 133-name type namespace. Its drop-in claim is bounded to the authenticated 0.84.2 contract and recorded consumer/behavior corpus.`) {
+if (compactDoc(napiLimitBlock) !== `- The private pie-tui-native package preserves the authenticated 0.84.2 baseline ${canonicalRuntimeNames.length}/${CANONICAL.symbolCount}, plus one adopted 0.84.4 overlay, for an actual ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${EXPECTED_NAPI_TYPE_NAMES} runtime/type facade. Its drop-in claim remains bounded to that recorded Tier-0 corpus.`) {
   errors.push("N14 README private-package current-limit receipt drift");
 }
 const napiVerifyCommands = readme.match(/^npm --prefix adapters\/pie-napi run verify$/gm) ?? [];
@@ -689,9 +704,10 @@ if (!same(mainAltTmuxCommands, [MAIN_ALT_TMUX_COMMAND])) {
   errors.push(`A9 expected one exact Main/Alt tmux command, got ${JSON.stringify(mainAltTmuxCommands)}`);
 }
 const normalizedNapiReadme = napiReadme.replace(/\s+/g, " ");
-if (!normalizedNapiReadme.includes(`complete ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}-export runtime namespace`)
+if (!normalizedNapiReadme.includes(`actual ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}-export / ${EXPECTED_NAPI_TYPE_NAMES}-name facade`)
   || !normalizedNapiReadme.includes("authenticated pi-tui 0.84.2")
-  || !normalizedNapiReadme.includes("133-name")
+  || !normalizedNapiReadme.includes(`${canonicalRuntimeNames.length}-export runtime namespace`)
+  || !normalizedNapiReadme.includes(`${CANONICAL.symbolCount}-name baseline`)
   || !normalizedNapiReadme.includes("not the upstream package")
   || !normalizedNapiReadme.includes("documented parity ledger")) {
   errors.push("N11 package README must retain its complete-surface and bounded-envelope receipt");
@@ -796,8 +812,8 @@ if (canonicalParityRows.length !== 1) {
   errors.push(`D4 expected exactly one canonical public API parity row, got ${canonicalParityRows.length}`);
 } else {
   const [, status, evidence] = canonicalParityRows[0];
-  if (status !== "✅ M6 authenticated surface") {
-    errors.push(`D5 parity canonical status: expected M6 authenticated surface, got ${status}`);
+  if (status !== "✅ M6 baseline + bounded overlay") {
+    errors.push(`D5 parity canonical status: expected M6 baseline + bounded overlay, got ${status}`);
   }
   checkParityNumbers(
     "canonical symbol count", evidence, /(\d+)\s+exact symbols/, [derivedMetrics.symbols.total],
@@ -944,7 +960,7 @@ if (napiParityRows.length !== 1) {
   errors.push(`N12 expected exactly one private Node-API parity row, got ${napiParityRows.length}`);
 } else {
   const [, status, evidence] = napiParityRows[0];
-  if (status !== `✅ reviewed ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${canonicalRuntimeNames.length} runtime + 133-name types`) {
+  if (status !== `✅ baseline ${canonicalRuntimeNames.length}/${CANONICAL.symbolCount} + one adopted overlay = actual ${EXPECTED_NAPI_RUNTIME_EXPORTS.length}/${EXPECTED_NAPI_TYPE_NAMES}`) {
     errors.push(`N13 private Node-API parity status drift: ${status}`);
   }
   checkNapiDocReceipt("private Node-API parity row", `${status} ${evidence}`);

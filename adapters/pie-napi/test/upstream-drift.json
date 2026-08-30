@@ -13,6 +13,8 @@
     "tarballIntegrity": "sha512-nPUnwDkLtupPXnZQYrCwPFcuTydCDqTY6ZbFqhsL4S4kVq0AT418kPa/6uXwtaCD+MjBNBltb7ScTYX65yeE1w==",
     "indexJsSha256": "a2f955f745dd3eaae8d3e8c122cf9f778ca8e7855d4cb0fe773d1594cb0581ae",
     "indexDtsSha256": "63bc1443bea709e2b308ecc8fbf0e35ce1b41095c1833d687fe4d97f1f9ac637",
+    "terminalImageJsSha256": "4d3f9ac5c61c42e3d198ea90db05fe9159ea8942191dafed5c6fafc9be870bd6",
+    "terminalImageDtsSha256": "ca936d3f496444a0fe2a6a9edce103589db5cb86d8c44ac074ff860399904abb",
     "runtimeExportCount": 70,
     "addedRuntimeExports": ["setCapabilityOverrides"]
   }

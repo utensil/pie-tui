@@ -2,9 +2,10 @@
 
 Milestone M6 closes the authenticated Tier-0 production paths of the private,
 repo-owned Node-API compatibility package. It
-exposes the complete 69-export runtime namespace and exact 133-name declaration
-namespace of the authenticated pi-tui 0.84.2 baseline, including canonical
-component, terminal, and Main/Alt screen classes.
+preserves the complete 69-export runtime namespace and exact 133-name baseline
+of the authenticated pi-tui 0.84.2 package, including canonical component,
+terminal, and Main/Alt screen classes. It adopts only the authenticated 0.84.4
+`setCapabilityOverrides` addition, yielding an actual 70-export / 134-name facade.
 It is an installable package alias for the recorded Tier-0 consumer contract;
 it is not the upstream package and does not claim compatibility outside the
 documented parity ledger and verification corpus.
@@ -36,7 +37,8 @@ compatibility namespace remains separate from the private ABI in `src/native.rs`
   the lower Rust approximation remains outside the selected facade.
 - Padded truncation preflights JavaScript's maximum string length and raises a
   catchable `RangeError` before a native allocation can abort the process.
-- Cell dimensions and capability overrides retain caller object identity.
+- Cell dimensions and temporary `setCapabilities` values retain caller object
+  identity. Persistent `setCapabilityOverrides` input is defensively cloned;
   ESM and CommonJS share the same runtime slots.
 - Capability detection snapshots every consumed terminal-environment value
   before invoking the optional tmux callback, then passes those immutable facts
@@ -57,9 +59,9 @@ compatibility namespace remains separate from the private ABI in `src/native.rs`
   JavaScript-owned `Number`, path, live capability/cell fact, and callback-free
   sequencing semantics. Raw unpaired surrogates in image payloads and composed
   terminal lines are preserved across the private native boundary.
-- The 69-key namespace has the pinned canonical namespace order and exact
-  module descriptors, null prototype, shared ESM/CommonJS values, and
-  non-extensible mutation behavior.
+- The 69-key baseline plus one adopted overlay has the pinned 70-key namespace
+  order and exact module descriptors, null prototype, shared ESM/CommonJS
+  values, and non-extensible mutation behavior.
 - A fresh consumer uses an npm `file:` dependency alias named
   `@earendil-works/pi-tui` and exercises the complete runtime namespace,
   component graphs, callbacks, and Main/Alt screen lifecycle. This does not
@@ -74,9 +76,14 @@ compatibility namespace remains separate from the private ABI in `src/native.rs`
   dependency versions and complete dependency trees, all 156 collision-free
   `dist` files, the full 69-name runtime order/type namespace, and the selected
   behavior-bearing source/type closure.
-- A separate drift gate authenticates the 0.84.2 and 0.84.4 npm tarballs. It
-  proves 0.84.2 retains the same 69-export runtime contract and records the
-  later 0.84.4 `setCapabilityOverrides` addition without silently widening M6.
+- Separate drift and semantic gates authenticate the 0.84.2 and 0.84.4 npm
+  tarballs. They prove the baseline remains 69/133 and adopt exactly one later
+  overlay for an actual 70/134 surface. The overlay defensively clones partial
+  overrides, preserves equal-cache identity, invalidates changed values, and
+  persists across resets without adopting the other 0.84.4 capability changes.
+- A real packed 0.84.4 coding-agent probe links this facade, loads its settings,
+  and constructs `InteractiveMode`. Full initialization also needs the separate
+  later `TuiAltScreen.setCopyOnSelect` method and is deliberately not claimed.
 - The tarball includes this repository's exact MIT `LICENSE`; pack-manifest,
   digest, install, and local-alias tests guard it.
 - Native builds pin Rust 1.98.0 and deterministically remap the source tree,

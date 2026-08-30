@@ -428,6 +428,8 @@ const ledger = {
         "adapters/pie-napi/test/check-surface.mjs",
         "adapters/pie-napi/test/check-type-surface.mjs",
         "adapters/pie-napi/test/check-upstream-drift.mjs",
+        "adapters/pie-napi/test/check-capability-overrides-reference.mjs",
+        "adapters/pie-napi/test/capability-overrides.test.mjs",
         "adapters/pie-napi/test/runtime.test.mjs",
         "adapters/pie-napi/test/m5-runtime.test.mjs",
         "adapters/pie-napi/test/m6-runtime.test.mjs",
@@ -439,6 +441,11 @@ const ledger = {
         "tools/tmux-napi-smoke.sh",
         "tools/check-current-dsh-consumer.sh",
       ],
+      canonicalBaselineRuntimeExportCount: api.statements
+        .flatMap((statement) => statement.symbols)
+        .filter((symbol) => symbol.exportKind === "runtime").length,
+      canonicalBaselineTypeNameCount: api.reference.symbolCount,
+      adoptedRuntimeOverlays: napiOracle.adoptedRuntimeOverlays,
     },
   },
   policy: {

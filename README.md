@@ -6,8 +6,9 @@ The public package contract is pinned to version 0.84.2; differential fixtures a
 API ledger keep compatibility claims tied to evidence.
 
 > **Status:** M0–M6 are complete for the authenticated pi-tui 0.84.2 Tier-0
-> production-behavior envelope. The private package exposes all 69 canonical runtime
-> exports and the 133-name declaration namespace; production ProcessTerminal and
+> production-behavior envelope. The private package keeps all 69 canonical 0.84.2 runtime exports and
+> 133 baseline type names, then adopts the single authenticated 0.84.4
+> `setCapabilityOverrides` overlay for an actual 70-export / 134-name facade; production ProcessTerminal and
 > native-planned Main/Alt screen facades pass semantic-oracle, mutation, and real-tmux
 > lifecycle gates. A clean `dsh-pi-tui-mono` override at `c59fd5d` passes all 40
 > front-door tests plus a real packed `InteractiveMode` render/input/resize/teardown
@@ -28,7 +29,7 @@ The [work queue](docs/roadmap.md) is the source of truth for milestone state.
 | M3 | Complete | Component waves, fuzzy matching, keybindings, staged direct-import contract, and the exhaustive canonical API ledger; reviewed M5 foundation mappings raised the receipt above its 80-symbol target. |
 | M4.0 | Complete | Sealed pure frame/diff state, transactional terminal byte planning/execution, and app-owned main-screen control with the legacy renderer contract preserved. |
 | M4 | Complete | Editor/Input state and lifecycle, kill ring and undo, marked-backed Markdown, and an exact raw-UTF-16 LaTeX compatibility boundary. Canonical Editor/Input/Markdown interfaces remain honestly partial where M5 owns host/runtime seams. |
-| M5 | Complete | Full 69-export Node-API runtime and 133-name TypeScript surface, production ProcessTerminal and canonical Main/Alt facades, 0.84.2/0.84.4 drift receipt, clean package and current pi-dsh consumer checks, plus teardown-oriented real-tmux coverage. |
+| M5 | Complete | Full 0.84.2 Node-API baseline, production ProcessTerminal and canonical Main/Alt facades, authenticated drift receipt, clean package and current pi-dsh consumer checks, plus teardown-oriented real-tmux coverage. The later bounded addition is explicit: baseline 69/133 + one adopted overlay = actual 70/134. |
 | M6 | Complete | Authenticated full-tree 0.84.2 contract, terminal/TuiBase semantics, native-planned Main/Alt transactions, decisive mutations, a real packed-consumer `InteractiveMode` lifecycle, and exact-SHA macOS/Linux arm64/x64 CI. |
 
 ## Available now
@@ -58,8 +59,9 @@ The workspace is intentionally layered:
   process-stream/event-loop ownership and canonical JavaScript screen classes.
 - `pie-napi` contains both the compiled Rust compatibility namespace used by the
   API contract tests and the private dual ESM/CommonJS `pie-tui-native` Node-API
-  package. The package has the reviewed ordered 69/69 runtime namespace, exact
-  133-name TypeScript namespace, native-backed behavioral state, canonical
+  package. The package preserves the reviewed ordered 69/69 runtime and
+  133-name TypeScript baseline, then adds only the authenticated 0.84.4
+  `setCapabilityOverrides` overlay for an actual 70-export / 134-name facade, with native-backed behavioral state and canonical
   JavaScript identity seams, and reproducible native artifacts. It is a clean
   alias for the recorded consumer contract, not a claim beyond the parity ledger.
 
@@ -161,9 +163,7 @@ consumer lifecycle, and exact-SHA four-target CI.
 - The integrated `TuiBaseController` remains a deterministic injected-host Rust
   foundation. The adapter now supplies production host/event-loop wiring,
   canonical screen classes, and current-consumer execution.
-- The private `pie-tui-native` package exposes exactly 69/69 canonical runtime
-  exports and the exact 133-name type namespace. Its drop-in claim is bounded to
-  the authenticated 0.84.2 contract and recorded consumer/behavior corpus.
+- The private `pie-tui-native` package preserves the authenticated 0.84.2 baseline 69/133, plus one adopted 0.84.4 overlay, for an actual 70/134 runtime/type facade. Its drop-in claim remains bounded to that recorded Tier-0 corpus.
 - The supported Node floor remains 24.4.1. Node 22.19.0 passes the runtime and
   pack gates but diverges in the authenticated Alt-screen search oracle, so it is
   tested evidence rather than an advertised compatibility claim.

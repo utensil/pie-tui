@@ -31,12 +31,15 @@ const testFiles = [
   'artifact-helpers.mjs',
   'boundary-child.mjs',
   'check-reference.mjs',
+  'check-capability-overrides-reference.mjs',
+  'capability-overrides.test.mjs',
   'oracle-contract.json',
   'm6-runtime.test.mjs',
   'm6-semantic-oracle.mjs',
   'pack-consumer.mjs',
   'postm6-randomized.test.mjs',
   'runtime.test.mjs',
+  'upstream-drift.json',
 ]
 
 for (const entry of await readdir(packageRoot)) {
@@ -67,6 +70,49 @@ async function replaceOnce(directory, file, from, to) {
 }
 
 const runtimeMutations = [
+  {
+    name: 'capability-overlay-clone-loss',
+    from: '  capabilityOverrides = { ...overrides }',
+    to: '  capabilityOverrides = overrides',
+    expected:
+      'capability overrides clone the input and take partial precedence',
+    testFile: 'capability-overrides.test.mjs',
+  },
+  {
+    name: 'capability-overlay-precedence-inversion',
+    from:
+      '      ...detectCapabilities(\n        hyperlinks === undefined ? undefined : () => hyperlinks,\n      ),\n      ...capabilityOverrides,',
+    to:
+      '      ...capabilityOverrides,\n      ...detectCapabilities(\n        hyperlinks === undefined ? undefined : () => hyperlinks,\n      ),',
+    expected:
+      'capability overrides clone the input and take partial precedence',
+    testFile: 'capability-overrides.test.mjs',
+  },
+  {
+    name: 'capability-overlay-equality-cache-loss',
+    from: '    capabilityOverrides.images === overrides.images &&',
+    to: '    false && capabilityOverrides.images === overrides.images &&',
+    expected:
+      'equal overrides preserve cache identity while changed values invalidate it',
+    testFile: 'capability-overrides.test.mjs',
+  },
+  {
+    name: 'capability-overlay-change-keeps-stale-cache',
+    from: '  capabilityOverrides = { ...overrides }\n  cachedCapabilities = null',
+    to: '  capabilityOverrides = { ...overrides }\n  // mutation: keep stale cache',
+    expected:
+      'equal overrides preserve cache identity while changed values invalidate it',
+    testFile: 'capability-overrides.test.mjs',
+  },
+  {
+    name: 'capability-overlay-reset-clears-persistence',
+    from: 'function resetCapabilitiesCache() {\n  cachedCapabilities = null\n}',
+    to:
+      'function resetCapabilitiesCache() {\n  cachedCapabilities = null\n  capabilityOverrides = {}\n}',
+    expected:
+      'persistent overrides survive reset and resume after setCapabilities',
+    testFile: 'capability-overrides.test.mjs',
+  },
   {
     name: 'cursor-marker-byte-drift',
     from: 'const CURSOR_MARKER = native.nativeCursorMarker()',
@@ -382,10 +428,26 @@ try {
     await expectKilled(
       mutation.name,
       directory,
-      ['--test', 'test/runtime.test.mjs'],
+      ['--test', `test/${mutation.testFile ?? 'runtime.test.mjs'}`],
       mutation.expected,
     )
   }
+
+  const overlaySourceDigestDirectory = await prepareCase(
+    'capability-overlay-reference-source-digest',
+  )
+  await replaceOnce(
+    overlaySourceDigestDirectory,
+    'test/upstream-drift.json',
+    '4d3f9ac5c61c42e3d198ea90db05fe9159ea8942191dafed5c6fafc9be870bd6',
+    '5d3f9ac5c61c42e3d198ea90db05fe9159ea8942191dafed5c6fafc9be870bd6',
+  )
+  await expectKilled(
+    'capability-overlay-reference-source-digest',
+    overlaySourceDigestDirectory,
+    ['test/check-capability-overrides-reference.mjs'],
+    'terminal-image.js SHA-256',
+  )
 
   for (const mutation of m6RuntimeMutations) {
     const directory = await prepareCase(mutation.name)
@@ -570,14 +632,14 @@ try {
   await replaceOnce(
     readmeCountDirectory,
     'README.md',
-    'complete 69-export runtime namespace and exact 133-name declaration\nnamespace of the authenticated pi-tui 0.84.2 baseline',
-    'incomplete 68-export runtime namespace and exact 133-name declaration\nnamespace of the authenticated pi-tui 0.84.2 baseline',
+    'complete 69-export runtime namespace and exact 133-name baseline\nof the authenticated pi-tui 0.84.2 package',
+    'incomplete 68-export runtime namespace and exact 133-name baseline\nof the authenticated pi-tui 0.84.2 package',
   )
   await expectKilled(
     'readme-selected-count',
     readmeCountDirectory,
     ['test/pack-consumer.mjs'],
-    'README pins the complete 69-export baseline',
+    'README pins the complete 69/133 baseline',
   )
 
   const readmeBoundaryDirectory = await prepareCase(
@@ -610,6 +672,22 @@ try {
     differentialWiringDirectory,
     ['test/pack-consumer.mjs'],
     'verify command includes the authenticated 0.84.2 M6 semantic gate',
+  )
+
+  const overlayWiringDirectory = await prepareCase(
+    'verify-capability-overlay-wiring',
+  )
+  await replaceOnce(
+    overlayWiringDirectory,
+    'package.json',
+    ' && npm run oracle:overlay',
+    '',
+  )
+  await expectKilled(
+    'verify-capability-overlay-wiring',
+    overlayWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated 0.84.4 overlay gate',
   )
 
   const licenseOmissionDirectory = await prepareCase('license-omission')

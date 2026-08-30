@@ -50,7 +50,8 @@
     "test:pack": "node test/pack-consumer.mjs",
     "oracle:check": "node test/check-reference.mjs",
     "oracle:drift": "node test/check-upstream-drift.mjs",
-    "verify": "npm run oracle:check && npm run oracle:drift && npm run test:surface && npm run test:typesurface && npm run build && npm run test:artifact && npm test && npm run test:types && npm run test:differential && npm run test:m6oracle && npm run test:pack && npm run test:mutations"
+    "oracle:overlay": "node test/check-capability-overrides-reference.mjs",
+    "verify": "npm run oracle:check && npm run oracle:drift && npm run test:surface && npm run test:typesurface && npm run build && npm run oracle:overlay && npm run test:artifact && npm test && npm run test:types && npm run test:differential && npm run test:m6oracle && npm run test:pack && npm run test:mutations"
   },
   "dependencies": {
     "marked": "18.0.5"
