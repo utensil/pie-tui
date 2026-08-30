@@ -35,6 +35,7 @@ const testFiles = [
   'm6-runtime.test.mjs',
   'm6-semantic-oracle.mjs',
   'pack-consumer.mjs',
+  'postm6-randomized.test.mjs',
   'runtime.test.mjs',
 ]
 
@@ -285,6 +286,19 @@ const m6RuntimeMutations = [
   },
 ]
 
+const postM6RandomizedMutations = [
+  {
+    name: 'postm6-scroll-upper-clamp-loss',
+    from: '    const next = Math.max(0, Math.min(maximum, requested))',
+    to: '    const next = Math.max(0, requested)',
+  },
+  {
+    name: 'postm6-vstack-available-height-loss',
+    from: '      const sizes = component.allocate(entries, intrinsic, componentHeight)',
+    to: '      const sizes = component.allocate(entries, intrinsic, undefined)',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -381,6 +395,17 @@ try {
       directory,
       ['--test', 'test/m6-runtime.test.mjs'],
       mutation.expected,
+    )
+  }
+
+  for (const mutation of postM6RandomizedMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', 'test/postm6-randomized.test.mjs'],
+      'post-M6 deterministic fullscreen ScrollView state machine stays bounded',
     )
   }
 
