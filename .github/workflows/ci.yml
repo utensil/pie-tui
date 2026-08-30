@@ -7,7 +7,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       # rustup reads the repository's exact rust-toolchain.toml pin. Keeping
       # installation policy in one file prevents local/CI Clippy drift.
       - name: install pinned Rust toolchain
@@ -29,7 +29,7 @@ jobs:
         run: bash tools/check-fresh-pie-app-consumer.sh
       - name: surface-coverage gate
         run: node tools/check-coverage.mjs
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24.4.1
       - name: install Node-API dependencies and authenticated references
@@ -82,12 +82,12 @@ jobs:
             addon: pie-tui-native.linux-x64-gnu.node
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: install pinned Rust toolchain
         run: |
           rustup show active-toolchain
           rustc --version --verbose
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 24.4.1
           cache: npm
