@@ -289,6 +289,178 @@ impl NativeMainScreenPlanner {
     }
 }
 
+#[cfg(test)]
+mod screen_planner_tests {
+    use super::{NativeAltScreenPlanner, NativeMainScreenPlanner};
+    use napi::Status;
+
+    const RESET: &str = "\x1b[0m\x1b]8;;\x07";
+    const CURSOR_MARKER: &str = "\x1b_pi:c\x07";
+
+    fn action_pairs(actions: &[super::NativeTerminalAction]) -> Vec<(&str, Option<&str>)> {
+        actions
+            .iter()
+            .map(|action| (action.kind.as_str(), action.data.as_deref()))
+            .collect()
+    }
+
+    #[test]
+    fn alt_planner_emits_exact_full_and_differential_frames() {
+        let mut planner = NativeAltScreenPlanner::new();
+
+        let initial = planner.render(vec!["one".into(), "two".into()], 8, 2);
+        assert_eq!(
+            initial,
+            "\x1b[?2026h\x1b[2J\x1b[1;1H\x1b[2Kone\x1b[0m\x1b]8;;\x07\x1b[2;1H\x1b[2Ktwo\x1b[0m\x1b]8;;\x07\x1b[?25l\x1b[?2026l"
+        );
+        assert_eq!(planner.full_redraws(), 1);
+
+        assert_eq!(
+            planner.render(vec!["one".into(), "two".into()], 8, 2),
+            "\x1b[?2026h\x1b[?25l\x1b[?2026l"
+        );
+        assert_eq!(planner.full_redraws(), 1);
+
+        assert_eq!(
+            planner.render(vec!["one".into(), "TWO".into()], 8, 2),
+            "\x1b[?2026h\x1b[2;1H\x1b[2KTWO\x1b[0m\x1b]8;;\x07\x1b[?25l\x1b[?2026l"
+        );
+        assert_eq!(planner.full_redraws(), 1);
+    }
+
+    #[test]
+    fn alt_planner_resize_reset_clamp_and_truncation_are_stateful() {
+        let mut planner = NativeAltScreenPlanner::new();
+        planner.render(vec!["a".into(), "b".into(), "discarded".into()], 3, 2);
+        assert_eq!(planner.previous_screen, vec!["a", "b"]);
+        assert_eq!(planner.full_redraws(), 1);
+
+        let resized = planner.render(vec!["a".into(), "b".into(), "discarded".into()], 4, 2);
+        assert!(resized.starts_with("\x1b[?2026h\x1b[2J"));
+        assert!(!resized.contains("discarded"));
+        assert_eq!(planner.full_redraws(), 2);
+
+        planner.reset();
+        assert!(planner.previous_screen.is_empty());
+        assert_eq!((planner.previous_width, planner.previous_height), (0, 0));
+        let after_reset = planner.render(vec!["z".into(), "discarded".into()], 0, 0);
+        assert_eq!(
+            after_reset,
+            "\x1b[?2026h\x1b[2J\x1b[1;1H\x1b[2Kz\x1b[0m\x1b]8;;\x07\x1b[?25l\x1b[?2026l"
+        );
+        assert_eq!(planner.previous_screen, vec!["z"]);
+        assert_eq!((planner.previous_width, planner.previous_height), (1, 1));
+        assert_eq!(planner.full_redraws(), 3);
+    }
+
+    #[test]
+    fn main_planner_preserves_exact_action_order_and_restorable_state() {
+        let mut planner = NativeMainScreenPlanner::new();
+        let lines = vec!["one".into(), format!("t{CURSOR_MARKER}")];
+        let actions = planner
+            .render(lines.clone(), 8, 3, false, false, true)
+            .expect("initial frame is valid");
+        let initial_write = format!("\x1b[?2026hone{RESET}\r\nt{RESET}\x1b[?2026l");
+        assert_eq!(
+            action_pairs(&actions),
+            vec![
+                ("write", Some(initial_write.as_str())),
+                ("write", Some("\x1b[2G")),
+                ("showCursor", None),
+            ]
+        );
+        assert_eq!(planner.full_redraws(), 1);
+
+        let state = planner.capture();
+        assert_eq!(
+            state.previous_lines,
+            vec![format!("one{RESET}"), format!("t{RESET}")]
+        );
+        assert_eq!((state.previous_width, state.previous_height), (8, 3));
+        assert_eq!((state.cursor_row, state.hardware_cursor_row), (1, 1));
+        assert_eq!(state.max_lines_rendered, 2);
+
+        let unchanged = planner
+            .render(lines.clone(), 8, 3, false, false, true)
+            .expect("unchanged frame is valid");
+        assert_eq!(
+            action_pairs(&unchanged),
+            vec![("write", Some("\x1b[2G")), ("showCursor", None)]
+        );
+        assert_eq!(planner.full_redraws(), 1);
+
+        let mut restored = NativeMainScreenPlanner::new();
+        restored.restore(state);
+        let restored_actions = restored
+            .render(lines, 8, 3, false, false, true)
+            .expect("restored frame is valid");
+        assert_eq!(
+            action_pairs(&restored_actions),
+            vec![("write", Some("\x1b[2G")), ("showCursor", None)]
+        );
+        assert_eq!(restored.full_redraws(), 0);
+    }
+
+    #[test]
+    fn main_planner_reset_stopped_clamp_and_invalid_frame_are_bounded() {
+        let mut planner = NativeMainScreenPlanner::new();
+        planner
+            .render(vec!["ok".into()], 4, 2, false, false, false)
+            .expect("seed frame is valid");
+        assert_eq!(planner.full_redraws(), 1);
+
+        planner.set_stopped(true);
+        assert!(
+            planner
+                .render(vec!["held".into()], 4, 2, true, false, false)
+                .expect("stopped planner accepts a frame")
+                .is_empty()
+        );
+        assert_eq!(planner.capture().previous_lines, vec![format!("ok{RESET}")]);
+
+        planner.set_stopped(false);
+        planner.reset();
+        let reset_state = planner.capture();
+        assert!(reset_state.previous_lines.is_empty());
+        assert_eq!(
+            (reset_state.previous_width, reset_state.previous_height),
+            (-1, -1)
+        );
+        let reset_actions = planner
+            .render(Vec::new(), 0, 0, false, false, false)
+            .expect("zero dimensions clamp to one cell");
+        assert_eq!(
+            action_pairs(&reset_actions),
+            vec![
+                ("write", Some("\x1b[?2026h\x1b[2J\x1b[H\x1b[3J\x1b[?2026l")),
+                ("hideCursor", None),
+            ]
+        );
+        assert_eq!(
+            (
+                planner.capture().previous_width,
+                planner.capture().previous_height
+            ),
+            (1, 1)
+        );
+        assert_eq!(planner.full_redraws(), 2);
+
+        let state_before_error = planner.capture();
+        let redraws_before_error = planner.full_redraws();
+        let error = match planner.render(vec!["xx".into()], 0, 0, false, false, false) {
+            Ok(_) => panic!("two visible cells must not fit the clamped width"),
+            Err(error) => error,
+        };
+        assert_eq!(error.status, Status::InvalidArg);
+        assert!(error.reason.contains("invalid logical frame: LineTooWide"));
+        assert_eq!(
+            planner.capture().previous_lines,
+            state_before_error.previous_lines
+        );
+        assert_eq!(planner.full_redraws(), redraws_before_error);
+    }
+}
+
 #[napi(object)]
 pub struct NativeFuzzyResult {
     pub matches: bool,
