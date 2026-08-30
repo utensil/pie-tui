@@ -2342,22 +2342,56 @@ class TuiAltScreen extends TuiBase {
     try { this.onRightClickPaste() } catch {}
     return true
   }
-  selectionPoint(event) {
-    const primaryTop = this.currentLayout?.primaryRect?.y ?? 0
+  getScrollSelectionPoint(scrollView, x, y) {
+    if (!this.currentLayout) return undefined
+    const box = getScrollViewBox(this.currentLayout, scrollView)
+    if (!box || box.rect.height <= 0 || box.clip.height <= 0) return undefined
+    const visibleTop = Math.max(0, box.rect.y, box.clip.y)
+    const visibleBottom = Math.min(
+      this.terminal.rows - 1,
+      box.rect.y + box.rect.height - 1,
+      box.clip.y + box.clip.height - 1,
+    )
+    if (visibleBottom < visibleTop) return undefined
+    const pointerRow = Math.max(visibleTop, Math.min(visibleBottom, y))
+    const maxContentRow = Math.max(0, (box.scrollContentLines?.length ?? 1) - 1)
     return {
-      row: Math.max(0, Math.min(this.lastDocument.length - 1, this.viewportTop + event.y - primaryTop)),
+      row: Math.max(
+        0,
+        Math.min(maxContentRow, scrollView.scrollTop + pointerRow - box.rect.y),
+      ),
+      col: Math.max(0, Math.min(box.rect.width - 1, x - box.rect.x)),
+      scrollView,
+    }
+  }
+  getSelectionPoint(event, scrollView) {
+    if (scrollView) {
+      const point = this.getScrollSelectionPoint(scrollView, event.x, event.y)
+      if (point) return point
+    }
+    return {
+      row: Math.max(0, Math.min(this.terminal.rows - 1, event.y)),
       col: Math.max(0, Math.min(this.terminal.columns - 1, event.x)),
     }
+  }
+  getSelectionSourceLine(point) {
+    if (point.scrollView && this.currentLayout) {
+      const lines = getScrollViewBox(this.currentLayout, point.scrollView)?.scrollContentLines
+      if (lines) return lines[point.row] ?? ''
+    }
+    return this.previousScreen[point.row] ?? ''
   }
   handleSelectionMouseEvent(event) {
     const button = event.button & 3
     if (button !== 0 && !(event.release && button === 3)) return
-    const point = this.selectionPoint(event)
+    const anchorScrollView = this.selectionAnchor?.scrollView
+    const point = this.getSelectionPoint(event, anchorScrollView)
     if (event.release) {
       if (!this.selectionPressActive) return
       this.selectionPressActive = false
       this.selectionFocus = point
       const clickedUrl = !this.selectionDragged &&
+        this.selectionAnchor?.scrollView === point.scrollView &&
         this.selectionAnchor?.row === point.row && this.selectionAnchor?.col === point.col
           ? this.pressedUrl : undefined
       this.pressedUrl = undefined
@@ -2378,33 +2412,58 @@ class TuiAltScreen extends TuiBase {
       this.requestRender()
       return
     }
+    const scrollView = !this.hasOverlay() && this.currentLayout
+      ? getScrollViewsAt(this.currentLayout, event.x, event.y)[0]
+      : undefined
+    const anchor = this.getSelectionPoint(event, scrollView)
     this.selectionPressActive = true
-    this.selectionAnchor = point
-    this.selectionFocus = point
+    this.selectionAnchor = anchor
+    this.selectionFocus = anchor
     this.selectionDragged = false
-    this.pressedUrl = getOsc8LinkAtColumn(this.previousScreen[event.y] ?? '', point.col)
+    this.pressedUrl = getOsc8LinkAtColumn(
+      this.previousScreen[Math.max(0, Math.min(this.terminal.rows - 1, event.y))] ?? '',
+      Math.max(0, Math.min(this.terminal.columns - 1, event.x)),
+    )
     this.requestRender()
   }
   getSelectionBounds() {
     const anchor = this.selectionAnchor
     const focus = this.selectionFocus
-    if (!anchor || !focus || (anchor.row === focus.row && anchor.col === focus.col)) return undefined
+    if (!anchor || !focus || anchor.scrollView !== focus.scrollView ||
+      (anchor.row === focus.row && anchor.col === focus.col)) return undefined
     return anchor.row < focus.row || (anchor.row === focus.row && anchor.col < focus.col)
       ? { start: anchor, end: focus }
       : { start: focus, end: anchor }
   }
-  getSelectionColumns(line, row, selection) {
-    const width = visibleWidth(line)
-    const start = row === selection.start.row ? Math.min(selection.start.col, width) : 0
-    const end = row === selection.end.row ? Math.min(selection.end.col + 1, width) : width
-    return { start, end }
+  getSelectionColumns(line, row, selection, minColumn = 0, maxColumn = visibleWidth(line)) {
+    const lineWidth = visibleWidth(line)
+    let start = Math.max(0, minColumn)
+    let end = Math.min(lineWidth, maxColumn)
+    if (row === selection.start.row) {
+      start = getLayoutGraphemeCellRange(line, selection.start.col)?.start ??
+        Math.min(selection.start.col, lineWidth)
+    }
+    if (row === selection.end.row) {
+      end = selection.end.boundary
+        ? Math.min(selection.end.col, lineWidth)
+        : getLayoutGraphemeCellRange(line, selection.end.col)?.end ??
+          Math.min(selection.end.col + 1, lineWidth)
+    }
+    return { start: Math.max(minColumn, start), end: Math.min(maxColumn, end) }
   }
   async copySelectionToClipboard() {
     const selection = this.getSelectionBounds()
     if (!selection) return
+    let sourceLines = this.previousScreen
+    if (selection.start.scrollView) {
+      if (!this.currentLayout) return
+      const box = getScrollViewBox(this.currentLayout, selection.start.scrollView)
+      if (!box?.scrollContentLines) return
+      sourceLines = box.scrollContentLines
+    }
     const lines = []
     for (let row = selection.start.row; row <= selection.end.row; row += 1) {
-      const line = this.lastDocument[row] ?? ''
+      const line = sourceLines[row] ?? ''
       const columns = this.getSelectionColumns(line, row, selection)
       lines.push(stripTerminalSequences(sliceByColumn(line, columns.start, Math.max(0, columns.end - columns.start), true)).trimEnd())
     }
@@ -2440,13 +2499,58 @@ class TuiAltScreen extends TuiBase {
     }
     return result
   }
-  applySelection(screen) {
+  applySelection(screen, layout = this.currentLayout) {
     const selection = this.getSelectionBounds()
     if (!selection) return screen
+    let screenSelection = selection
+    let minRow = 0
+    let maxRow = screen.length - 1
+    let minColumn = 0
+    let maxColumn = this.terminal.columns
+    if (selection.start.scrollView) {
+      if (!layout) return screen
+      const box = getScrollViewBox(layout, selection.start.scrollView)
+      if (!box) return screen
+      minRow = Math.max(0, box.rect.y, box.clip.y)
+      maxRow = Math.min(
+        screen.length - 1,
+        box.rect.y + box.rect.height - 1,
+        box.clip.y + box.clip.height - 1,
+      )
+      minColumn = Math.max(0, box.rect.x, box.clip.x)
+      maxColumn = Math.min(
+        this.terminal.columns,
+        box.rect.x + box.rect.width,
+        box.clip.x + box.clip.width,
+      )
+      screenSelection = {
+        start: {
+          ...selection.start,
+          row: box.rect.y + selection.start.row - selection.start.scrollView.scrollTop,
+          col: box.rect.x + selection.start.col,
+        },
+        end: {
+          ...selection.end,
+          row: box.rect.y + selection.end.row - selection.start.scrollView.scrollTop,
+          col: box.rect.x + selection.end.col,
+        },
+      }
+    }
     return screen.map((line, row) => {
-      const documentRow = this.viewportTop + row - (this.currentLayout?.primaryRect?.y ?? 0)
-      if (documentRow < selection.start.row || documentRow > selection.end.row || isImageLine(line)) return line
-      const columns = this.getSelectionColumns(line, documentRow, selection)
+      if (
+        row < minRow ||
+        row > maxRow ||
+        row < screenSelection.start.row ||
+        row > screenSelection.end.row ||
+        isImageLine(line)
+      ) return line
+      const columns = this.getSelectionColumns(
+        line,
+        row,
+        screenSelection,
+        minColumn,
+        maxColumn,
+      )
       if (columns.end <= columns.start) return line
       const width = visibleWidth(line)
       return `${sliceByColumn(line, 0, columns.start, true)}\x1b[7m${sliceByColumn(line, columns.start, columns.end - columns.start, true)}\x1b[27m${sliceByColumn(line, columns.end, Math.max(0, width - columns.end), true)}`

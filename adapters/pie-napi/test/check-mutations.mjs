@@ -41,6 +41,8 @@ const testFiles = [
   'runtime.test.mjs',
   'tier1-scroll.test.mjs',
   'tier1-scroll-oracle.mjs',
+  'selection-geometry.test.mjs',
+  'selection-geometry-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -453,6 +455,57 @@ const tier1ScrollMutations = [
   },
 ]
 
+const selectionGeometryMutations = [
+  {
+    name: 'selection-scrollview-identity-loss',
+    from:
+      '    const scrollView = !this.hasOverlay() && this.currentLayout\n' +
+      '      ? getScrollViewsAt(this.currentLayout, event.x, event.y)[0]\n' +
+      '      : undefined',
+    to: '    const scrollView = undefined',
+    pattern: 'selection remains owned by the hit ScrollView',
+  },
+  {
+    name: 'selection-scrollview-clip-loss',
+    from:
+      '    const pointerRow = Math.max(visibleTop, Math.min(visibleBottom, y))',
+    to: '    const pointerRow = y',
+    pattern: 'selection remains owned by the hit ScrollView',
+  },
+  {
+    name: 'selection-scrollview-source-loss',
+    from: '      sourceLines = box.scrollContentLines',
+    to: '      sourceLines = this.lastDocument',
+    pattern: 'selection remains owned by the hit ScrollView',
+  },
+  {
+    name: 'selection-cross-pane-identity-allow',
+    from:
+      '    if (!anchor || !focus || anchor.scrollView !== focus.scrollView ||\n' +
+      '      (anchor.row === focus.row && anchor.col === focus.col)) return undefined',
+    to:
+      '    if (!anchor || !focus ||\n' +
+      '      (anchor.row === focus.row && anchor.col === focus.col)) return undefined',
+    pattern: 'selection bounds reject endpoints from different ScrollViews',
+  },
+  {
+    name: 'selection-grapheme-start-snap-loss',
+    from:
+      '      start = getLayoutGraphemeCellRange(line, selection.start.col)?.start ??\n' +
+      '        Math.min(selection.start.col, lineWidth)',
+    to: '      start = Math.min(selection.start.col, lineWidth)',
+    pattern: 'selection endpoints snap to the complete wide grapheme',
+  },
+  {
+    name: 'selection-grapheme-end-snap-loss',
+    from:
+      '        : getLayoutGraphemeCellRange(line, selection.end.col)?.end ??\n' +
+      '          Math.min(selection.end.col + 1, lineWidth)',
+    to: '        : Math.min(selection.end.col + 1, lineWidth)',
+    pattern: 'selection end columns snap to the complete wide grapheme',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -589,6 +642,21 @@ try {
         '--test',
         `--test-name-pattern=${mutation.pattern}`,
         'test/tier1-scroll.test.mjs',
+      ],
+      mutation.pattern,
+    )
+  }
+
+  for (const mutation of selectionGeometryMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      [
+        '--test',
+        `--test-name-pattern=${mutation.pattern}`,
+        'test/selection-geometry.test.mjs',
       ],
       mutation.pattern,
     )
@@ -827,6 +895,22 @@ try {
     tier1WiringDirectory,
     ['test/pack-consumer.mjs'],
     'verify command includes the authenticated 0.84.2 Tier-1 scroll gate',
+  )
+
+  const selectionWiringDirectory = await prepareCase(
+    'verify-selection-geometry-oracle-wiring',
+  )
+  await replaceOnce(
+    selectionWiringDirectory,
+    'package.json',
+    ' && npm run test:selectionoracle',
+    '',
+  )
+  await expectKilled(
+    'verify-selection-geometry-oracle-wiring',
+    selectionWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated selection geometry gate',
   )
 
   const licenseOmissionDirectory = await prepareCase('license-omission')

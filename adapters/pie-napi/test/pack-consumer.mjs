@@ -132,6 +132,11 @@ try {
   )
   assert.match(
     installedManifest.scripts.verify,
+    /npm run test:selectionoracle/,
+    'verify command includes the authenticated selection geometry gate',
+  )
+  assert.match(
+    installedManifest.scripts.verify,
     /npm run oracle:overlay/,
     'verify command includes the authenticated 0.84.4 overlay gate',
   )
