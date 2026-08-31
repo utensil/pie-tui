@@ -185,6 +185,16 @@ try {
     /npm run test:searchpaneoracle/,
     'aggregate verify intentionally leaves the standalone search-pane gate out before implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:copycontroloracle'],
+    'node test/copy-control-oracle.mjs',
+    'package preserves the standalone authenticated copy-control gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:copycontroloracle/,
+    'aggregate verify intentionally leaves the standalone copy-control gate out before implementation',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
