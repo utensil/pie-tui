@@ -175,6 +175,16 @@ try {
     /npm run test:searchhighlightoracle/,
     'verify command includes the authenticated search-highlight gate after implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:searchpaneoracle'],
+    'node test/search-pane-oracle.mjs',
+    'package preserves the standalone authenticated search-pane gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:searchpaneoracle/,
+    'aggregate verify intentionally leaves the standalone search-pane gate out before implementation',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
