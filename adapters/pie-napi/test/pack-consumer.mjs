@@ -135,6 +135,16 @@ try {
     /npm run test:selectionoracle/,
     'verify command includes the authenticated selection geometry gate',
   )
+  assert.equal(
+    installedManifest.scripts['test:wordcopyoracle'],
+    'node test/word-copy-oracle.mjs',
+    'package preserves the standalone authenticated word\/copy gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:wordcopyoracle/,
+    'aggregate verify intentionally leaves the standalone word\/copy gate out',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,

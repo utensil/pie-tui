@@ -43,6 +43,7 @@ const testFiles = [
   'tier1-scroll-oracle.mjs',
   'selection-geometry.test.mjs',
   'selection-geometry-oracle.mjs',
+  'word-copy-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -506,6 +507,45 @@ const selectionGeometryMutations = [
   },
 ]
 
+const wordCopyMutations = [
+  {
+    name: 'word-selection-helper-loss',
+    from: '    const word = this.getWordSelection(anchor)',
+    to: '    const word = undefined',
+    expected: 'double-click word selection',
+  },
+  {
+    name: 'word-boundary-width-loss',
+    from: '      const end = start + visibleWidth(segment.segment)',
+    to: '      const end = start + 1',
+    expected: 'double-click word selection',
+  },
+  {
+    name: 'double-click-timeout-guard-loss',
+    from: '      now - previous.timestamp <= DOUBLE_CLICK_INTERVAL_MS &&',
+    to: '      true &&',
+    expected: 'double-click timeout',
+  },
+  {
+    name: 'triple-click-line-range-loss',
+    from: "        ? this.getLineSelection(anchor)\n        : undefined",
+    to: "        ? undefined\n        : undefined",
+    expected: 'triple-click line selection',
+  },
+  {
+    name: 'copy-callback-result-loss',
+    from: "      this.flash(copied ? 'Copied!' : 'Copy failed')",
+    to: "      this.flash('Copied!')",
+    expected: 'callback copy failure and flash',
+  },
+  {
+    name: 'osc52-base64-encoding-loss',
+    from: "      this.terminal.write(`\\x1b]52;c;${Buffer.from(text).toString('base64')}\\x07`)",
+    to: "      this.terminal.write(`\\x1b]52;c;${text}\\x07`)",
+    expected: 'OSC52 clipboard payload',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -659,6 +699,17 @@ try {
         'test/selection-geometry.test.mjs',
       ],
       mutation.pattern,
+    )
+  }
+
+  for (const mutation of wordCopyMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/word-copy-oracle.mjs'],
+      mutation.expected,
     )
   }
 
@@ -911,6 +962,22 @@ try {
     selectionWiringDirectory,
     ['test/pack-consumer.mjs'],
     'verify command includes the authenticated selection geometry gate',
+  )
+
+  const wordCopyWiringDirectory = await prepareCase(
+    'word-copy-oracle-standalone-wiring',
+  )
+  await replaceOnce(
+    wordCopyWiringDirectory,
+    'package.json',
+    '  "test:wordcopyoracle": "node test/word-copy-oracle.mjs",',
+    '  "test:wordcopyoracle": "node test/m6-semantic-oracle.mjs",',
+  )
+  await expectKilled(
+    'word-copy-oracle-standalone-wiring',
+    wordCopyWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'package preserves the standalone authenticated word/copy gate',
   )
 
   const licenseOmissionDirectory = await prepareCase('license-omission')

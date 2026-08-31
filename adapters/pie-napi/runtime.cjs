@@ -12,6 +12,7 @@ const native = require('./native-loader.cjs')
 
 const MAX_PAD_WIDTH = MAX_STRING_LENGTH
 const SEGMENT_RESET = '\x1b[0m\x1b]8;;\x07'
+const DOUBLE_CLICK_INTERVAL_MS = 500
 
 const fromNullable = (value) => (value === null ? undefined : value)
 
@@ -1609,6 +1610,9 @@ function extractLayoutAnsiCode(value, position) {
 const layoutGraphemeSegmenter = new Intl.Segmenter(undefined, {
   granularity: 'grapheme',
 })
+const selectionWordSegmenter = new Intl.Segmenter(undefined, {
+  granularity: 'word',
+})
 
 function getLayoutGraphemeCellRange(line, column) {
   let currentColumn = 0
@@ -2381,6 +2385,74 @@ class TuiAltScreen extends TuiBase {
     }
     return this.previousScreen[point.row] ?? ''
   }
+  getWordSelection(point) {
+    const line = stripTerminalSequences(this.getSelectionSourceLine(point))
+    let start = 0
+    for (const segment of selectionWordSegmenter.segment(line)) {
+      const end = start + visibleWidth(segment.segment)
+      if (point.col >= start && point.col < end) {
+        return {
+          start: { ...point, col: start },
+          end: { ...point, col: end, boundary: true },
+        }
+      }
+      start = end
+    }
+    return undefined
+  }
+  getLineSelection(point) {
+    return {
+      start: { ...point, col: 0 },
+      end: {
+        ...point,
+        col: visibleWidth(this.getSelectionSourceLine(point)),
+        boundary: true,
+      },
+    }
+  }
+  updateSelectionFocus(point) {
+    if (this.selectionGranularity === 'character' || !this.selectionInitialRange) {
+      this.selectionFocus = point
+      return
+    }
+    const range = this.selectionGranularity === 'word'
+      ? this.getWordSelection(point)
+      : this.getLineSelection(point)
+    if (!range) return
+    const initial = this.selectionInitialRange
+    const targetBeforeInitial = range.start.row < initial.start.row ||
+      (range.start.row === initial.start.row && range.start.col < initial.start.col)
+    if (targetBeforeInitial) {
+      this.selectionAnchor = initial.end
+      this.selectionFocus = range.start
+    } else {
+      this.selectionAnchor = initial.start
+      this.selectionFocus = range.end
+    }
+  }
+  getClickCount(point, word) {
+    const now = Date.now()
+    const previous = this.lastClick
+    const count = word && previous &&
+      now - previous.timestamp <= DOUBLE_CLICK_INTERVAL_MS &&
+      previous.row === point.row &&
+      previous.scrollView === point.scrollView &&
+      previous.wordStart === word.start.col &&
+      previous.wordEnd === word.end.col
+      ? (previous.count % 3) + 1
+      : 1
+    this.lastClick = word
+      ? {
+        timestamp: now,
+        count,
+        row: point.row,
+        scrollView: point.scrollView,
+        wordStart: word.start.col,
+        wordEnd: word.end.col,
+      }
+      : undefined
+    return count
+  }
   handleSelectionMouseEvent(event) {
     const button = event.button & 3
     if (button !== 0 && !(event.release && button === 3)) return
@@ -2389,7 +2461,8 @@ class TuiAltScreen extends TuiBase {
     if (event.release) {
       if (!this.selectionPressActive) return
       this.selectionPressActive = false
-      this.selectionFocus = point
+      if (!this.selectionAnchor) return
+      this.updateSelectionFocus(point)
       const clickedUrl = !this.selectionDragged &&
         this.selectionAnchor?.scrollView === point.scrollView &&
         this.selectionAnchor?.row === point.row && this.selectionAnchor?.col === point.col
@@ -2408,22 +2481,35 @@ class TuiAltScreen extends TuiBase {
     if ((event.button & 32) !== 0) {
       if (!this.selectionPressActive || !this.selectionAnchor) return
       this.selectionDragged = true
-      this.selectionFocus = point
+      this.lastClick = undefined
+      this.pressedUrl = undefined
+      this.updateSelectionFocus(point)
       this.requestRender()
       return
     }
+    this.selectionPressActive = true
     const scrollView = !this.hasOverlay() && this.currentLayout
       ? getScrollViewsAt(this.currentLayout, event.x, event.y)[0]
       : undefined
     const anchor = this.getSelectionPoint(event, scrollView)
-    this.selectionPressActive = true
-    this.selectionAnchor = anchor
-    this.selectionFocus = anchor
+    const word = this.getWordSelection(anchor)
+    const clickCount = this.getClickCount(anchor, word)
+    const range = clickCount === 2
+      ? word
+      : clickCount === 3
+        ? this.getLineSelection(anchor)
+        : undefined
+    this.selectionGranularity = range ? (clickCount === 2 ? 'word' : 'line') : 'character'
+    this.selectionInitialRange = range
+    this.selectionAnchor = range?.start ?? anchor
+    this.selectionFocus = range?.end ?? anchor
     this.selectionDragged = false
-    this.pressedUrl = getOsc8LinkAtColumn(
-      this.previousScreen[Math.max(0, Math.min(this.terminal.rows - 1, event.y))] ?? '',
-      Math.max(0, Math.min(this.terminal.columns - 1, event.x)),
-    )
+    this.pressedUrl = range
+      ? undefined
+      : getOsc8LinkAtColumn(
+        this.previousScreen[Math.max(0, Math.min(this.terminal.rows - 1, event.y))] ?? '',
+        Math.max(0, Math.min(this.terminal.columns - 1, event.x)),
+      )
     this.requestRender()
   }
   getSelectionBounds() {
@@ -2499,6 +2585,38 @@ class TuiAltScreen extends TuiBase {
     }
     return result
   }
+  applySelectionHighlight(text) {
+    let result = '\x1b[7m'
+    let index = 0
+    while (index < text.length) {
+      const ansi = extractLayoutAnsiCode(text, index)
+      if (!ansi) {
+        result += text[index]
+        index += 1
+        continue
+      }
+      result += ansi.code
+      if (ansi.code.endsWith('m')) result += '\x1b[7m'
+      index += ansi.length
+    }
+    return `${result}\x1b[27m`
+  }
+  compositeFlashes(screen, width, height) {
+    const entries = this.flashes.slice(-height)
+    if (entries.length === 0) return screen
+    const result = [...screen]
+    while (result.length < height) result.push('')
+    for (let row = 0; row < entries.length; row += 1) {
+      const message = truncateToWidth(` ${entries[row].message} `, width, '')
+      const line = `\x1b[7m${message}\x1b[27m`
+      const flashWidth = visibleWidth(line)
+      if (flashWidth === 0) continue
+      result[row] = compositeTuiLine(
+        result[row] ?? '', line, width - flashWidth, flashWidth, width,
+      )
+    }
+    return result
+  }
   applySelection(screen, layout = this.currentLayout) {
     const selection = this.getSelectionBounds()
     if (!selection) return screen
@@ -2553,7 +2671,10 @@ class TuiAltScreen extends TuiBase {
       )
       if (columns.end <= columns.start) return line
       const width = visibleWidth(line)
-      return `${sliceByColumn(line, 0, columns.start, true)}\x1b[7m${sliceByColumn(line, columns.start, columns.end - columns.start, true)}\x1b[27m${sliceByColumn(line, columns.end, Math.max(0, width - columns.end), true)}`
+      const before = sliceByColumn(line, 0, columns.start, true)
+      const selected = sliceByColumn(line, columns.start, columns.end - columns.start, true)
+      const after = sliceByColumn(line, columns.end, Math.max(0, width - columns.end), true)
+      return `${before}${this.applySelectionHighlight(selected)}${after}`
     })
   }
   prepareKittyScreen(screen) {
@@ -2602,13 +2723,9 @@ class TuiAltScreen extends TuiBase {
     let screen = document.slice(0, height)
     while (screen.length < height) screen.push('')
     screen = this.applySearchHighlights(screen)
-    if (this.flashes.length > 0) {
-      const message = this.flashes.at(-1).message
-      const flashWidth = Math.min(width, visibleWidth(message))
-      screen[0] = compositeTuiLine(screen[0] ?? '', message, width - flashWidth, flashWidth, width)
-    }
     let composited = this.compositeOverlays(screen, width, height)
     composited = this.applySelection(composited)
+    composited = this.compositeFlashes(composited, width, height)
     const planner = altScreenPlannerRegistry.get(this)
     const fullRedraw = this.previousScreen.length === 0
     const imagesNeedRedraw = composited.some((line, row) =>
