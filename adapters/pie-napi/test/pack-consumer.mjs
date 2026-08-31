@@ -215,6 +215,16 @@ try {
     /npm run test:x10oracle/,
     'verify command includes the authenticated legacy-X10 gate after implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:scrollbarcanceloracle'],
+    'node test/scrollbar-selection-oracle.mjs',
+    'package preserves the standalone authenticated scrollbar-cancel gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:scrollbarcanceloracle/,
+    'aggregate verify intentionally leaves the standalone scrollbar-cancel gate out before implementation',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,

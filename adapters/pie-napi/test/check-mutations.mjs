@@ -53,6 +53,7 @@ const testFiles = [
   'copy-control-oracle.mjs',
   'scroll-prompt.test.mjs',
   'legacy-x10-oracle.mjs',
+  'scrollbar-selection-oracle.mjs',
   'upstream-drift.json',
 ]
 
