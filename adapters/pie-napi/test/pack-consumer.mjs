@@ -145,6 +145,16 @@ try {
     /npm run test:wordcopyoracle/,
     'aggregate verify intentionally leaves the standalone word\/copy gate out',
   )
+  assert.equal(
+    installedManifest.scripts['test:autosearchoracle'],
+    'node test/auto-scroll-search-oracle.mjs',
+    'package preserves the standalone authenticated auto-scroll/search gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:autosearchoracle/,
+    'aggregate verify intentionally leaves the standalone auto-scroll/search gate out',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
