@@ -46,6 +46,7 @@ const testFiles = [
   'word-copy-oracle.mjs',
   'word-copy-regressions.test.mjs',
   'auto-scroll-search-oracle.mjs',
+  'search-grapheme-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -633,6 +634,15 @@ const autoScrollSearchMutations = [
   },
 ]
 
+const searchGraphemeMutations = [
+  {
+    name: 'search-grapheme-segmentation-loss',
+    from: '    for (const { segment } of layoutGraphemeSegmenter.segment(plain)) {',
+    to: '    for (const segment of plain) {',
+    expected: 'AssertionError',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -818,6 +828,17 @@ try {
       mutation.name,
       directory,
       ['test/auto-scroll-search-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of searchGraphemeMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/search-grapheme-oracle.mjs'],
       mutation.expected,
     )
   }

@@ -160,10 +160,10 @@ try {
     'node test/search-grapheme-oracle.mjs',
     'package preserves the standalone authenticated search-grapheme gate',
   )
-  assert.doesNotMatch(
+  assert.match(
     installedManifest.scripts.verify,
     /npm run test:searchgraphemeoracle/,
-    'aggregate verify intentionally leaves the red search-grapheme characterization out',
+    'verify command includes the authenticated search-grapheme gate after implementation',
   )
   assert.match(
     installedManifest.scripts.verify,

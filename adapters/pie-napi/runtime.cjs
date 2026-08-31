@@ -1503,9 +1503,9 @@ function findAltScreenSearchMatches(lines, query) {
   for (let row = 0; row < lines.length; row += 1) {
     const plain = stripTerminalSequences(lines[row] ?? '')
     let column = 0
-    for (const character of plain) {
-      const width = visibleWidth(character)
-      if (/^\s+$/u.test(character)) {
+    for (const { segment } of layoutGraphemeSegmenter.segment(plain)) {
+      const width = visibleWidth(segment)
+      if (/^\s+$/u.test(segment)) {
         if (text.length > 0) pendingSeparator = true
         column += width
         continue
@@ -1515,8 +1515,8 @@ function findAltScreenSearchMatches(lines, query) {
         source.push(undefined)
         pendingSeparator = false
       }
-      text += character
-      for (let index = 0; index < character.length; index += 1) {
+      text += segment
+      for (let index = 0; index < segment.length; index += 1) {
         source.push({ row, startCol: column, endCol: column + width })
       }
       column += width
