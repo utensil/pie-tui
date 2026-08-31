@@ -2148,7 +2148,7 @@ class TuiAltScreen extends TuiBase {
       this.getPrimaryScrollView().scrollTo(first.row - Math.floor(height / 3), { disableFollow: true })
     }
   }
-  flash(message, durationMs = 2000) {
+  flash(message, durationMs = 1000) {
     const entry = { message: String(message) }
     this.flashes.push(entry)
     this.requestRender()
@@ -2259,7 +2259,10 @@ class TuiAltScreen extends TuiBase {
       this.selectionPressActive = false
       this.selectionAnchor = undefined
       this.selectionFocus = undefined
+      this.selectionGranularity = 'character'
+      this.selectionInitialRange = undefined
       this.lastClick = undefined
+      this.selectionDragged = false
       this.pressedUrl = undefined
       this.stopScrollbarHover()
       this.stopScrollbarDrag()

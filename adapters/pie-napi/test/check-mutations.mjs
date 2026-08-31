@@ -44,6 +44,7 @@ const testFiles = [
   'selection-geometry.test.mjs',
   'selection-geometry-oracle.mjs',
   'word-copy-oracle.mjs',
+  'word-copy-regressions.test.mjs',
   'upstream-drift.json',
 ]
 
@@ -443,7 +444,10 @@ const tier1ScrollMutations = [
   {
     name: 'tier1-scrollbar-focus-out-cleanup-loss',
     from:
+      "      this.selectionGranularity = 'character'\n" +
+      '      this.selectionInitialRange = undefined\n' +
       '      this.lastClick = undefined\n' +
+      '      this.selectionDragged = false\n' +
       '      this.pressedUrl = undefined\n' +
       '      this.stopScrollbarHover()\n' +
       '      this.stopScrollbarDrag()\n' +
@@ -543,6 +547,35 @@ const wordCopyMutations = [
     from: "      this.terminal.write(`\\x1b]52;c;${Buffer.from(text).toString('base64')}\\x07`)",
     to: "      this.terminal.write(`\\x1b]52;c;${text}\\x07`)",
     expected: 'OSC52 clipboard payload',
+  },
+]
+
+const wordCopyRegressionMutations = [
+  {
+    name: 'word-copy-flash-default-drift',
+    from: '  flash(message, durationMs = 1000) {',
+    to: '  flash(message, durationMs = 2000) {',
+    expected: 'AltScreen flash defaults to the authenticated 0.84.2 one-second lifetime',
+  },
+  {
+    name: 'word-copy-focus-granularity-reset-loss',
+    from:
+      "      this.selectionGranularity = 'character'\n" +
+      '      this.selectionInitialRange = undefined',
+    to:
+      "      this.selectionGranularity = 'word'\n" +
+      '      this.selectionInitialRange = undefined',
+    expected: 'AltScreen focus-out resets all selection state',
+  },
+  {
+    name: 'word-copy-focus-drag-reset-loss',
+    from:
+      '      this.selectionDragged = false\n' +
+      '      this.pressedUrl = undefined',
+    to:
+      '      this.selectionDragged = true\n' +
+      '      this.pressedUrl = undefined',
+    expected: 'AltScreen focus-out resets all selection state',
   },
 ]
 
@@ -709,6 +742,17 @@ try {
       mutation.name,
       directory,
       ['test/word-copy-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of wordCopyRegressionMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', `--test-name-pattern=${mutation.expected}`, 'test/word-copy-regressions.test.mjs'],
       mutation.expected,
     )
   }
