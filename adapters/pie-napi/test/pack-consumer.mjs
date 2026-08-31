@@ -195,6 +195,16 @@ try {
     /npm run test:copycontroloracle/,
     'aggregate verify intentionally leaves the standalone copy-control gate out before implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:scrollpromptoracle'],
+    'node test/scroll-prompt-oracle.mjs',
+    'package preserves the standalone authenticated scroll-to-prompt gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:scrollpromptoracle/,
+    'aggregate verify intentionally leaves the standalone scroll-to-prompt gate out before implementation',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
