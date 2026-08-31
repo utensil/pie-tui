@@ -165,6 +165,16 @@ try {
     /npm run test:searchgraphemeoracle/,
     'verify command includes the authenticated search-grapheme gate after implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:searchhighlightoracle'],
+    'node test/search-highlight-oracle.mjs',
+    'package preserves the standalone authenticated search-highlight gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:searchhighlightoracle/,
+    'aggregate verify intentionally leaves the standalone search-highlight gate out',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
