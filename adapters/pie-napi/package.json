@@ -48,6 +48,7 @@
     "test:selectionoracle": "node test/selection-geometry-oracle.mjs",
     "test:wordcopyoracle": "node test/word-copy-oracle.mjs",
     "test:autosearchoracle": "node test/auto-scroll-search-oracle.mjs",
+    "test:searchgraphemeoracle": "node test/search-grapheme-oracle.mjs",
     "test:mutations": "node test/check-mutations.mjs",
     "test:types": "tsc --noEmit",
     "test:typesurface": "node test/check-type-surface.mjs",

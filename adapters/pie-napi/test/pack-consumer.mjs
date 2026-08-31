@@ -155,6 +155,16 @@ try {
     /npm run test:autosearchoracle/,
     'verify command includes the authenticated auto-scroll/search gate after implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:searchgraphemeoracle'],
+    'node test/search-grapheme-oracle.mjs',
+    'package preserves the standalone authenticated search-grapheme gate',
+  )
+  assert.doesNotMatch(
+    installedManifest.scripts.verify,
+    /npm run test:searchgraphemeoracle/,
+    'aggregate verify intentionally leaves the red search-grapheme characterization out',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,
