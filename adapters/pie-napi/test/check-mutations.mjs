@@ -49,6 +49,8 @@ const testFiles = [
   'search-grapheme-oracle.mjs',
   'search-highlight-oracle.mjs',
   'search-pane-oracle.mjs',
+  'copy-control.test.mjs',
+  'copy-control-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -685,6 +687,45 @@ const searchPaneMutations = [
   },
 ]
 
+const copyControlMutations = [
+  {
+    name: 'copy-control-default-disabled',
+    from: '    this.copyOnSelect = options.copyOnSelect ?? true',
+    to: '    this.copyOnSelect = options.copyOnSelect ?? false',
+    pattern: 'copyOnSelect defaults true',
+  },
+  {
+    name: 'copy-control-getter-loss',
+    from: '  getCopyOnSelect() { return this.copyOnSelect }',
+    to: '  getCopyOnSelect() { return false }',
+    pattern: 'copyOnSelect defaults true',
+  },
+  {
+    name: 'copy-control-no-selection-success-loss',
+    from:
+      '  async copyActiveSelectionToClipboard() {\n' +
+      '    const text = this.getActiveSelectionText()\n' +
+      '    if (!text) return false',
+    to:
+      '  async copyActiveSelectionToClipboard() {\n' +
+      '    const text = this.getActiveSelectionText()\n' +
+      '    if (!text) return true',
+    pattern: 'active selection copy reports',
+  },
+  {
+    name: 'copy-control-callback-result-loss',
+    from: '      return copied\n    } else {',
+    to: '      return true\n    } else {',
+    pattern: 'active selection copy reports',
+  },
+  {
+    name: 'copy-control-release-gate-loss',
+    from: "      } else if (this.copyOnSelect) {\n        void this.copySelectionToClipboard()",
+    to: "      } else if (true) {\n        void this.copySelectionToClipboard()",
+    pattern: 'copyOnSelect gates automatic release copying',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -904,6 +945,17 @@ try {
       directory,
       ['test/search-pane-oracle.mjs'],
       mutation.expected,
+    )
+  }
+
+  for (const mutation of copyControlMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', `--test-name-pattern=${mutation.pattern}`, 'test/copy-control.test.mjs'],
+      mutation.pattern,
     )
   }
 

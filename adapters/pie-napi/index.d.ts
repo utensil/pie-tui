@@ -673,6 +673,7 @@ export interface TuiAltScreenOptions {
   searchCurrentMatchStyle?: (text: string) => string
   openUrl?: (url: string) => void
   onRightClickPaste?: () => void
+  copyOnSelect?: boolean
   copySelection?: (text: string) => Promise<boolean>
 }
 export interface TuiAltScreen extends TUI, ViewportTUI {}
@@ -687,6 +688,10 @@ export class TuiAltScreen extends Container {
     options?: TuiAltScreenOptions,
   )
   setLayoutRoot(component: Component | undefined): void
+  getCopyOnSelect(): boolean
+  setCopyOnSelect(enabled: boolean): void
+  hasActiveSelection(): boolean
+  copyActiveSelectionToClipboard(): Promise<boolean>
   scrollBy(lines: number): void
   scrollToTop(): void
   scrollToBottom(): void

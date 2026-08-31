@@ -1960,6 +1960,7 @@ class TuiAltScreen extends TuiBase {
     this.searchCurrentMatchStyle = options.searchCurrentMatchStyle ?? ((text) => `\x1b[1;7m${text}\x1b[22;27m`)
     this.openUrl = options.openUrl
     this.onRightClickPaste = options.onRightClickPaste
+    this.copyOnSelect = options.copyOnSelect ?? true
     this.copySelection = options.copySelection
     this.implicitScrollView = new ScrollView({
       render: (width) => Container.prototype.render.call(this, width),
@@ -1994,6 +1995,14 @@ class TuiAltScreen extends TuiBase {
   }
   get viewportTop() { return this.getPrimaryScrollView().scrollTop }
   get isFollowingOutput() { return this.getPrimaryScrollView().isFollowingEnd }
+  getCopyOnSelect() { return this.copyOnSelect }
+  setCopyOnSelect(enabled) { this.copyOnSelect = enabled }
+  hasActiveSelection() { return this.getActiveSelectionText() !== undefined }
+  async copyActiveSelectionToClipboard() {
+    const text = this.getActiveSelectionText()
+    if (!text) return false
+    return this.copyTextToClipboard(text)
+  }
   setLayoutRoot(component) {
     if (this.layoutRoot === component) return
     this.layoutRoot = component
@@ -2575,7 +2584,7 @@ class TuiAltScreen extends TuiBase {
         this.selectionAnchor = undefined
         this.selectionFocus = undefined
         try { this.openUrl(clickedUrl) } catch {}
-      } else {
+      } else if (this.copyOnSelect) {
         void this.copySelectionToClipboard()
       }
       this.requestRender()
@@ -2659,13 +2668,18 @@ class TuiAltScreen extends TuiBase {
       lines.push(stripTerminalSequences(sliceByColumn(line, columns.start, Math.max(0, columns.end - columns.start), true)).trimEnd())
     }
     const text = lines.join('\n')
-    if (!text) return
+    if (!text) return false
+    return this.copyTextToClipboard(text)
+  }
+  async copyTextToClipboard(text) {
     if (this.copySelection) {
       const copied = await this.copySelection(text)
       this.flash(copied ? 'Copied!' : 'Copy failed')
+      return copied
     } else {
       this.terminal.write(`\x1b]52;c;${Buffer.from(text).toString('base64')}\x07`)
       this.flash('Copied!')
+      return true
     }
   }
   applySearchTextHighlight(text, current) {
