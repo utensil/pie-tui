@@ -205,6 +205,16 @@ try {
     /npm run test:scrollpromptoracle/,
     'aggregate verify intentionally leaves the standalone scroll-to-prompt gate out before implementation',
   )
+  assert.equal(
+    installedManifest.scripts['test:x10oracle'],
+    'node test/legacy-x10-oracle.mjs',
+    'package preserves the standalone authenticated legacy-X10 gate',
+  )
+  assert.match(
+    installedManifest.scripts.verify,
+    /npm run test:x10oracle/,
+    'verify command includes the authenticated legacy-X10 gate after implementation',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run oracle:overlay/,

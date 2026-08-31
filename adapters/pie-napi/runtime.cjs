@@ -2394,11 +2394,18 @@ class TuiAltScreen extends TuiBase {
       y: Number.parseInt(match[3], 10) - 1,
       release: match[4] === 'm',
     }
-    if (data.length === 6 && data.startsWith('\x1b[M')) return {
-      button: data.charCodeAt(3) - 32,
-      x: data.charCodeAt(4) - 33,
-      y: data.charCodeAt(5) - 33,
-      release: false,
+    if (data.length === 6 && data.startsWith('\x1b[M')) {
+      const button = data.charCodeAt(3) - 32
+      // The pinned 0.84.2 runtime consumes legacy X10 button presses without
+      // turning them into selection events. Legacy X10 wheel packets are the
+      // only packets handled by this facade; SGR remains the selection format.
+      if ((button & 64) === 0) return undefined
+      return {
+        button,
+        x: data.charCodeAt(4) - 33,
+        y: data.charCodeAt(5) - 33,
+        release: false,
+      }
     }
     return undefined
   }

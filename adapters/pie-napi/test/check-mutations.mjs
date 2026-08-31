@@ -52,6 +52,7 @@ const testFiles = [
   'copy-control.test.mjs',
   'copy-control-oracle.mjs',
   'scroll-prompt.test.mjs',
+  'legacy-x10-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -748,6 +749,15 @@ const scrollPromptMutations = [
   },
 ]
 
+const x10Mutations = [
+  {
+    name: 'legacy-x10-click-routing',
+    from: '      if ((button & 64) === 0) return undefined',
+    to: '      if (false) return undefined',
+    expected: 'legacy X10 primary press is consumed without entering selection',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -989,6 +999,17 @@ try {
       directory,
       ['--test', `--test-name-pattern=${mutation.pattern}`, 'test/scroll-prompt.test.mjs'],
       mutation.pattern,
+    )
+  }
+
+  for (const mutation of x10Mutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/legacy-x10-oracle.mjs'],
+      mutation.expected,
     )
   }
 
