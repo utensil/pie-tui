@@ -2132,40 +2132,62 @@ class TuiAltScreen extends TuiBase {
     this.activeSearch.selectionMode = direction < 0 ? 'previous' : 'next'
     this.requestRender()
   }
-  refreshSearch(document, height) {
+  refreshSearch(layout) {
     const search = this.activeSearch
-    if (!search) return
-    const matches = findAltScreenSearchMatches(document, search.query)
-    let selectedIndex = search.selectedIndex
+    if (!search) return false
+    const scrollView = layout?.primaryScrollView ?? this.implicitScrollView
+    const box = layout ? getScrollViewBox(layout, scrollView) : undefined
+    const lines = box?.scrollContentLines
+    if (!lines || !search.query.trim()) {
+      search.matches = []
+      search.selectedIndex = -1
+      search.selectedKey = undefined
+      search.selectionMode = 'retain'
+      search.component.setResult(-1, 0)
+      return false
+    }
+    const shouldRevealSelection = search.selectionMode !== 'retain'
+    const matches = findAltScreenSearchMatches(lines, search.query)
     const exactIndex = search.selectedKey
       ? matches.findIndex((match) => getAltScreenSearchMatchKey(match) === search.selectedKey)
       : -1
-    if (matches.length === 0) selectedIndex = -1
-    else if (search.selectionMode === 'query') {
-      selectedIndex = matches.findIndex((match) => (match.segments[0]?.row ?? 0) >= search.anchorRow)
-      if (selectedIndex < 0) selectedIndex = 0
-    } else if (search.selectionMode === 'next') {
-      const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(selectedIndex, matches.length - 1)
-      selectedIndex = baseIndex < 0 ? 0 : (baseIndex + 1) % matches.length
-    } else if (search.selectionMode === 'previous') {
-      const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(selectedIndex, matches.length - 1)
-      selectedIndex = baseIndex < 0 ? matches.length - 1 : (baseIndex - 1 + matches.length) % matches.length
+    let selectedIndex = -1
+    if (matches.length > 0) {
+      if (search.selectionMode === 'query') {
+        selectedIndex = matches.findIndex((match) => (match.segments[0]?.row ?? 0) >= search.anchorRow)
+        if (selectedIndex < 0) selectedIndex = 0
+      } else if (search.selectionMode === 'next') {
+        const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(search.selectedIndex, matches.length - 1)
+        selectedIndex = baseIndex < 0 ? 0 : (baseIndex + 1) % matches.length
+      } else if (search.selectionMode === 'previous') {
+        const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(search.selectedIndex, matches.length - 1)
+        selectedIndex = baseIndex < 0 ? matches.length - 1 : (baseIndex - 1 + matches.length) % matches.length
+      } else {
+        selectedIndex = exactIndex >= 0
+          ? exactIndex
+          : Math.min(Math.max(0, search.selectedIndex), matches.length - 1)
+      }
     } else {
-      selectedIndex = exactIndex >= 0 ? exactIndex : Math.min(Math.max(0, selectedIndex), matches.length - 1)
+      selectedIndex = -1
     }
-    const reveal = search.selectionMode !== 'retain'
     search.matches = matches
     search.selectedIndex = selectedIndex
     search.selectedKey = selectedIndex >= 0 ? getAltScreenSearchMatchKey(matches[selectedIndex]) : undefined
     search.selectionMode = 'retain'
     search.component.setResult(selectedIndex, matches.length)
-    if (!reveal || selectedIndex < 0) return
-    const first = matches[selectedIndex]?.segments[0]
-    const last = matches[selectedIndex]?.segments.at(-1)
-    if (!first || !last) return
-    if (first.row < this.viewportTop || last.row >= this.viewportTop + height) {
-      this.getPrimaryScrollView().scrollTo(first.row - Math.floor(height / 3), { disableFollow: true })
+    if (!shouldRevealSelection) return false
+    const selected = matches[selectedIndex]
+    const first = selected?.segments[0]
+    const last = selected?.segments.at(-1)
+    if (!box || !first || !last || scrollView.viewportHeight <= 0) return false
+    const before = scrollView.scrollTop
+    const visibleBottom = before + scrollView.viewportHeight - 1
+    let target = before
+    if (first.row < before || last.row > visibleBottom) {
+      target = first.row - Math.floor(scrollView.viewportHeight / 3)
     }
+    scrollView.scrollTo(target, { disableFollow: true })
+    return scrollView.scrollTop !== before
   }
   clearFlashes() {
     for (const entry of this.flashes) clearTimeout(entry.timer)
@@ -2665,25 +2687,50 @@ class TuiAltScreen extends TuiBase {
     if (plainStart < text.length) result += style(text.slice(plainStart))
     return result
   }
-  applySearchHighlights(screen) {
+  applySearchHighlights(screen, layout = this.currentLayout) {
     const search = this.activeSearch
-    if (!search || search.selectedIndex < 0) return screen
-    const result = [...screen]
-    for (let index = 0; index < search.matches.length; index += 1) {
-      for (const segment of search.matches[index].segments) {
-        const row = (this.currentLayout?.primaryRect?.y ?? 0) + segment.row - this.viewportTop
-        if (row < 0 || row >= result.length || isImageLine(result[row] ?? '')) continue
-        const line = result[row] ?? ''
-        const width = visibleWidth(line)
-        const start = Math.min(segment.startCol, width)
-        const end = Math.min(segment.endCol, width)
-        if (end <= start) continue
-        const before = sliceByColumn(line, 0, start, true)
-        const match = sliceByColumn(line, start, end - start, true)
-        const after = sliceByColumn(line, end, Math.max(0, width - end), true)
-        const current = index === search.selectedIndex
-        result[row] = `${before}${this.applySearchTextHighlight(match, current)}${after}`
+    if (!search || search.selectedIndex < 0 || search.matches.length === 0 || !layout) return screen
+    const scrollView = layout.primaryScrollView ?? this.implicitScrollView
+    const box = getScrollViewBox(layout, scrollView)
+    if (!box) return screen
+    const rangesByRow = new Map()
+    const scrollbarColumn = getScrollbarGeometry(box)?.column
+    const minRow = Math.max(0, box.rect.y, box.clip.y)
+    const maxRow = Math.min(screen.length, box.rect.y + box.rect.height, box.clip.y + box.clip.height)
+    const minColumn = Math.max(0, box.rect.x, box.clip.x)
+    const maxColumn = Math.min(
+      this.terminal.columns,
+      box.rect.x + box.rect.width,
+      box.clip.x + box.clip.width,
+      scrollbarColumn ?? Number.POSITIVE_INFINITY,
+    )
+    for (let matchIndex = 0; matchIndex < search.matches.length; matchIndex += 1) {
+      for (const segment of search.matches[matchIndex].segments) {
+        const row = box.rect.y + segment.row - scrollView.scrollTop
+        if (row < minRow || row >= maxRow) continue
+        const startCol = Math.max(minColumn, box.rect.x + segment.startCol)
+        const endCol = Math.min(maxColumn, box.rect.x + segment.endCol)
+        if (endCol <= startCol) continue
+        const ranges = rangesByRow.get(row) ?? []
+        ranges.push({ startCol, endCol, current: matchIndex === search.selectedIndex })
+        rangesByRow.set(row, ranges)
       }
+    }
+    const result = [...screen]
+    for (const [row, ranges] of rangesByRow) {
+      let line = result[row] ?? ''
+      if (isImageLine(line)) continue
+      const lineWidth = visibleWidth(line)
+      for (const range of ranges.sort((left, right) => right.startCol - left.startCol)) {
+        const startCol = Math.min(range.startCol, lineWidth)
+        const endCol = Math.min(range.endCol, lineWidth)
+        if (endCol <= startCol) continue
+        const before = sliceByColumn(line, 0, startCol, true)
+        const highlighted = sliceByColumn(line, startCol, endCol - startCol, true)
+        const after = sliceByColumn(line, endCol, Math.max(0, lineWidth - endCol), true)
+        line = `${before}${this.applySearchTextHighlight(highlighted, range.current)}${after}`
+      }
+      result[row] = line
     }
     return result
   }
@@ -2816,15 +2863,14 @@ class TuiAltScreen extends TuiBase {
     this.lastDocument = (this.currentLayout.primaryContentLines ?? document)
       .map((line) => line.replace(ALT_OSC133_ZONE_PREFIX, ''))
     const beforeSearchTop = this.viewportTop
-    this.refreshSearch(this.lastDocument, this.getPrimaryScrollView().viewportHeight)
-    if (this.viewportTop !== beforeSearchTop) {
+    if (this.refreshSearch(this.currentLayout)) {
       this.currentLayout = renderLayoutFrame(root, width, height, () => this.requestRender())
       document = this.currentLayout.lines
         .map((line) => line.replace(ALT_OSC133_ZONE_PREFIX, ''))
     }
     let screen = document.slice(0, height)
     while (screen.length < height) screen.push('')
-    screen = this.applySearchHighlights(screen)
+    screen = this.applySearchHighlights(screen, this.currentLayout)
     let composited = this.compositeOverlays(screen, width, height)
     composited = this.applySelection(composited)
     composited = this.compositeFlashes(composited, width, height)

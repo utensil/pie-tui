@@ -48,6 +48,7 @@ const testFiles = [
   'auto-scroll-search-oracle.mjs',
   'search-grapheme-oracle.mjs',
   'search-highlight-oracle.mjs',
+  'search-pane-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -661,6 +662,29 @@ const searchHighlightMutations = [
   },
 ]
 
+const searchPaneMutations = [
+  {
+    name: 'search-pane-layout-x-loss',
+    from: '        const startCol = Math.max(minColumn, box.rect.x + segment.startCol)',
+    to: '        const startCol = Math.max(minColumn, segment.startCol)',
+    expected: 'AssertionError',
+  },
+  {
+    name: 'search-pane-clip-boundary-loss',
+    from:
+      '    const maxColumn = Math.min(\n' +
+      '      this.terminal.columns,\n' +
+      '      box.rect.x + box.rect.width,',
+    to:
+      '    const maxColumn = minColumn\n' +
+      '    /* mutation: discard pane right boundary */\n' +
+      '    const unusedMaxColumn = Math.min(\n' +
+      '      this.terminal.columns,\n' +
+      '      box.rect.x + box.rect.width,',
+    expected: 'AssertionError',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -868,6 +892,17 @@ try {
       mutation.name,
       directory,
       ['test/search-highlight-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of searchPaneMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/search-pane-oracle.mjs'],
       mutation.expected,
     )
   }

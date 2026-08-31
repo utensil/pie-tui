@@ -57,7 +57,7 @@ function snapshot(api) {
   api.setCapabilities({ images: null, trueColor: true, hyperlinks: true })
   const terminal = new RecordingTerminal()
   const primary = new api.ScrollView(
-    new api.Text('prefix needle suffix\nsecond needle row', 0, 0),
+    new api.Text(`${'x'.repeat(28)}needle\nsecond ${'x'.repeat(18)}needle`, 0, 0),
     { primary: true, scrollbar: 'always', follow: 'none' },
   )
   const root = new api.HStack([
