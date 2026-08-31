@@ -63,3 +63,35 @@ test('AltScreen focus-out resets all selection state', () => {
   assert.equal(tui.selectionDragged, false)
   tui.stop({ preserveScreen: true })
 })
+
+test('AltScreen stop and restart dispose transient flash entries and timers', () => {
+  const terminal = new RecordingTerminal()
+  const tui = new TuiAltScreen(terminal, false)
+  tui.start()
+  const originalSetTimeout = globalThis.setTimeout
+  const originalClearTimeout = globalThis.clearTimeout
+  const timers = []
+  globalThis.setTimeout = (callback, delay) => {
+    const timer = { callback, delay, cleared: false, unref() {} }
+    timers.push(timer)
+    return timer
+  }
+  globalThis.clearTimeout = (timer) => {
+    timer.cleared = true
+  }
+  try {
+    tui.flash('Copied!')
+    assert.equal(tui.flashes.length, 1)
+    tui.stop({ preserveScreen: true })
+    assert.equal(tui.flashes.length, 0)
+    assert.equal(timers.length, 1)
+    assert.equal(timers[0].cleared, true)
+
+    tui.start()
+    assert.equal(tui.flashes.length, 0)
+    tui.stop({ preserveScreen: true })
+  } finally {
+    globalThis.setTimeout = originalSetTimeout
+    globalThis.clearTimeout = originalClearTimeout
+  }
+})
