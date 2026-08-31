@@ -1994,6 +1994,7 @@ class TuiAltScreen extends TuiBase {
   beforeTerminalStart() {
     this.stopScrollbarHover()
     this.stopScrollbarDrag()
+    this.clearFlashes()
     this.altScreenActive = true
     this.previousScreen = []
     this.lastDocument = []
@@ -2024,6 +2025,7 @@ class TuiAltScreen extends TuiBase {
   beforeTerminalStop() {
     this.closeSearch()
     this.selectionPressActive = false
+    this.clearFlashes()
     this.stopScrollbarHover()
     this.stopScrollbarDrag()
     if (!this.altScreenActive) return
@@ -2148,6 +2150,10 @@ class TuiAltScreen extends TuiBase {
       this.getPrimaryScrollView().scrollTo(first.row - Math.floor(height / 3), { disableFollow: true })
     }
   }
+  clearFlashes() {
+    for (const entry of this.flashes) clearTimeout(entry.timer)
+    this.flashes = []
+  }
   flash(message, durationMs = 1000) {
     const entry = { message: String(message) }
     this.flashes.push(entry)
@@ -2157,6 +2163,7 @@ class TuiAltScreen extends TuiBase {
       if (index !== -1) this.flashes.splice(index, 1)
       this.requestRender()
     }, durationMs)
+    entry.timer = timer
     timer.unref?.()
   }
   shouldDeferViewportInputToOverlay() {

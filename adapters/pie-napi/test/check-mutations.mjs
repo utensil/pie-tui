@@ -433,6 +433,7 @@ const tier1ScrollMutations = [
       '  beforeTerminalStop() {\n' +
       '    this.closeSearch()\n' +
       '    this.selectionPressActive = false\n' +
+      '    this.clearFlashes()\n' +
       '    this.stopScrollbarHover()\n' +
       '    this.stopScrollbarDrag()',
     to:
@@ -576,6 +577,19 @@ const wordCopyRegressionMutations = [
       '      this.selectionDragged = true\n' +
       '      this.pressedUrl = undefined',
     expected: 'AltScreen focus-out resets all selection state',
+  },
+  {
+    name: 'word-copy-flash-disposal-loss',
+    from:
+      '  beforeTerminalStop() {\n' +
+      '    this.closeSearch()\n' +
+      '    this.selectionPressActive = false\n' +
+      '    this.clearFlashes()',
+    to:
+      '  beforeTerminalStop() {\n' +
+      '    this.closeSearch()\n' +
+      '    this.selectionPressActive = false',
+    expected: 'AltScreen stop and restart dispose transient flash entries and timers',
   },
 ]
 
