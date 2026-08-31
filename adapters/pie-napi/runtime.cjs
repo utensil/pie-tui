@@ -1455,6 +1455,7 @@ const ALT_FOCUS_IN = '\x1b[I'
 const ALT_FOCUS_OUT = '\x1b[O'
 const ALT_PAGE_OVERLAP = 4
 const ALT_OSC133_ZONE_PREFIX = /^(?:\x1b\]133;[ABC](?:\x07|\x1b\\))+/
+const OSC133_PROMPT_START = /^\x1b\]133;A(?:\x07|\x1b\\)/
 const ALT_KITTY_PLACEMENT_KEYS = new Set([
   'i', 'p', 'x', 'y', 'w', 'h', 'X', 'Y', 'c', 'r', 'C', 'U', 'z', 'P', 'Q', 'H', 'V',
 ])
@@ -2094,9 +2095,13 @@ class TuiAltScreen extends TuiBase {
   scrollToTop() { this.getPrimaryScrollView().scrollToStart(); this.requestRender() }
   scrollToBottom() { this.getPrimaryScrollView().scrollToEnd(); this.requestRender() }
   scrollToPrompt(direction) {
-    for (let row = this.viewportTop + direction; row >= 0 && row < this.lastDocument.length; row += direction) {
-      if (!/^\x1b\]133;A(?:\x07|\x1b\\)/.test(this.lastDocument[row] ?? '')) continue
-      this.getPrimaryScrollView().scrollTo(row)
+    if (!this.currentLayout) return
+    const scrollView = this.getPrimaryScrollView()
+    const lines = getScrollViewBox(this.currentLayout, scrollView)?.scrollContentLines
+    if (!lines) return
+    for (let row = scrollView.scrollTop + direction; row >= 0 && row < lines.length; row += direction) {
+      if (!OSC133_PROMPT_START.test(lines[row] ?? '')) continue
+      scrollView.scrollTo(row)
       this.requestRender()
       return
     }

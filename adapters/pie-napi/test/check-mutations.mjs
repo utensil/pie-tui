@@ -51,6 +51,7 @@ const testFiles = [
   'search-pane-oracle.mjs',
   'copy-control.test.mjs',
   'copy-control-oracle.mjs',
+  'scroll-prompt.test.mjs',
   'upstream-drift.json',
 ]
 
@@ -726,6 +727,27 @@ const copyControlMutations = [
   },
 ]
 
+const scrollPromptMutations = [
+  {
+    name: 'scroll-prompt-marker-terminator-loss',
+    from: "const OSC133_PROMPT_START = /^\\x1b\\]133;A(?:\\x07|\\x1b\\\\)/",
+    to: "const OSC133_PROMPT_START = /^\\x1b\\]133;A(?:\\x07)/",
+    pattern: 'scrollToPrompt navigates BEL and ST OSC-133 prompt markers',
+  },
+  {
+    name: 'scroll-prompt-direction-offset-loss',
+    from: 'scrollView.scrollTop + direction',
+    to: 'scrollView.scrollTop',
+    pattern: 'scrollToPrompt navigates BEL and ST OSC-133 prompt markers',
+  },
+  {
+    name: 'scroll-prompt-visible-lines-loss',
+    from: 'getScrollViewBox(this.currentLayout, scrollView)?.scrollContentLines',
+    to: 'this.currentLayout.lines',
+    pattern: 'scrollToPrompt navigates BEL and ST OSC-133 prompt markers',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -955,6 +977,17 @@ try {
       mutation.name,
       directory,
       ['--test', `--test-name-pattern=${mutation.pattern}`, 'test/copy-control.test.mjs'],
+      mutation.pattern,
+    )
+  }
+
+  for (const mutation of scrollPromptMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['--test', `--test-name-pattern=${mutation.pattern}`, 'test/scroll-prompt.test.mjs'],
       mutation.pattern,
     )
   }
