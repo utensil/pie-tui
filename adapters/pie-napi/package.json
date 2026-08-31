@@ -53,6 +53,7 @@
     "test:searchpaneoracle": "node test/search-pane-oracle.mjs",
     "test:copycontroloracle": "node test/copy-control-oracle.mjs",
     "test:scrollpromptoracle": "node test/scroll-prompt-oracle.mjs",
+    "test:x10oracle": "node test/legacy-x10-oracle.mjs",
     "test:mutations": "node test/check-mutations.mjs",
     "test:types": "tsc --noEmit",
     "test:typesurface": "node test/check-type-surface.mjs",
