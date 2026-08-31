@@ -1543,6 +1543,12 @@ function findAltScreenSearchMatches(lines, query) {
   return matches
 }
 
+function getAltScreenSearchMatchKey(match) {
+  const first = match.segments[0]
+  const last = match.segments.at(-1)
+  return first && last ? `${first.row}:${first.startCol}:${last.row}:${last.endCol}` : ''
+}
+
 class AltScreenSearchComponent {
   constructor(onQueryChange) {
     this.input = new Input()
@@ -1971,6 +1977,9 @@ class TuiAltScreen extends TuiBase {
     this.selectionGranularity = 'character'
     this.selectionInitialRange = undefined
     this.lastClick = undefined
+    this.selectionDragPointer = undefined
+    this.selectionAutoScrollDirection = 0
+    this.selectionAutoScrollTimer = undefined
     this.selectionPressActive = false
     this.selectionDragged = false
     this.scrollbarDrag = undefined
@@ -1992,6 +2001,7 @@ class TuiAltScreen extends TuiBase {
     this.requestRender()
   }
   beforeTerminalStart() {
+    this.stopSelectionAutoScroll()
     this.stopScrollbarHover()
     this.stopScrollbarDrag()
     this.clearFlashes()
@@ -2024,6 +2034,7 @@ class TuiAltScreen extends TuiBase {
   }
   beforeTerminalStop() {
     this.closeSearch()
+    this.stopSelectionAutoScroll()
     this.selectionPressActive = false
     this.clearFlashes()
     this.stopScrollbarHover()
@@ -2126,20 +2137,26 @@ class TuiAltScreen extends TuiBase {
     if (!search) return
     const matches = findAltScreenSearchMatches(document, search.query)
     let selectedIndex = search.selectedIndex
+    const exactIndex = search.selectedKey
+      ? matches.findIndex((match) => getAltScreenSearchMatchKey(match) === search.selectedKey)
+      : -1
     if (matches.length === 0) selectedIndex = -1
     else if (search.selectionMode === 'query') {
       selectedIndex = matches.findIndex((match) => (match.segments[0]?.row ?? 0) >= search.anchorRow)
       if (selectedIndex < 0) selectedIndex = 0
     } else if (search.selectionMode === 'next') {
-      selectedIndex = selectedIndex < 0 ? 0 : (selectedIndex + 1) % matches.length
+      const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(selectedIndex, matches.length - 1)
+      selectedIndex = baseIndex < 0 ? 0 : (baseIndex + 1) % matches.length
     } else if (search.selectionMode === 'previous') {
-      selectedIndex = selectedIndex < 0 ? matches.length - 1 : (selectedIndex - 1 + matches.length) % matches.length
+      const baseIndex = exactIndex >= 0 ? exactIndex : Math.min(selectedIndex, matches.length - 1)
+      selectedIndex = baseIndex < 0 ? matches.length - 1 : (baseIndex - 1 + matches.length) % matches.length
     } else {
-      selectedIndex = Math.min(Math.max(0, selectedIndex), matches.length - 1)
+      selectedIndex = exactIndex >= 0 ? exactIndex : Math.min(Math.max(0, selectedIndex), matches.length - 1)
     }
     const reveal = search.selectionMode !== 'retain'
     search.matches = matches
     search.selectedIndex = selectedIndex
+    search.selectedKey = selectedIndex >= 0 ? getAltScreenSearchMatchKey(matches[selectedIndex]) : undefined
     search.selectionMode = 'retain'
     search.component.setResult(selectedIndex, matches.length)
     if (!reveal || selectedIndex < 0) return
@@ -2264,6 +2281,7 @@ class TuiAltScreen extends TuiBase {
     if (data === ALT_FOCUS_OUT) {
       const hadSelection = this.getSelectionBounds() !== undefined
       this.selectionPressActive = false
+      this.stopSelectionAutoScroll()
       this.selectionAnchor = undefined
       this.selectionFocus = undefined
       this.selectionGranularity = 'character'
@@ -2463,6 +2481,58 @@ class TuiAltScreen extends TuiBase {
       : undefined
     return count
   }
+  updateSelectionAutoScroll(event) {
+    const scrollView = this.selectionAnchor?.scrollView
+    if (!scrollView || !this.currentLayout) {
+      this.stopSelectionAutoScroll()
+      return
+    }
+    const box = getScrollViewBox(this.currentLayout, scrollView)
+    if (!box || box.rect.height <= 0 || box.clip.height <= 0) {
+      this.stopSelectionAutoScroll()
+      return
+    }
+    const visibleTop = Math.max(0, box.rect.y, box.clip.y)
+    const visibleBottom = Math.min(
+      this.terminal.rows - 1,
+      box.rect.y + box.rect.height - 1,
+      box.clip.y + box.clip.height - 1,
+    )
+    this.selectionDragPointer = { x: event.x, y: event.y }
+    this.selectionAutoScrollDirection = event.y <= visibleTop ? -1 : event.y >= visibleBottom ? 1 : 0
+    if (this.selectionAutoScrollDirection === 0) {
+      this.stopSelectionAutoScroll()
+      return
+    }
+    if (this.selectionAutoScrollTimer) return
+    this.selectionAutoScrollTimer = setInterval(() => this.autoScrollSelection(), 50)
+    this.selectionAutoScrollTimer.unref?.()
+  }
+  autoScrollSelection() {
+    const scrollView = this.selectionAnchor?.scrollView
+    const pointer = this.selectionDragPointer
+    const direction = this.selectionAutoScrollDirection
+    if (!scrollView || !pointer || direction === 0) {
+      this.stopSelectionAutoScroll()
+      return
+    }
+    const remaining = scrollView.scrollBy(direction)
+    if (remaining === direction) {
+      this.stopSelectionAutoScroll()
+      return
+    }
+    const point = this.getScrollSelectionPoint(scrollView, pointer.x, pointer.y)
+    if (point) this.updateSelectionFocus(point)
+    this.requestRender()
+  }
+  stopSelectionAutoScroll() {
+    if (this.selectionAutoScrollTimer) {
+      clearInterval(this.selectionAutoScrollTimer)
+      this.selectionAutoScrollTimer = undefined
+    }
+    this.selectionAutoScrollDirection = 0
+    this.selectionDragPointer = undefined
+  }
   handleSelectionMouseEvent(event) {
     const button = event.button & 3
     if (button !== 0 && !(event.release && button === 3)) return
@@ -2471,6 +2541,7 @@ class TuiAltScreen extends TuiBase {
     if (event.release) {
       if (!this.selectionPressActive) return
       this.selectionPressActive = false
+      this.stopSelectionAutoScroll()
       if (!this.selectionAnchor) return
       this.updateSelectionFocus(point)
       const clickedUrl = !this.selectionDragged &&
@@ -2494,9 +2565,11 @@ class TuiAltScreen extends TuiBase {
       this.lastClick = undefined
       this.pressedUrl = undefined
       this.updateSelectionFocus(point)
+      this.updateSelectionAutoScroll(event)
       this.requestRender()
       return
     }
+    this.stopSelectionAutoScroll()
     this.selectionPressActive = true
     const scrollView = !this.hasOverlay() && this.currentLayout
       ? getScrollViewsAt(this.currentLayout, event.x, event.y)[0]

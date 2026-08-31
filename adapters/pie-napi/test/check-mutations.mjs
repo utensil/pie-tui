@@ -45,6 +45,7 @@ const testFiles = [
   'selection-geometry-oracle.mjs',
   'word-copy-oracle.mjs',
   'word-copy-regressions.test.mjs',
+  'auto-scroll-search-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -432,6 +433,7 @@ const tier1ScrollMutations = [
     from:
       '  beforeTerminalStop() {\n' +
       '    this.closeSearch()\n' +
+      '    this.stopSelectionAutoScroll()\n' +
       '    this.selectionPressActive = false\n' +
       '    this.clearFlashes()\n' +
       '    this.stopScrollbarHover()\n' +
@@ -445,6 +447,10 @@ const tier1ScrollMutations = [
   {
     name: 'tier1-scrollbar-focus-out-cleanup-loss',
     from:
+      '      this.selectionPressActive = false\n' +
+      '      this.stopSelectionAutoScroll()\n' +
+      '      this.selectionAnchor = undefined\n' +
+      '      this.selectionFocus = undefined\n' +
       "      this.selectionGranularity = 'character'\n" +
       '      this.selectionInitialRange = undefined\n' +
       '      this.lastClick = undefined\n' +
@@ -583,6 +589,7 @@ const wordCopyRegressionMutations = [
     from:
       '  beforeTerminalStop() {\n' +
       '    this.closeSearch()\n' +
+      '    this.stopSelectionAutoScroll()\n' +
       '    this.selectionPressActive = false\n' +
       '    this.clearFlashes()',
     to:
@@ -590,6 +597,39 @@ const wordCopyRegressionMutations = [
       '    this.closeSearch()\n' +
       '    this.selectionPressActive = false',
     expected: 'AltScreen stop and restart dispose transient flash entries and timers',
+  },
+]
+
+const autoScrollSearchMutations = [
+  {
+    name: 'auto-scroll-timer-start-loss',
+    from: '    this.selectionAutoScrollTimer = setInterval(() => this.autoScrollSelection(), 50)',
+    to: '    this.selectionAutoScrollTimer = undefined',
+    expected: 'TypeError',
+  },
+  {
+    name: 'auto-scroll-direction-inversion',
+    from: '    this.selectionAutoScrollDirection = event.y <= visibleTop ? -1 : event.y >= visibleBottom ? 1 : 0',
+    to: '    this.selectionAutoScrollDirection = event.y <= visibleTop ? 1 : event.y >= visibleBottom ? -1 : 0',
+    expected: 'AssertionError',
+  },
+  {
+    name: 'auto-scroll-focus-recompute-loss',
+    from: '    if (point) this.updateSelectionFocus(point)',
+    to: '    if (false && point) this.updateSelectionFocus(point)',
+    expected: 'AssertionError',
+  },
+  {
+    name: 'search-selected-key-retention-loss',
+    from: '    const exactIndex = search.selectedKey\n      ? matches.findIndex((match) => getAltScreenSearchMatchKey(match) === search.selectedKey)\n      : -1',
+    to: '    const exactIndex = -1',
+    expected: 'AssertionError',
+  },
+  {
+    name: 'search-selected-key-assignment-loss',
+    from: "    search.selectedKey = selectedIndex >= 0 ? getAltScreenSearchMatchKey(matches[selectedIndex]) : undefined",
+    to: '    search.selectedKey = undefined',
+    expected: 'AssertionError',
   },
 ]
 
@@ -767,6 +807,17 @@ try {
       mutation.name,
       directory,
       ['--test', `--test-name-pattern=${mutation.expected}`, 'test/word-copy-regressions.test.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of autoScrollSearchMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/auto-scroll-search-oracle.mjs'],
       mutation.expected,
     )
   }

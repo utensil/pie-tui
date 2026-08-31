@@ -150,10 +150,10 @@ try {
     'node test/auto-scroll-search-oracle.mjs',
     'package preserves the standalone authenticated auto-scroll/search gate',
   )
-  assert.doesNotMatch(
+  assert.match(
     installedManifest.scripts.verify,
     /npm run test:autosearchoracle/,
-    'aggregate verify intentionally leaves the standalone auto-scroll/search gate out',
+    'verify command includes the authenticated auto-scroll/search gate after implementation',
   )
   assert.match(
     installedManifest.scripts.verify,
