@@ -2646,6 +2646,25 @@ class TuiAltScreen extends TuiBase {
       this.flash('Copied!')
     }
   }
+  applySearchTextHighlight(text, current) {
+    const style = current ? this.searchCurrentMatchStyle : this.searchMatchStyle
+    let result = ''
+    let plainStart = 0
+    let index = 0
+    while (index < text.length) {
+      const ansi = extractLayoutAnsiCode(text, index)
+      if (!ansi) {
+        index += 1
+        continue
+      }
+      if (index > plainStart) result += style(text.slice(plainStart, index))
+      result += ansi.code
+      index += ansi.length
+      plainStart = index
+    }
+    if (plainStart < text.length) result += style(text.slice(plainStart))
+    return result
+  }
   applySearchHighlights(screen) {
     const search = this.activeSearch
     if (!search || search.selectedIndex < 0) return screen
@@ -2662,8 +2681,8 @@ class TuiAltScreen extends TuiBase {
         const before = sliceByColumn(line, 0, start, true)
         const match = sliceByColumn(line, start, end - start, true)
         const after = sliceByColumn(line, end, Math.max(0, width - end), true)
-        const style = index === search.selectedIndex ? this.searchCurrentMatchStyle : this.searchMatchStyle
-        result[row] = `${before}${style(match)}${after}`
+        const current = index === search.selectedIndex
+        result[row] = `${before}${this.applySearchTextHighlight(match, current)}${after}`
       }
     }
     return result

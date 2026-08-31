@@ -170,10 +170,10 @@ try {
     'node test/search-highlight-oracle.mjs',
     'package preserves the standalone authenticated search-highlight gate',
   )
-  assert.doesNotMatch(
+  assert.match(
     installedManifest.scripts.verify,
     /npm run test:searchhighlightoracle/,
-    'aggregate verify intentionally leaves the standalone search-highlight gate out',
+    'verify command includes the authenticated search-highlight gate after implementation',
   )
   assert.match(
     installedManifest.scripts.verify,

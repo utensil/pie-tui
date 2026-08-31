@@ -47,6 +47,7 @@ const testFiles = [
   'word-copy-regressions.test.mjs',
   'auto-scroll-search-oracle.mjs',
   'search-grapheme-oracle.mjs',
+  'search-highlight-oracle.mjs',
   'upstream-drift.json',
 ]
 
@@ -643,6 +644,23 @@ const searchGraphemeMutations = [
   },
 ]
 
+const searchHighlightMutations = [
+  {
+    name: 'search-highlight-ansi-boundary-loss',
+    from:
+      '    let plainStart = 0\n' +
+      '    let index = 0\n' +
+      '    while (index < text.length) {\n' +
+      '      const ansi = extractLayoutAnsiCode(text, index)',
+    to:
+      '    let plainStart = 0\n' +
+      '    let index = 0\n' +
+      '    while (index < text.length) {\n' +
+      '      const ansi = undefined',
+    expected: 'search highlighting preserves ANSI boundaries',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -839,6 +857,17 @@ try {
       mutation.name,
       directory,
       ['test/search-grapheme-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of searchHighlightMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/search-highlight-oracle.mjs'],
       mutation.expected,
     )
   }
