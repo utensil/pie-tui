@@ -2297,6 +2297,7 @@ class TuiAltScreen extends TuiBase {
     ) return false
     const target = this.getScrollbarTargetAt(event.x, event.y)
     if (!target) return false
+    this.stopSelectionAutoScroll()
     this.selectionPressActive = false
     this.selectionAnchor = undefined
     this.selectionFocus = undefined

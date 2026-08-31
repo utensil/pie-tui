@@ -759,6 +759,20 @@ const x10Mutations = [
   },
 ]
 
+const scrollbarCancelMutations = [
+  {
+    name: 'scrollbar-cancel-selection-autoscroll-loss',
+    from:
+      '    if (!target) return false\n' +
+      '    this.stopSelectionAutoScroll()\n' +
+      '    this.selectionPressActive = false',
+    to:
+      '    if (!target) return false\n' +
+      '    this.selectionPressActive = false',
+    expected: 'scrollbar thumb press cancels selection auto-scroll and transient selection state',
+  },
+]
+
 const m6SemanticMutations = [
   {
     name: 'm6-alt-search-open-omission',
@@ -1010,6 +1024,17 @@ try {
       mutation.name,
       directory,
       ['test/legacy-x10-oracle.mjs'],
+      mutation.expected,
+    )
+  }
+
+  for (const mutation of scrollbarCancelMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name,
+      directory,
+      ['test/scrollbar-selection-oracle.mjs'],
       mutation.expected,
     )
   }

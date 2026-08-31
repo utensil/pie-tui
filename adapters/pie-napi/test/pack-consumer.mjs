@@ -220,10 +220,10 @@ try {
     'node test/scrollbar-selection-oracle.mjs',
     'package preserves the standalone authenticated scrollbar-cancel gate',
   )
-  assert.doesNotMatch(
+  assert.match(
     installedManifest.scripts.verify,
     /npm run test:scrollbarcanceloracle/,
-    'aggregate verify intentionally leaves the standalone scrollbar-cancel gate out before implementation',
+    'verify command includes the authenticated scrollbar-cancel gate after implementation',
   )
   assert.match(
     installedManifest.scripts.verify,

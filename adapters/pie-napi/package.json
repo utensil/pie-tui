@@ -62,7 +62,7 @@
     "oracle:check": "node test/check-reference.mjs",
     "oracle:drift": "node test/check-upstream-drift.mjs",
     "oracle:overlay": "node test/check-capability-overrides-reference.mjs",
-    "verify": "npm run oracle:check && npm run oracle:drift && npm run test:surface && npm run test:typesurface && npm run build && npm run oracle:overlay && npm run test:artifact && npm test && npm run test:types && npm run test:differential && npm run test:m6oracle && npm run test:tier1oracle && npm run test:selectionoracle && npm run test:autosearchoracle && npm run test:searchgraphemeoracle && npm run test:searchhighlightoracle && npm run test:x10oracle && npm run test:pack && npm run test:mutations"
+    "verify": "npm run oracle:check && npm run oracle:drift && npm run test:surface && npm run test:typesurface && npm run build && npm run oracle:overlay && npm run test:artifact && npm test && npm run test:types && npm run test:differential && npm run test:m6oracle && npm run test:tier1oracle && npm run test:selectionoracle && npm run test:autosearchoracle && npm run test:searchgraphemeoracle && npm run test:searchhighlightoracle && npm run test:x10oracle && npm run test:scrollbarcanceloracle && npm run test:pack && npm run test:mutations"
   },
   "dependencies": {
     "marked": "18.0.5"
