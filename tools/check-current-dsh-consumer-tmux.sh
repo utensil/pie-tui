@@ -39,7 +39,7 @@ receipt="$test_root/receipt.json"
 stream_ack="$test_root/stream-ack"
 capture="$test_root/pane.txt"
 capture_flat="$test_root/pane-flat.txt"
-mkdir -p "$test_root/home"
+mkdir -p "$test_root/isolated-user"
 wait_for_file_field() {
   local pattern=$1
   local deadline=$((SECONDS + 20))
@@ -71,7 +71,7 @@ wait_for_pane() {
 
 printf -v pane_command \
   'exec env HOME=%q XDG_CONFIG_HOME=%q PI_OFFLINE=1 CONSUMER_ROOT=%q CONSUMER_HEAD=%q RECEIPT_PATH=%q STREAM_ACK_PATH=%q EXPECTED_TUI_PACKAGE=%q node %q' \
-  "$test_root/home" "$test_root/home/config" "$consumer_root" "$consumer_head" "$receipt" "$stream_ack" "$expected_tui_package" "$driver"
+  "$test_root/isolated-user" "$test_root/isolated-user/config" "$consumer_root" "$consumer_head" "$receipt" "$stream_ack" "$expected_tui_package" "$driver"
 tmux -L "$socket_name" new-session -d -x "$columns" -y "$rows" -s "$session_name" "$pane_command"
 tmux -L "$socket_name" set-window-option -t "$session_name" remain-on-exit on >/dev/null
 wait_for_file_field '"ready": true'
