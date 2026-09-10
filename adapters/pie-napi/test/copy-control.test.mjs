@@ -1,7 +1,9 @@
 import assert from 'node:assert/strict'
 import test from 'node:test'
 
-import { TuiAltScreen } from '../index.js'
+import * as api from '../index.js'
+import { exerciseNaturalCopyControls } from './natural-selection-scenario.mjs'
+const { TuiAltScreen } = api
 
 class Terminal {
   columns = 20
@@ -29,32 +31,8 @@ test('copyOnSelect defaults true and can be toggled', () => {
   assert.equal(tui.getCopyOnSelect(), true)
 })
 
-test('active selection copy reports no selection and callback success/failure', async () => {
-  const copied = []
-  const tui = new TuiAltScreen(new Terminal(), false, undefined, {
-    copySelection: async (text) => { copied.push(text); return true },
-  })
-  tui.getActiveSelectionText = () => undefined
-  assert.equal(tui.hasActiveSelection(), false)
-  assert.equal(await tui.copyActiveSelectionToClipboard(), false)
-  tui.getActiveSelectionText = () => 'alpha'
-  assert.equal(tui.hasActiveSelection(), true)
-  assert.equal(await tui.copyActiveSelectionToClipboard(), true)
-  assert.deepEqual(copied, ['alpha'])
-
-  const failure = new TuiAltScreen(new Terminal(), false, undefined, {
-    copySelection: async () => false,
-  })
-  failure.getActiveSelectionText = () => 'beta'
-  assert.equal(await failure.copyActiveSelectionToClipboard(), false)
-})
-
-test('copyActiveSelectionToClipboard uses OSC 52 when no callback is supplied', async () => {
-  const terminal = new Terminal()
-  const tui = new TuiAltScreen(terminal, false)
-  tui.getActiveSelectionText = () => 'gamma'
-  assert.equal(await tui.copyActiveSelectionToClipboard(), true)
-  assert.ok(terminal.events.some((value) => value.startsWith('\x1b]52;c;')))
+test('active selection copy reports natural drag, clear, callback and OSC 52 behavior', async () => {
+  await exerciseNaturalCopyControls(api)
 })
 
 test('copyOnSelect gates automatic release copying', () => {

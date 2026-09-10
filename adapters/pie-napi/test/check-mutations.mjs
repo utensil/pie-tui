@@ -54,6 +54,7 @@ const testFiles = [
   'search-highlight-oracle.mjs',
   'search-pane-oracle.mjs',
   'copy-control.test.mjs',
+  'natural-selection-scenario.mjs',
   'copy-control-oracle.mjs',
   'scroll-prompt.test.mjs',
   'legacy-x10-oracle.mjs',
@@ -710,6 +711,18 @@ const searchPaneMutations = [
 
 const copyControlMutations = [
   {
+    name: 'copy-control-natural-extractor-loss',
+    from: '  getActiveSelectionText() {',
+    to: '  disconnectedActiveSelectionText() {',
+    pattern: 'active selection copy reports',
+  },
+  {
+    name: 'copy-control-natural-extraction-disabled',
+    from: '  getActiveSelectionText() {\n    const selection = this.getSelectionBounds()',
+    to: '  getActiveSelectionText() {\n    return undefined\n    const selection = this.getSelectionBounds()',
+    pattern: 'active selection copy reports',
+  },
+  {
     name: 'copy-control-default-disabled',
     from: '    this.copyOnSelect = options.copyOnSelect ?? true',
     to: '    this.copyOnSelect = options.copyOnSelect ?? false',
@@ -1242,6 +1255,20 @@ try {
     readmeBoundaryDirectory,
     ['test/pack-consumer.mjs'],
     'README preserves the recorded compatibility boundary',
+  )
+
+  const copyControlWiringDirectory = await prepareCase('verify-copy-control-oracle-wiring')
+  await replaceOnce(
+    copyControlWiringDirectory,
+    'package.json',
+    ' && npm run test:copycontroloracle',
+    '',
+  )
+  await expectKilled(
+    'verify-copy-control-oracle-wiring',
+    copyControlWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated copy-control gate',
   )
 
   const differentialWiringDirectory = await prepareCase(

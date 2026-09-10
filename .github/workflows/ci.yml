@@ -41,6 +41,9 @@ jobs:
           npm pack @earendil-works/pi-tui@0.84.4 --pack-destination "$RUNNER_TEMP/pi-tui-tarballs"
           npm install --prefix "$RUNNER_TEMP/pi-tui-reference" --ignore-scripts \
             "$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz"
+          npm install --prefix "$RUNNER_TEMP/pi-tui-reference-0844" --ignore-scripts \
+            "$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.4.tgz"
+          echo "PI_TUI_0844_DIST=$RUNNER_TEMP/pi-tui-reference-0844/node_modules/@earendil-works/pi-tui/dist" >> "$GITHUB_ENV"
           echo "PI_TUI_TARBALL=$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz" >> "$GITHUB_ENV"
           echo "PI_TUI_DIST=$RUNNER_TEMP/pi-tui-reference/node_modules/@earendil-works/pi-tui/dist" >> "$GITHUB_ENV"
           echo "PI_TUI_0842_TARBALL=$RUNNER_TEMP/pi-tui-tarballs/earendil-works-pi-tui-0.84.2.tgz" >> "$GITHUB_ENV"
@@ -49,6 +52,8 @@ jobs:
         run: npm --prefix adapters/pie-napi run verify
       - name: install real-terminal smoke dependency
         run: sudo apt-get update && sudo apt-get install -y tmux
+      - name: natural active-selection copy real-terminal gate
+        run: bash tools/check-tmux-copy.sh
       - name: Node-API Main/Alt real-terminal gate
         run: tools/tmux-napi-smoke.sh
       - name: current pi-dsh front-door consumer and real-terminal gate

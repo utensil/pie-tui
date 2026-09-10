@@ -2804,7 +2804,7 @@ class TuiAltScreen extends TuiBase {
     }
     return { start: Math.max(minColumn, start), end: Math.min(maxColumn, end) }
   }
-  async copySelectionToClipboard() {
+  getActiveSelectionText() {
     const selection = this.getSelectionBounds()
     if (!selection) return
     let sourceLines = this.previousScreen
@@ -2820,7 +2820,10 @@ class TuiAltScreen extends TuiBase {
       const columns = this.getSelectionColumns(line, row, selection)
       lines.push(stripTerminalSequences(sliceByColumn(line, columns.start, Math.max(0, columns.end - columns.start), true)).trimEnd())
     }
-    const text = lines.join('\n')
+    return lines.join('\n') || undefined
+  }
+  async copySelectionToClipboard() {
+    const text = this.getActiveSelectionText()
     if (!text) return false
     return this.copyTextToClipboard(text)
   }

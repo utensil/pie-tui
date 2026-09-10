@@ -195,10 +195,10 @@ try {
     'node test/copy-control-oracle.mjs',
     'package preserves the standalone authenticated copy-control gate',
   )
-  assert.doesNotMatch(
+  assert.match(
     installedManifest.scripts.verify,
     /npm run test:copycontroloracle/,
-    'aggregate verify intentionally leaves the standalone copy-control gate out before implementation',
+    'verify command includes the authenticated copy-control gate',
   )
   assert.equal(
     installedManifest.scripts['test:scrollpromptoracle'],
