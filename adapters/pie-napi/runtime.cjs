@@ -825,7 +825,7 @@ class SelectList {
         this.theme.scrollInfo(
           truncateToWidth(
             `  (${this.selectedIndex + 1}/${this.filteredItems.length})`,
-            width - 2,
+            Math.max(0, width - 2),
             '',
           ),
         ),
@@ -899,6 +899,7 @@ class SelectList {
   }
   truncatePrimary(item, selected, maxWidth, columnWidth) {
     const text = item.label || item.value
+    // Custom callbacks retain the raw layout budgets; only native helpers clamp.
     const value = this.layout.truncatePrimary
       ? this.layout.truncatePrimary({
           text,
@@ -907,8 +908,8 @@ class SelectList {
           item,
           isSelected: selected,
         })
-      : truncateToWidth(text, maxWidth, '')
-    return truncateToWidth(value, maxWidth, '')
+      : truncateToWidth(text, Math.max(0, maxWidth), '')
+    return truncateToWidth(value, Math.max(0, maxWidth), '')
   }
   notifySelectionChange() {
     const item = this.filteredItems[this.selectedIndex]
@@ -1127,7 +1128,7 @@ class SettingsList {
       const label = item.label + ' '.repeat(Math.max(0, labelWidth - visibleWidth(item.label)))
       const used = visibleWidth(prefix) + labelWidth + 2
       const value = this.theme.value(
-        truncateToWidth(item.currentValue, width - used - 2, ''),
+        truncateToWidth(item.currentValue, Math.max(0, width - used - 2), ''),
         selected,
       )
       lines.push(
@@ -1140,14 +1141,14 @@ class SettingsList {
     if (start > 0 || end < display.length) {
       lines.push(
         this.theme.hint(
-          truncateToWidth(`  (${this.selectedIndex + 1}/${display.length})`, width - 2, ''),
+          truncateToWidth(`  (${this.selectedIndex + 1}/${display.length})`, Math.max(0, width - 2), ''),
         ),
       )
     }
     const selected = display[this.selectedIndex]
     if (selected?.description) {
       lines.push('')
-      for (const line of wrapTextWithAnsi(selected.description, width - 4)) {
+      for (const line of wrapTextWithAnsi(selected.description, Math.max(0, width - 4))) {
         lines.push(this.theme.description(`  ${line}`))
       }
     }

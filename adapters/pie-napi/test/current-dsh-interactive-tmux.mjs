@@ -41,6 +41,8 @@ const result = {
   realTty: true,
   ready: false,
   streamAcknowledged: false,
+  resizeWidths: [],
+  settingsChanges: [],
   submittedText: null,
   terminalRestored: false,
   listenersRestored: false,
@@ -48,7 +50,10 @@ const result = {
 
 mkdirSync(dirname(receiptPath), { recursive: true });
 const save = () => writeFileSync(receiptPath, `${JSON.stringify(result, null, 2)}\n`);
+const observeResize = () => { result.resizeWidths.push(process.stdout.columns); result.lastResizeWidth = process.stdout.columns; save(); };
+process.stdout.on("resize", observeResize);
 process.on("exit", (code) => {
+  process.stdout.off("resize", observeResize);
   result.exitCode = code;
   try {
     result.terminalRestored = execFileSync("stty", ["-g"], {
@@ -173,6 +178,12 @@ const runtimeHost = createRuntimeHost(ctx, agent, "consumer-harness", {
   theme: "dark",
   tuiMode: "fullscreen",
 });
+const originalSetAutoCompaction = runtimeHost.session.setAutoCompactionEnabled.bind(runtimeHost.session);
+runtimeHost.session.setAutoCompactionEnabled = (enabled) => {
+  result.settingsChanges.push({ enabled, columns: process.stdout.columns });
+  save();
+  return originalSetAutoCompaction(enabled);
+};
 const mode = new InteractiveMode(runtimeHost, {
   initialThemeSetting: "dark",
   tuiMode: "fullscreen",

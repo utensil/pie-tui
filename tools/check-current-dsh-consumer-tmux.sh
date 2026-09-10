@@ -82,6 +82,19 @@ cp "$capture" "$test_root/autocomplete.txt"
 tmux -L "$socket_name" send-keys -t "$session_name" Tab Enter
 wait_for_pane 'Auto-compact|Autocomplete max items'
 cp "$capture" "$test_root/settings.txt"
+[[ $columns == 90 ]] || { echo "settings resize gate starts at 90 columns" >&2; exit 1; }
+tmux -L "$socket_name" resize-window -t "$session_name" -x 24 -y "$rows"
+wait_for_file_field '"lastResizeWidth": 24'
+[[ $(tmux -L "$socket_name" display-message -p -t "$session_name" '#{pane_width}') == 24 ]]
+wait_for_pane 'Auto-compact'
+cp "$capture" "$test_root/settings-narrow.txt"
+tmux -L "$socket_name" send-keys -t "$session_name" Space
+wait_for_file_field '"columns": 24'
+tmux -L "$socket_name" resize-window -t "$session_name" -x 90 -y "$rows"
+wait_for_file_field '"lastResizeWidth": 90'
+[[ $(tmux -L "$socket_name" display-message -p -t "$session_name" '#{pane_width}') == 90 ]]
+wait_for_pane 'Auto-compact +false'
+cp "$capture" "$test_root/settings-restored.txt"
 tmux -L "$socket_name" send-keys -t "$session_name" Escape
 sleep 0.3
 
@@ -116,8 +129,14 @@ node -e '
   const receipt = JSON.parse(fs.readFileSync(process.argv[1], "utf8"));
   if (receipt.backend !== "deterministic-fake") throw new Error("unexpected backend");
   if (receipt.submittedText !== "consumer harness prompt") throw new Error("ordinary prompt did not reach host");
+  if (JSON.stringify(receipt.resizeWidths) !== "[24,90]") throw new Error("expected live resize from 90 to 24 to 90");
+  if (JSON.stringify(receipt.settingsChanges) !== JSON.stringify([{ enabled: false, columns: 24 }])) throw new Error("settings did not change at narrow width");
   if (!receipt.streamAcknowledged) throw new Error("stream-only output was not observed before finalization");
   if (!receipt.realTty || !receipt.terminalRestored || !receipt.listenersRestored) throw new Error("terminal lifecycle failed");
   process.stdout.write(JSON.stringify({ ...receipt, tmuxPaneDead: true, alternateScreen: false }) + "\n");
 ' "$receipt"
+if [[ -n ${RECEIPT_DIR:-} ]]; then
+  mkdir -p "$RECEIPT_DIR"
+  cp "$receipt" "$test_root"/*.txt "$RECEIPT_DIR/"
+fi
 echo "current dsh consumer tmux OK: actual InteractiveMode, command dispatch, fake-backend stream/tool turn, clean exit at $consumer_head"

@@ -39,6 +39,9 @@ const testFiles = [
   'pack-consumer.mjs',
   'postm6-randomized.test.mjs',
   'runtime.test.mjs',
+  'narrow-dialogs.test.mjs',
+  'narrow-dialogs-scenarios.mjs',
+  'narrow-dialogs-oracle.mjs',
   'editor-autocomplete.test.mjs',
   'editor-autocomplete-scenarios.mjs',
   'editor-autocomplete-safety.test.mjs',
@@ -88,6 +91,44 @@ async function replaceOnce(directory, file, from, to) {
   assert.equal(occurrences, 1, `${file}: mutation marker count`)
   await writeFile(path, content.replace(from, to))
 }
+
+const narrowDialogMutations = [
+  {
+    name: "narrow-select-scroll-width-guard",
+    from: "            Math.max(0, width - 2),",
+    to: "            width - 2,",
+  },
+  {
+    name: "narrow-select-default-width-guard",
+    from: "truncateToWidth(text, Math.max(0, maxWidth), '')",
+    to: "truncateToWidth(text, maxWidth, '')",
+  },
+  {
+    name: "narrow-select-custom-width-guard",
+    from: "truncateToWidth(value, Math.max(0, maxWidth), '')",
+    to: "truncateToWidth(value, maxWidth, '')",
+  },
+  {
+    name: "narrow-settings-value-width-guard",
+    from: "truncateToWidth(item.currentValue, Math.max(0, width - used - 2), '')",
+    to: "truncateToWidth(item.currentValue, width - used - 2, '')",
+  },
+  {
+    name: "narrow-settings-scroll-width-guard",
+    from: "truncateToWidth(`  (${this.selectedIndex + 1}/${display.length})`, Math.max(0, width - 2), '')",
+    to: "truncateToWidth(`  (${this.selectedIndex + 1}/${display.length})`, width - 2, '')",
+  },
+  {
+    name: "narrow-settings-description-width-guard",
+    from: "wrapTextWithAnsi(selected.description, Math.max(0, width - 4))",
+    to: "wrapTextWithAnsi(selected.description, width - 4)",
+  },
+  {
+    name: "narrow-select-custom-callback-budget",
+    from: "          maxWidth,\n          columnWidth,\n          item,",
+    to: "          maxWidth: Math.max(0, maxWidth),\n          columnWidth: Math.max(0, columnWidth),\n          item,",
+  },
+]
 
 const runtimeMutations = [
   {
@@ -876,6 +917,36 @@ async function prepareReferenceCopy(directory) {
 }
 
 try {
+  for (const mutation of narrowDialogMutations) {
+    const directory = await prepareCase(mutation.name)
+    await replaceOnce(directory, 'runtime.cjs', mutation.from, mutation.to)
+    await expectKilled(
+      mutation.name, directory, ['test/narrow-dialogs-oracle.mjs'],
+      'narrow dialogs match reference render bytes, input and callback arguments',
+    )
+  }
+
+  const narrowWiringDirectory = await prepareCase('verify-narrow-dialogs-oracle-wiring')
+  await replaceOnce(
+    narrowWiringDirectory, 'package.json', ' && npm run test:narrowdialogsoracle', '',
+  )
+  await expectKilled(
+    'verify-narrow-dialogs-oracle-wiring', narrowWiringDirectory,
+    ['test/pack-consumer.mjs'],
+    'verify command includes the authenticated narrow-dialogs gate',
+  )
+
+  const narrowStandaloneDirectory = await prepareCase('narrow-dialogs-oracle-standalone-wiring')
+  await replaceOnce(
+    narrowStandaloneDirectory, 'package.json',
+    'node test/narrow-dialogs-oracle.mjs', 'node test/m6-semantic-oracle.mjs',
+  )
+  await expectKilled(
+    'narrow-dialogs-oracle-standalone-wiring', narrowStandaloneDirectory,
+    ['test/pack-consumer.mjs'],
+    'package preserves the standalone authenticated narrow-dialogs gate',
+  )
+
   for (const mutation of runtimeMutations) {
     const directory = await prepareCase(mutation.name)
     await replaceOnce(

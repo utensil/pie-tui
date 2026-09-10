@@ -120,6 +120,16 @@ try {
   assert.equal(installedManifest.private, true)
   assert.equal(installedManifest.license, 'MIT')
   assert.equal(installedManifest.engines.node, '>=24.4.1')
+  assert.equal(
+    installedManifest.scripts['test:narrowdialogsoracle'],
+    'node test/narrow-dialogs-oracle.mjs',
+    'package preserves the standalone authenticated narrow-dialogs gate',
+  )
+  assert.match(
+    installedManifest.scripts.verify,
+    /npm run test:narrowdialogsoracle/,
+    'verify command includes the authenticated narrow-dialogs gate',
+  )
   assert.match(
     installedManifest.scripts.verify,
     /npm run test:editorautocompleteoracle/,
