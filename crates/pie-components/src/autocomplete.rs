@@ -168,6 +168,20 @@ pub trait AutocompleteProvider: Send + Sync {
         prefix: &str,
     ) -> CompletionResult;
 
+    /// Apply a completion when the host callback succeeds. `None` leaves the
+    /// editor text and cursor unchanged and prevents submission after Enter.
+    /// Existing infallible providers retain their `apply_completion` behavior.
+    fn try_apply_completion(
+        &self,
+        lines: &[String],
+        cursor_line: usize,
+        cursor_col: usize,
+        item: &AutocompleteItem,
+        prefix: &str,
+    ) -> Option<CompletionResult> {
+        Some(self.apply_completion(lines, cursor_line, cursor_col, item, prefix))
+    }
+
     fn should_trigger_file_completion(
         &self,
         _lines: &[String],

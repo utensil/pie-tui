@@ -1135,23 +1135,32 @@ impl Editor {
             return false;
         };
         let slash = menu.prefix.starts_with('/');
-        self.apply_completion(item, &menu.prefix, !(slash && suppress_slash_change));
+        if !self.apply_completion(item, &menu.prefix, !(slash && suppress_slash_change)) {
+            return false;
+        }
         self.cancel_autocomplete();
         slash
     }
 
-    fn apply_completion(&mut self, item: &AutocompleteItem, prefix: &str, emit_change: bool) {
+    fn apply_completion(
+        &mut self,
+        item: &AutocompleteItem,
+        prefix: &str,
+        emit_change: bool,
+    ) -> bool {
         let Some(provider) = self.autocomplete_provider.as_ref() else {
-            return;
+            return false;
         };
         let snapshot = self.model.snapshot();
-        let result = provider.apply_completion(
+        let Some(result) = provider.try_apply_completion(
             &snapshot.lines,
             snapshot.cursor.line,
             snapshot.cursor.col,
             item,
             prefix,
-        );
+        ) else {
+            return false;
+        };
         let effects = self.model.apply(EditorAction::ApplyCompletion {
             lines: result.lines,
             cursor: EditorCursor {
@@ -1162,6 +1171,7 @@ impl Editor {
         if emit_change {
             self.emit_effects(effects);
         }
+        true
     }
 
     fn cancel_autocomplete_request(&mut self) {

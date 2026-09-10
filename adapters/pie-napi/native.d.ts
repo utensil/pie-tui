@@ -15,6 +15,8 @@ export declare class NativeEditorState {
   set disableSubmit(disable: boolean)
   getPaddingX(): number
   setPaddingX(padding: number): void
+  setAutocompleteProvider(provider: object): void
+  clearAutocompleteProvider(): void
   getAutocompleteMaxVisible(): number
   setAutocompleteMaxVisible(maxVisible: number): void
   addToHistory(text: string): void
@@ -25,6 +27,14 @@ export declare class NativeEditorState {
   setText(text: string): NativeEditorEvents
   insertTextAtCursor(text: string): NativeEditorEvents
   handleInput(data: string): NativeEditorEvents
+  runAutocompleteTask(taskId: number): NativeEditorEvents
+  settleAutocomplete(key: number, suggestions?: NativeAutocompleteSuggestions | undefined | null): NativeEditorEvents
+  /**
+   * A callback error can follow a committed text edit. Leave its events
+   * available for the JS adapter to deliver after the native borrow ends.
+   */
+  drainPendingEvents(): NativeEditorEvents
+  drainAutocompleteActions(): Array<NativeAutocompleteAction>
   isShowingAutocomplete(): boolean
   invalidate(): void
   render(width: number): Array<string>
@@ -100,11 +110,50 @@ export declare class NativeTruncatedTextState {
 
 export declare function nativeAllocateStackSizes(entries: Array<NativeStackEntry>, intrinsicSizes: Array<number>, availableSize: number | undefined | null, gap: number): Array<number>
 
+/**
+ * A queued host action. Optional fields keep the native ABI compact; `kind`
+ * determines which fields are populated.
+ */
+export interface NativeAutocompleteAction {
+  kind: string
+  taskId?: number
+  delayMs?: number
+  key?: number
+  request?: NativeAutocompleteRequest
+}
+
+export interface NativeAutocompleteItem {
+  value: string
+  label: string
+  description?: string
+}
+
+/** Data passed to the JS event loop for one provider request. */
+export interface NativeAutocompleteRequest {
+  key: number
+  providerId: number
+  lines: Array<string>
+  cursorLine: number
+  cursorCol: number
+  force: boolean
+}
+
+export interface NativeAutocompleteSuggestions {
+  items: Array<NativeAutocompleteItem>
+  prefix: string
+}
+
 export declare function nativeCalculateImageRows(imageDimensions: NativeImageDimensions, targetWidthCells: number, cellDimensions?: NativeCellDimensions | undefined | null): number
 
 export interface NativeCellDimensions {
   widthPx: number
   heightPx: number
+}
+
+export interface NativeCompletionResult {
+  lines: Array<string>
+  cursorLine: number
+  cursorCol: number
 }
 
 export interface NativeCompositeSegments {

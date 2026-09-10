@@ -375,6 +375,125 @@ class Input {
 }
 
 const editorRegistry = new WeakMap()
+const editorAutocompleteRegistry = new WeakMap()
+
+// Native FunctionRefs root these closures independently of JavaScript GC.
+// Keep only a weak provider link here so provider callbacks may capture their
+// editor without creating a native-rooted cycle. The live editor owns provider.
+function createEditorAutocompleteHooks(providerRef) {
+  return {
+    applyCompletion: (...args) => providerRef.deref().applyCompletion(...args),
+    shouldTriggerFileCompletion: (...args) => providerRef.deref().shouldTriggerFileCompletion(...args),
+  }
+}
+
+// Rust owns the editor's autocomplete state machine. These actions run only
+// after the native borrow has ended, on the owning JavaScript event loop.
+function drainEditorAutocomplete(editor, events) {
+  const state = editorRegistry.get(editor)
+  const bridge = editorAutocompleteRegistry.get(editor)
+  bridge.actions.push(...state.drainAutocompleteActions())
+  // Cancellation is visible to onChange immediately. New provider work waits
+  // until after those text events, including when an event reenters the editor.
+  for (;;) {
+    const index = bridge.actions.findIndex((action) => action.kind === 'cancel' || action.kind === 'abort')
+    if (index === -1) break
+    const [action] = bridge.actions.splice(index, 1)
+    if (action.kind === 'cancel') {
+      clearTimeout(bridge.timers.get(action.taskId))
+      bridge.timers.delete(action.taskId)
+      bridge.actions = bridge.actions.filter((pending) => pending.kind !== 'schedule' || pending.taskId !== action.taskId)
+    } else {
+      const pending = bridge.actions.find((pending) => pending.kind === 'request' && pending.key === action.key)
+      if (pending) pending.aborted = true
+      bridge.requests.get(action.key)?.abort()
+    }
+  }
+  try {
+    if (events) editor.emitEvents(events)
+  } finally {
+    runEditorAutocompleteActions(editor)
+  }
+}
+
+function runEditorNativeCall(editor, callback) {
+  let events
+  try {
+    events = callback()
+  } catch (error) {
+    // A provider can fail after Rust has committed a text edit. Deliver that
+    // edit once, after its native borrow ends, then preserve the original error.
+    try {
+      drainEditorAutocomplete(editor, editorRegistry.get(editor).drainPendingEvents())
+    } catch {}
+    throw error
+  }
+  drainEditorAutocomplete(editor, events)
+}
+
+function runEditorAutocompleteActions(editor) {
+  const state = editorRegistry.get(editor)
+  const bridge = editorAutocompleteRegistry.get(editor)
+  while (bridge.actions.length > 0) {
+    const action = bridge.actions.shift()
+    switch (action.kind) {
+      case 'schedule': {
+        const run = () => {
+          bridge.timers.delete(action.taskId)
+          runEditorNativeCall(editor, () => state.runAutocompleteTask(action.taskId))
+        }
+        if (action.delayMs === 0) run()
+        else bridge.timers.set(action.taskId, setTimeout(run, action.delayMs))
+        break
+      }
+      case 'request': {
+        const request = action.request
+        const provider = bridge.provider
+        const controller = new AbortController()
+        bridge.requests.set(request.key, controller)
+        const settle = (suggestions) => {
+          if (bridge.requests.get(request.key) !== controller) return
+          bridge.requests.delete(request.key)
+          let events
+          try {
+            events = state.settleAutocomplete(request.key, suggestions ?? null)
+          } catch {
+            // Malformed async results release the queued next request. Errors
+            // from async forced-apply hooks are also contained at this boundary.
+            events = state.settleAutocomplete(request.key, null)
+          } finally {
+            drainEditorAutocomplete(editor, events)
+          }
+        }
+        if (action.aborted || !provider || request.providerId !== bridge.providerId) {
+          controller.abort()
+          settle(null)
+          break
+        }
+        let result
+        try {
+          result = provider.getSuggestions(
+            request.lines,
+            request.cursorLine,
+            request.cursorCol,
+            { force: request.force, signal: controller.signal },
+          )
+        } catch {
+          settle(null)
+          break
+        }
+        // Both Awaitable forms settle on a microtask. Reentrant setters can
+        // invalidate the request before its result enters the Rust editor.
+        Promise.resolve(result).then(settle, () => settle(null))
+        break
+      }
+      case 'render':
+        editor.tui.requestRender()
+        break
+    }
+  }
+}
+
 class Editor {
   constructor(tui, theme, options = {}) {
     this.tui = tui
@@ -383,6 +502,13 @@ class Editor {
     this.onSubmit = undefined
     this.onChange = undefined
     this.autocompleteProvider = undefined
+    editorAutocompleteRegistry.set(this, {
+      provider: undefined,
+      providerId: 0,
+      timers: new Map(),
+      requests: new Map(),
+      actions: [],
+    })
     editorRegistry.set(
       this,
       new native.NativeEditorState(
@@ -436,7 +562,27 @@ class Editor {
       .setAutocompleteMaxVisible(assertColumn(value, 'maxVisible'))
     this.tui.requestRender()
   }
-  setAutocompleteProvider(provider) { this.autocompleteProvider = provider }
+  setAutocompleteProvider(provider) {
+    const state = editorRegistry.get(this)
+    const bridge = editorAutocompleteRegistry.get(this)
+    const providerId = (bridge.providerId + 1) >>> 0
+    if (provider == null) state.clearAutocompleteProvider()
+    else {
+      const hooks = createEditorAutocompleteHooks(new WeakRef(provider))
+      state.setAutocompleteProvider({
+        providerId,
+        triggerCharacters: provider.triggerCharacters,
+        applyCompletion: hooks.applyCompletion,
+        shouldTriggerFileCompletion: typeof provider.shouldTriggerFileCompletion === 'function'
+          ? hooks.shouldTriggerFileCompletion
+          : undefined,
+      })
+    }
+    bridge.provider = provider
+    bridge.providerId = providerId
+    this.autocompleteProvider = provider
+    drainEditorAutocomplete(this)
+  }
   addToHistory(text) {
     editorRegistry.get(this).addToHistory(assertWellFormed(text, 'text'))
   }
@@ -445,9 +591,7 @@ class Editor {
     return editorRegistry.get(this).render(assertColumn(width, 'width'))
   }
   handleInput(data) {
-    this.emitEvents(
-      editorRegistry.get(this).handleInput(assertWellFormed(data, 'data')),
-    )
+    runEditorNativeCall(this, () => editorRegistry.get(this).handleInput(assertWellFormed(data, 'data')))
     this.tui.requestRender()
   }
   getText() { return editorRegistry.get(this).getText() }
@@ -455,17 +599,13 @@ class Editor {
   getLines() { return editorRegistry.get(this).getLines() }
   getCursor() { return editorRegistry.get(this).getCursor() }
   setText(text) {
-    this.emitEvents(
-      editorRegistry.get(this).setText(assertWellFormed(text, 'text')),
-    )
+    const events = editorRegistry.get(this).setText(assertWellFormed(text, 'text'))
+    drainEditorAutocomplete(this, events)
     this.tui.requestRender()
   }
   insertTextAtCursor(text) {
-    this.emitEvents(
-      editorRegistry
-        .get(this)
-        .insertTextAtCursor(assertWellFormed(text, 'text')),
-    )
+    const events = editorRegistry.get(this).insertTextAtCursor(assertWellFormed(text, 'text'))
+    drainEditorAutocomplete(this, events)
     this.tui.requestRender()
   }
   isShowingAutocomplete() {

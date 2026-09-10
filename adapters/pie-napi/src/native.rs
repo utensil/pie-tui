@@ -9,13 +9,12 @@
 // entry point as unused.
 #![cfg_attr(test, allow(dead_code))]
 
-use napi::bindgen_prelude::{Either, Null, Utf16String};
+use napi::bindgen_prelude::{Either, Env, Null, Object, Utf16String};
 use napi::{Error, Result, Status};
 use napi_derive::napi;
 use pie_components::{
-    Component, DetachedEditorHost, Editor, EditorOptions, EditorTheme, Input, Loader,
-    LoaderIndicatorOptions, Markdown, MarkdownOptions, MarkdownTheme, Spacer, StackEntry, Text,
-    TruncatedText, allocate_stack_sizes,
+    Component, Editor, EditorOptions, EditorTheme, Input, Loader, LoaderIndicatorOptions, Markdown,
+    MarkdownOptions, MarkdownTheme, Spacer, StackEntry, Text, TruncatedText, allocate_stack_sizes,
 };
 use pie_core::keybindings::KeybindingShape;
 use pie_core::latex::RenderLatexOptions;
@@ -28,6 +27,11 @@ use pie_core::text::{extract_ansi_code_len, grapheme_width};
 use pie_core::wrap::AnsiCodeTracker;
 use pie_term::capabilities::TerminalEnvironment;
 use unicode_segmentation::UnicodeSegmentation;
+
+use crate::autocomplete_bridge::{
+    CurrentEnvScope, NativeAutocompleteAction, NativeAutocompleteSuggestions, QueuedEditorHost,
+    new_bridge, provider_from_js,
+};
 
 const KITTY_UTF16_CHUNK_SIZE: usize = 4096;
 
@@ -327,6 +331,7 @@ pub struct NativeEditorEvents {
 #[napi]
 pub struct NativeEditorState {
     inner: Editor,
+    host: QueuedEditorHost,
     submitted: std::sync::Arc<std::sync::Mutex<Option<String>>>,
     changed: std::sync::Arc<std::sync::Mutex<Option<String>>>,
 }
@@ -337,8 +342,10 @@ impl NativeEditorState {
     pub fn new(padding_x: u32, autocomplete_max_visible: Option<u32>) -> Self {
         let submitted = std::sync::Arc::new(std::sync::Mutex::new(None));
         let changed = std::sync::Arc::new(std::sync::Mutex::new(None));
+        let bridge = new_bridge();
+        let host = QueuedEditorHost::new(bridge.clone(), 24);
         let mut inner = Editor::new(
-            Box::new(DetachedEditorHost::default()),
+            Box::new(QueuedEditorHost::new(bridge, 24)),
             EditorTheme::plain(),
             EditorOptions {
                 padding_x: padding_x as usize,
@@ -356,6 +363,7 @@ impl NativeEditorState {
         })));
         Self {
             inner,
+            host,
             submitted,
             changed,
         }
@@ -389,6 +397,19 @@ impl NativeEditorState {
     #[napi]
     pub fn set_padding_x(&mut self, padding: u32) {
         self.inner.set_padding_x(padding as usize);
+    }
+
+    #[napi]
+    pub fn set_autocomplete_provider(&mut self, env: Env, provider: Object<'_>) -> Result<()> {
+        let _scope = CurrentEnvScope::enter(env);
+        let adapter = provider_from_js(env, provider, self.host.shared_bridge())?;
+        self.inner.set_autocomplete_provider(adapter);
+        Ok(())
+    }
+
+    #[napi]
+    pub fn clear_autocomplete_provider(&mut self) {
+        self.inner.clear_autocomplete_provider();
     }
 
     #[napi]
@@ -446,9 +467,54 @@ impl NativeEditorState {
     }
 
     #[napi]
-    pub fn handle_input(&mut self, data: String) -> NativeEditorEvents {
+    pub fn handle_input(&mut self, env: Env, data: String) -> Result<NativeEditorEvents> {
+        let scope = CurrentEnvScope::enter(env);
         self.inner.handle_input(&data);
+        scope.finish(())?;
+        Ok(self.take_events())
+    }
+
+    #[napi]
+    pub fn run_autocomplete_task(&mut self, env: Env, task_id: u32) -> Result<NativeEditorEvents> {
+        let Some(task) = self
+            .host
+            .take_task(pie_components::EditorTaskId(u64::from(task_id)))
+        else {
+            return Ok(self.take_events());
+        };
+        let scope = CurrentEnvScope::enter(env);
+        self.inner.handle_host_task(task);
+        self.host.pump(&mut self.inner);
+        scope.finish(())?;
+        Ok(self.take_events())
+    }
+
+    #[napi]
+    pub fn settle_autocomplete(
+        &mut self,
+        env: Env,
+        key: u32,
+        suggestions: Option<NativeAutocompleteSuggestions>,
+    ) -> Result<NativeEditorEvents> {
+        let scope = CurrentEnvScope::enter(env);
+        let result = suggestions.map(Into::into);
+        if self.host.settle(key, result) {
+            self.host.pump(&mut self.inner);
+        }
+        scope.finish(())?;
+        Ok(self.take_events())
+    }
+
+    /// A callback error can follow a committed text edit. Leave its events
+    /// available for the JS adapter to deliver after the native borrow ends.
+    #[napi]
+    pub fn drain_pending_events(&self) -> NativeEditorEvents {
         self.take_events()
+    }
+
+    #[napi]
+    pub fn drain_autocomplete_actions(&self) -> Vec<NativeAutocompleteAction> {
+        self.host.take_actions()
     }
 
     #[napi]

@@ -35,4 +35,9 @@ npx --yes pnpm@10.4.1 --dir "$test_root/consumer" \
 CONSUMER_ROOT="$test_root/consumer" CONSUMER_HEAD="$consumer_head" \
   node "$package_root/test/current-dsh-interactive-lifecycle.mjs"
 
+if [[ ${PIE_TUI_REQUIRE_CONSUMER_TMUX:-0} == 1 ]]; then
+  CONSUMER_ROOT="$test_root/consumer" CONSUMER_HEAD="$consumer_head" \
+    "$repo_root/tools/check-current-dsh-consumer-tmux.sh"
+fi
+
 echo "current dsh consumer OK: 40 front-door tests and InteractiveMode full lifecycle at $consumer_head"

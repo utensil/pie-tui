@@ -122,6 +122,11 @@ try {
   assert.equal(installedManifest.engines.node, '>=24.4.1')
   assert.match(
     installedManifest.scripts.verify,
+    /npm run test:editorautocompleteoracle/,
+    'verify command includes the authenticated editor autocomplete gate',
+  )
+  assert.match(
+    installedManifest.scripts.verify,
     /npm run test:m6oracle/,
     'verify command includes the authenticated 0.84.2 M6 semantic gate',
   )

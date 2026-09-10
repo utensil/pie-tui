@@ -110,6 +110,7 @@ struct ProviderState {
     resolvers: Vec<ManualResolver>,
     events: Vec<Value>,
     predicate: bool,
+    reject_apply: bool,
 }
 
 struct ManualProvider {
@@ -195,6 +196,21 @@ impl AutocompleteProvider for ManualProvider {
             lines: result,
             cursor_line,
             cursor_col: start + item.value.encode_utf16().count(),
+        }
+    }
+
+    fn try_apply_completion(
+        &self,
+        lines: &[String],
+        cursor_line: usize,
+        cursor_col: usize,
+        item: &AutocompleteItem,
+        prefix: &str,
+    ) -> Option<CompletionResult> {
+        if self.state.lock().expect("provider lock").reject_apply {
+            None
+        } else {
+            Some(self.apply_completion(lines, cursor_line, cursor_col, item, prefix))
         }
     }
 
@@ -1163,4 +1179,38 @@ fn utf16_to_byte(text: &str, units: usize) -> usize {
         consumed += character.len_utf16();
     }
     text.len()
+}
+
+#[test]
+fn rejected_completion_preserves_input_and_does_not_submit() {
+    let _guard = KEYBINDING_TEST_LOCK.lock().expect("keybinding test lock");
+    set_keybindings(KeybindingsManager::with_tui_defaults(Vec::new()));
+    for key in ["\t", "\r"] {
+        let clock = FakeClock::default();
+        let (provider, state) = ManualProvider::new(&[]);
+        state.lock().expect("provider lock").reject_apply = true;
+        let mut editor = new_editor(&clock);
+        let submitted = Arc::new(Mutex::new(Vec::new()));
+        let submitted_callback = Arc::clone(&submitted);
+        editor.set_on_submit(Some(Box::new(move |text| {
+            submitted_callback.lock().expect("submit lock").push(text);
+        })));
+        editor.set_autocomplete_provider(provider);
+        editor.set_text("/");
+        editor.handle_input("m");
+        clock.advance(&mut editor, 0);
+        resolve_latest(&clock, &mut editor, &state, suggestion(&["/model "], "/m"));
+        let before = editor_state(&editor);
+        editor.handle_input(key);
+        assert_eq!(editor_state(&editor), before);
+        assert!(submitted.lock().expect("submit lock").is_empty());
+
+        state.lock().expect("provider lock").reject_apply = false;
+        editor.handle_input(key);
+        if key == "\r" {
+            assert_eq!(*submitted.lock().expect("submit lock"), vec!["/model"]);
+        } else {
+            assert_eq!(editor.get_text(), "/model ");
+        }
+    }
 }

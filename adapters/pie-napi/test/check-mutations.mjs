@@ -39,6 +39,10 @@ const testFiles = [
   'pack-consumer.mjs',
   'postm6-randomized.test.mjs',
   'runtime.test.mjs',
+  'editor-autocomplete.test.mjs',
+  'editor-autocomplete-scenarios.mjs',
+  'editor-autocomplete-safety.test.mjs',
+  'editor-autocomplete-gc.mjs',
   'tier1-scroll.test.mjs',
   'tier1-scroll-oracle.mjs',
   'selection-geometry.test.mjs',
@@ -85,6 +89,20 @@ async function replaceOnce(directory, file, from, to) {
 }
 
 const runtimeMutations = [
+  {
+    name: 'editor-native-provider-retention',
+    from: 'function createEditorAutocompleteHooks(providerRef) {',
+    to: 'function createEditorAutocompleteHooks(providerRef) {\n  const retained = providerRef.deref()\n  providerRef = { deref: () => retained }',
+    expected: 'native hooks allow an abandoned provider and editor to be collected',
+    testFile: 'editor-autocomplete-safety.test.mjs',
+  },
+  {
+    name: 'editor-provider-disconnection',
+    from: '    else {\n      const hooks = createEditorAutocompleteHooks(new WeakRef(provider))',
+    to: '    else if (false) {\n      const hooks = createEditorAutocompleteHooks(new WeakRef(provider))',
+    expected: 'slash menu supports selection, Tab, Enter, and cancel',
+    testFile: 'editor-autocomplete.test.mjs',
+  },
   {
     name: 'capability-overlay-clone-loss',
     from: '  capabilityOverrides = { ...overrides }',

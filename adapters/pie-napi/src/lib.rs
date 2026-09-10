@@ -3,6 +3,7 @@
 
 pub mod pi_tui;
 
+mod autocomplete_bridge;
 mod native;
 
 pub mod placeholder {
